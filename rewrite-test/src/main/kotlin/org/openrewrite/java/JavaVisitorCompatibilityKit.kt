@@ -144,6 +144,9 @@ abstract class JavaVisitorCompatibilityKit {
     inner class FinalizeLocalVariablesTck : FinalizeLocalVariablesTest
 
     @Nested
+    inner class FindAnnotationsTck : FindAnnotationsTest
+
+    @Nested
     inner class FixSerializableFieldsTck : FixSerializableFieldsTest
 
     @Nested
@@ -153,7 +156,7 @@ abstract class JavaVisitorCompatibilityKit {
     inner class ForLoopIncrementInUpdateTck : ForLoopIncrementInUpdateTest
 
     @Nested
-    inner class FindAnnotationsTck : FindAnnotationsTest
+    inner class LastWriteTck : LastWriteTest
 
     @Nested
     inner class FindDeprecatedClassesTck : FindDeprecatedClassesTest
