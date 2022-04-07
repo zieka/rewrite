@@ -37,21 +37,21 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ChangeDependencyVersion extends Recipe {
     @Option(displayName = "Dependency pattern",
-        description = "A dependency pattern specifying which dependencies should have their groupId updated. " +
-            DependencyMatcher.STANDARD_OPTION_DESCRIPTION,
-        example = "com.fasterxml.jackson*:*"
+            description = "A dependency pattern specifying which dependencies should have their groupId updated. " +
+                    DependencyMatcher.STANDARD_OPTION_DESCRIPTION,
+            example = "com.fasterxml.jackson*:*"
     )
     String dependencyPattern;
 
     @Option(displayName = "New Version",
-        description = "The version number to update the dependency to",
-        example = "1.0")
+            description = "The version number to update the dependency to",
+            example = "1.0")
     String newVersion;
 
     @Option(displayName = "Dependency configuration",
-        description = "The dependency configuration to search for dependencies in.",
-        example = "api",
-        required = false)
+            description = "The dependency configuration to search for dependencies in.",
+            example = "api",
+            required = false)
     @Nullable
     String configuration;
 
@@ -92,9 +92,9 @@ public class ChangeDependencyVersion extends Recipe {
                         if (gavs.length >= 3 && !newVersion.equals(gavs[2]) && depMatcher.matches(gavs[0], gavs[1], gavs[2])) {
                             String newGav = gavs[0] + ":" + gavs[1] + ":" + newVersion;
                             m = m.withArguments(ListUtils.map(m.getArguments(), (n, arg) ->
-                                n == 0 ?
-                                    ChangeStringLiteral.withStringValue((J.Literal) arg, newGav) :
-                                    arg
+                                    n == 0 ?
+                                            ChangeStringLiteral.withStringValue((J.Literal) arg, newGav) :
+                                            arg
                             ));
                         }
                     }
@@ -133,8 +133,8 @@ public class ChangeDependencyVersion extends Recipe {
                         }
                     }
                     if (groupId == null || artifactId == null
-                        || (version == null && !depMatcher.matches(groupId, artifactId))
-                        || (version != null && !depMatcher.matches(groupId, artifactId, version))) {
+                            || (version == null && !depMatcher.matches(groupId, artifactId))
+                            || (version != null && !depMatcher.matches(groupId, artifactId, version))) {
                         return m;
                     }
                     String delimiter = versionStringDelimiter;
@@ -142,8 +142,8 @@ public class ChangeDependencyVersion extends Recipe {
                     m = m.withArguments(ListUtils.map(m.getArguments(), arg -> {
                         if (arg == finalVersion) {
                             return finalVersion.withValue(((J.Literal) finalVersion.getValue())
-                                .withValue(newVersion)
-                                .withValueSource(delimiter + newVersion + delimiter));
+                                    .withValue(newVersion)
+                                    .withValueSource(delimiter + newVersion + delimiter));
                         }
                         return arg;
                     }));

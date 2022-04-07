@@ -34,21 +34,21 @@ import java.util.List;
 @Value
 public class ChangeDependencyArtifactId extends Recipe {
     @Option(displayName = "Dependency pattern",
-        description = "A dependency pattern specifying which dependencies should have their artifactId updated. " +
-            DependencyMatcher.STANDARD_OPTION_DESCRIPTION,
-        example = "com.fasterxml.jackson*:jackson-module*"
+            description = "A dependency pattern specifying which dependencies should have their artifactId updated. " +
+                    DependencyMatcher.STANDARD_OPTION_DESCRIPTION,
+            example = "com.fasterxml.jackson*:jackson-module*"
     )
     String dependencyPattern;
 
     @Option(displayName = "New artifactId",
-        description = "The new artifactId to use.",
-        example = "rewrite-core")
+            description = "The new artifactId to use.",
+            example = "rewrite-core")
     String newArtifactId;
 
     @Option(displayName = "Dependency configuration",
-        description = "The dependency configuration to search for dependencies in.",
-        example = "api",
-        required = false)
+            description = "The dependency configuration to search for dependencies in.",
+            example = "api",
+            required = false)
     @Nullable
     String configuration;
 
@@ -97,9 +97,9 @@ public class ChangeDependencyArtifactId extends Recipe {
                         if (gavs.length >= 3 && !newArtifactId.equals(gavs[1]) && depMatcher.matches(gavs[0], gavs[1], gavs[2])) {
                             String newGav = gavs[0] + ":" + newArtifactId + ":" + gavs[2];
                             m = m.withArguments(ListUtils.map(m.getArguments(), (n, arg) ->
-                                n == 0 ?
-                                    ChangeStringLiteral.withStringValue((J.Literal) arg, newGav) :
-                                    arg
+                                    n == 0 ?
+                                            ChangeStringLiteral.withStringValue((J.Literal) arg, newGav) :
+                                            arg
                             ));
                         }
                     }
@@ -138,8 +138,8 @@ public class ChangeDependencyArtifactId extends Recipe {
                         }
                     }
                     if (groupId == null || artifactId == null
-                        || (version == null && !depMatcher.matches(groupId, artifactId))
-                        || (version != null && !depMatcher.matches(groupId, artifactId, version))) {
+                            || (version == null && !depMatcher.matches(groupId, artifactId))
+                            || (version != null && !depMatcher.matches(groupId, artifactId, version))) {
                         return m;
                     }
                     String delimiter = versionStringDelimiter;
@@ -147,8 +147,8 @@ public class ChangeDependencyArtifactId extends Recipe {
                     m = m.withArguments(ListUtils.map(m.getArguments(), arg -> {
                         if (arg == finalArtifact) {
                             return finalArtifact.withValue(((J.Literal) finalArtifact.getValue())
-                                .withValue(newArtifactId)
-                                .withValueSource(delimiter + newArtifactId + delimiter));
+                                    .withValue(newArtifactId)
+                                    .withValueSource(delimiter + newArtifactId + delimiter));
                         }
                         return arg;
                     }));

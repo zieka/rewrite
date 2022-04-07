@@ -34,21 +34,21 @@ import java.util.List;
 @Value
 public class ChangeDependencyGroupId extends Recipe {
     @Option(displayName = "Dependency pattern",
-        description = "A dependency pattern specifying which dependencies should have their groupId updated. " +
-            DependencyMatcher.STANDARD_OPTION_DESCRIPTION,
-        example = "com.fasterxml.jackson*:*"
+            description = "A dependency pattern specifying which dependencies should have their groupId updated. " +
+                    DependencyMatcher.STANDARD_OPTION_DESCRIPTION,
+            example = "com.fasterxml.jackson*:*"
     )
     String dependencyPattern;
 
     @Option(displayName = "New groupId",
-        description = "The new groupId to use.",
-        example = "corp.internal.openrewrite.recipe")
+            description = "The new groupId to use.",
+            example = "corp.internal.openrewrite.recipe")
     String newGroupId;
 
     @Option(displayName = "Dependency configuration",
-        description = "The dependency configuration to search for dependencies in.",
-        example = "api",
-        required = false)
+            description = "The dependency configuration to search for dependencies in.",
+            example = "api",
+            required = false)
     @Nullable
     String configuration;
 
@@ -97,9 +97,9 @@ public class ChangeDependencyGroupId extends Recipe {
                         if (gavs.length >= 3 && !newGroupId.equals(gavs[0]) && depMatcher.matches(gavs[0], gavs[1], gavs[2])) {
                             String newGav = newGroupId + ":" + gavs[1] + ":" + gavs[2];
                             m = m.withArguments(ListUtils.map(m.getArguments(), (n, arg) ->
-                                n == 0 ?
-                                    ChangeStringLiteral.withStringValue((J.Literal) arg, newGav) :
-                                    arg
+                                    n == 0 ?
+                                            ChangeStringLiteral.withStringValue((J.Literal) arg, newGav) :
+                                            arg
                             ));
                         }
                     }
@@ -138,8 +138,8 @@ public class ChangeDependencyGroupId extends Recipe {
                         }
                     }
                     if (groupId == null || artifactId == null
-                        || (version == null && !depMatcher.matches(groupId, artifactId))
-                        || (version != null && !depMatcher.matches(groupId, artifactId, version))) {
+                            || (version == null && !depMatcher.matches(groupId, artifactId))
+                            || (version != null && !depMatcher.matches(groupId, artifactId, version))) {
                         return m;
                     }
                     String delimiter = versionStringDelimiter;
@@ -147,8 +147,8 @@ public class ChangeDependencyGroupId extends Recipe {
                     m = m.withArguments(ListUtils.map(m.getArguments(), arg -> {
                         if (arg == finalGroup) {
                             return finalGroup.withValue(((J.Literal) finalGroup.getValue())
-                                .withValue(newGroupId)
-                                .withValueSource(delimiter + newGroupId + delimiter));
+                                    .withValue(newGroupId)
+                                    .withValueSource(delimiter + newGroupId + delimiter));
                         }
                         return arg;
                     }));
