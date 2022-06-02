@@ -10,6 +10,7 @@ dependencies {
     api(project(":rewrite-hcl"))
     api(project(":rewrite-java"))
     api(project(":rewrite-json"))
+    api(project(":rewrite-kotlin"))
     api(project(":rewrite-maven"))
     api(project(":rewrite-properties"))
     api(project(":rewrite-protobuf"))

@@ -22,6 +22,7 @@ import org.openrewrite.hcl.tree.Hcl;
 import org.openrewrite.internal.lang.Nullable;
 import org.openrewrite.java.tree.J;
 import org.openrewrite.json.tree.Json;
+import org.openrewrite.kotlin.tree.K;
 import org.openrewrite.properties.tree.Properties;
 import org.openrewrite.protobuf.tree.Proto;
 import org.openrewrite.quark.Quark;
@@ -65,6 +66,31 @@ public interface SourceSpecs extends Iterable<SourceSpec<?>> {
         spec.accept(java);
         return java;
     }
+
+
+    default SourceSpecs kotlin(@Language("kotlin") @Nullable String before) {
+        return kotlin(before, s -> {
+        });
+    }
+
+    default SourceSpecs kotlin(@Language("kotlin") @Nullable String before, Consumer<SourceSpec<K.CompilationUnit>> spec) {
+        SourceSpec<K.CompilationUnit> kotlin = new SourceSpec<>(K.CompilationUnit.class, null, before, null);
+        spec.accept(kotlin);
+        return kotlin;
+    }
+
+    default SourceSpecs kotlin(@Language("kotlin") @Nullable String before, @Language("java") String after) {
+        return kotlin(before, after, s -> {
+        });
+    }
+
+    default SourceSpecs kotlin(@Language("kotlin") @Nullable String before, @Language("java") String after,
+                             Consumer<SourceSpec<K.CompilationUnit>> spec) {
+        SourceSpec<K.CompilationUnit> kotlin = new SourceSpec<>(K.CompilationUnit.class, null, before, after);
+        spec.accept(kotlin);
+        return kotlin;
+    }
+
 
     default SourceSpecs plainText(@Nullable String before) {
         return plainText(before, s -> {

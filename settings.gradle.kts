@@ -19,6 +19,7 @@ include(
     "rewrite-java-11",
     "rewrite-java-17",
     "rewrite-json",
+    "rewrite-kotlin",
     "rewrite-maven",
     "rewrite-properties",
     "rewrite-protobuf",

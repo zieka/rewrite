@@ -31,6 +31,8 @@ import org.openrewrite.java.tree.J;
 import org.openrewrite.java.tree.JavaSourceFile;
 import org.openrewrite.json.JsonParser;
 import org.openrewrite.json.tree.Json;
+import org.openrewrite.kotlin.KotlinParser;
+import org.openrewrite.kotlin.tree.K;
 import org.openrewrite.maven.MavenParser;
 import org.openrewrite.properties.PropertiesParser;
 import org.openrewrite.properties.tree.Properties;
@@ -197,6 +199,12 @@ public interface RewriteTest extends SourceSpecs {
             } else if (Json.Document.class.equals(sourceSpec.sourceFileType)) {
                 sourceSpecsByParser.computeIfAbsent(
                         new ParserSupplier(Json.Document.class, sourceSpec.dsl, JsonParser::new),
+                        p -> new ArrayList<>()).add(sourceSpec);
+            } else if(K.CompilationUnit.class.equals(sourceSpec.sourceFileType)) {
+                sourceSpecsByParser.computeIfAbsent(
+                        new ParserSupplier(K.CompilationUnit.class, sourceSpec.dsl, () -> KotlinParser.builder()
+                                .logCompilationWarningsAndErrors(true)
+                                .build()),
                         p -> new ArrayList<>()).add(sourceSpec);
             } else if (Hcl.ConfigFile.class.equals(sourceSpec.sourceFileType)) {
                 sourceSpecsByParser.computeIfAbsent(
