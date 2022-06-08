@@ -5,7 +5,8 @@ plugins {
 
 dependencies {
     api(project(":rewrite-java"))
-    implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:latest.release")
-
+    implementation(platform(kotlin("bom", "latest.release")))
+    implementation(kotlin("compiler-embeddable"))
+    implementation(kotlin("stdlib"))
     testImplementation(project(":rewrite-test"))
 }

@@ -16,22 +16,37 @@
 package org.openrewrite.kotlin;
 
 import lombok.*;
-import org.jetbrains.kotlin.analyzer.AnalysisResult;
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector;
 import org.jetbrains.kotlin.cli.common.messages.PrintingMessageCollector;
-import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles;
-import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment;
-import org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler;
-import org.jetbrains.kotlin.codegen.state.GenerationState;
-import org.jetbrains.kotlin.com.intellij.mock.MockProject;
+import org.jetbrains.kotlin.cli.jvm.compiler.*;
+import org.jetbrains.kotlin.com.intellij.core.CoreProjectScopeBuilder;
+import org.jetbrains.kotlin.com.intellij.mock.MockFileIndexFacade;
 import org.jetbrains.kotlin.com.intellij.openapi.Disposable;
 import org.jetbrains.kotlin.com.intellij.openapi.project.Project;
+import org.jetbrains.kotlin.com.intellij.openapi.roots.FileIndexFacade;
 import org.jetbrains.kotlin.com.intellij.openapi.util.Disposer;
+import org.jetbrains.kotlin.com.intellij.openapi.vfs.StandardFileSystems;
+import org.jetbrains.kotlin.com.intellij.openapi.vfs.VirtualFileManager;
 import org.jetbrains.kotlin.com.intellij.psi.PsiFileFactory;
-import org.jetbrains.kotlin.config.CommonConfigurationKeys;
-import org.jetbrains.kotlin.config.CompilerConfiguration;
+import org.jetbrains.kotlin.com.intellij.psi.search.GlobalSearchScope;
+import org.jetbrains.kotlin.config.*;
+import org.jetbrains.kotlin.fir.FirModuleData;
+import org.jetbrains.kotlin.fir.FirModuleDataImpl;
+import org.jetbrains.kotlin.fir.FirSession;
+import org.jetbrains.kotlin.fir.builder.BodyBuildingMode;
+import org.jetbrains.kotlin.fir.builder.PsiHandlingMode;
+import org.jetbrains.kotlin.fir.builder.RawFirBuilder;
+import org.jetbrains.kotlin.fir.declarations.FirFile;
+import org.jetbrains.kotlin.fir.deserialization.SingleModuleDataProvider;
+import org.jetbrains.kotlin.fir.java.FirProjectSessionProvider;
+import org.jetbrains.kotlin.fir.scopes.FirKotlinScopeProvider;
+import org.jetbrains.kotlin.fir.session.FirSessionFactory;
 import org.jetbrains.kotlin.idea.KotlinLanguage;
+import org.jetbrains.kotlin.name.Name;
+import org.jetbrains.kotlin.platform.TargetPlatform;
+import org.jetbrains.kotlin.platform.jvm.JvmPlatforms;
 import org.jetbrains.kotlin.psi.KtFile;
+import org.jetbrains.kotlin.resolve.jvm.platform.JvmPlatformAnalyzerServices;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.Parser;
 import org.openrewrite.internal.lang.Nullable;
@@ -65,33 +80,66 @@ public class KotlinParser implements Parser<K.CompilationUnit> {
     @Override
     public List<K.CompilationUnit> parseInputs(Iterable<Input> sources, @Nullable Path relativeTo, ExecutionContext ctx) {
         ParsingEventListener parsingListener = ParsingExecutionContextView.view(ctx).getParsingListener();
-        LinkedHashMap<Input, KtFile> cus = parseInputsToCompilerAst(sources, ctx);
+        LinkedHashMap<Input, FirFile> cus = parseInputsToCompilerAst(sources, ctx);
 
         return null;
     }
 
-    private LinkedHashMap<Input, KtFile> parseInputsToCompilerAst(Iterable<Input> sourceFiles, ExecutionContext ctx) {
+    private LinkedHashMap<Input, FirFile> parseInputsToCompilerAst(Iterable<Input> sourceFiles, ExecutionContext ctx) {
         Disposable disposable = null;
         try {
-            LinkedHashMap<Input, KtFile> cus = new LinkedHashMap<>();
 
             disposable = Disposer.newDisposable();
             KotlinCoreEnvironment kenv = KotlinCoreEnvironment.createForProduction(
                     disposable, compilerConfiguration(), EnvironmentConfigFiles.JVM_CONFIG_FILES);
 
             Project project = kenv.getProject();
+            LanguageVersionSettings languageVersionSettings = new LanguageVersionSettingsImpl(LanguageVersion.KOTLIN_1_6,
+                    ApiVersion.KOTLIN_1_6);
+            FileIndexFacade fileIndexFacade = new MockFileIndexFacade(project);
+            CoreProjectScopeBuilder coreProjectScopeBuilder = new CoreProjectScopeBuilder(project, fileIndexFacade);
+            GlobalSearchScope globalScope = coreProjectScopeBuilder.buildAllScope();
+            JvmPackagePartProvider packagePartProvider = new JvmPackagePartProvider(languageVersionSettings, globalScope);
+            Function<GlobalSearchScope, JvmPackagePartProvider> packagePartProviderFunction = (globalSearchScope) -> packagePartProvider;
+            TargetPlatform targetPlatform = JvmPlatforms.INSTANCE.getJvm11();
+            FirProjectSessionProvider firProjectSessionProvider = new FirProjectSessionProvider();
+            VfsBasedProjectEnvironment projectEnvironment = new VfsBasedProjectEnvironment(project,
+                    VirtualFileManager.getInstance().getFileSystem(StandardFileSystems.FILE_PROTOCOL),
+                    packagePartProviderFunction::apply);
 
+            PsiBasedProjectFileSearchScope librariesScope = new PsiBasedProjectFileSearchScope(globalScope);
+            List<FirModuleData> dependencies = Collections.emptyList();
+            List<FirModuleData> dependsOnDependencies = Collections.emptyList();
+            List<FirModuleData> friendDependencies = Collections.emptyList();
+            Name name = Name.identifier("main");
+            FirModuleData firModuleData = new FirModuleDataImpl(
+                    name,
+                    dependencies,
+                    dependsOnDependencies,
+                    friendDependencies,
+                    targetPlatform,
+                    JvmPlatformAnalyzerServices.INSTANCE
+            );
+            SingleModuleDataProvider moduleDataProvider = new SingleModuleDataProvider(firModuleData);
+
+            FirSession firSession = FirSessionFactory.INSTANCE.createLibrarySession(
+                    name,
+                    firProjectSessionProvider,
+                    moduleDataProvider,
+                    librariesScope,
+                    projectEnvironment,
+                    packagePartProvider,
+                    languageVersionSettings
+            );
+            FirKotlinScopeProvider firScopeProvider = new FirKotlinScopeProvider();
+            RawFirBuilder rawFirBuilder = new RawFirBuilder(firSession, firScopeProvider, PsiHandlingMode.IDE, BodyBuildingMode.NORMAL);
             PsiFileFactory psiFileFactory = PsiFileFactory.getInstance(project);
-            for (Input input : sourceFiles) {
-                KtFile ktFile = (KtFile) psiFileFactory.createFileFromText(KotlinLanguage.INSTANCE, input.getSource().readFully());
-                kenv.getSourceFiles().add(ktFile);
-                cus.put(input, ktFile);
+            LinkedHashMap<Input, FirFile> cus = new LinkedHashMap<>();
+            for(Input sourceFile : sourceFiles) {
+                KtFile ktFile = (KtFile) psiFileFactory.createFileFromText(KotlinLanguage.INSTANCE, sourceFile.getSource().readFully());
+                FirFile firFile = rawFirBuilder.buildFirFile(ktFile);
+                cus.put(sourceFile, firFile);
             }
-//            kenv.registerJavac(Collections.emptyList(), kenv.getSourceFiles(), null, null, null);
-
-            KotlinToJVMBytecodeCompiler kotlinCompiler = KotlinToJVMBytecodeCompiler.INSTANCE;
-            AnalysisResult result = kotlinCompiler.analyze(kenv);
-
             return cus;
         } finally {
             if(disposable != null) {
