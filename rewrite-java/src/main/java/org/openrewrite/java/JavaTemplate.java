@@ -32,7 +32,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
@@ -266,9 +265,18 @@ public class JavaTemplate implements SourceTemplate<J, JavaCoordinates> {
             }
 
             @Override
+            public J visitExpression(Expression expression, Integer p) {
+                if (loc.equals(EXPRESSION_PREFIX) && expression.isScope(insertionPoint)) {
+                    return autoFormat(substitutions.unsubstitute(templateParser.parseExpression(substitutedTemplate))
+                            .withPrefix(expression.getPrefix()), p, getCursor().getParentOrThrow());
+                }
+                return expression;
+            }
+
+            @Override
             public J visitFieldAccess(J.FieldAccess fa, Integer p) {
                 if (loc.equals(FIELD_ACCESS_PREFIX) && fa.isScope(insertionPoint)) {
-                    return autoFormat(substitutions.unsubstitute(templateParser.parseIdentifier(substitutedTemplate))
+                    return autoFormat(substitutions.unsubstitute(templateParser.parseExpression(substitutedTemplate))
                             .withPrefix(fa.getPrefix()), p, getCursor().getParentOrThrow());
                 }
                 return super.visitFieldAccess(fa, p);
@@ -276,8 +284,9 @@ public class JavaTemplate implements SourceTemplate<J, JavaCoordinates> {
 
             @Override
             public J visitIdentifier(J.Identifier ident, Integer p) {
+                // ONLY for backwards compatibility, otherwise the same as expression replacement
                 if (loc.equals(IDENTIFIER_PREFIX) && ident.isScope(insertionPoint)) {
-                    return autoFormat(substitutions.unsubstitute(templateParser.parseIdentifier(substitutedTemplate))
+                    return autoFormat(substitutions.unsubstitute(templateParser.parseExpression(substitutedTemplate))
                             .withPrefix(ident.getPrefix()), p, getCursor().getParentOrThrow());
                 }
                 return super.visitIdentifier(ident, p);
