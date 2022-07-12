@@ -26,7 +26,6 @@ import org.openrewrite.hcl.internal.grammar.JsonPathLexer;
 import org.openrewrite.hcl.internal.grammar.JsonPathParser;
 import org.openrewrite.hcl.internal.grammar.JsonPathParserBaseVisitor;
 import org.openrewrite.hcl.internal.grammar.JsonPathParserVisitor;
-import org.openrewrite.hcl.tree.BodyContentContainer;
 import org.openrewrite.hcl.tree.Hcl;
 import org.openrewrite.internal.lang.Nullable;
 
@@ -120,7 +119,7 @@ public class JsonPathMatcher {
         public Object visitJsonPath(JsonPathParser.JsonPathContext ctx) {
             if (ctx.ROOT() != null || "[".equals(ctx.start.getText())) {
                 scope = cursorPath.stream()
-                        .filter(t -> t instanceof BodyContentContainer)
+                        .filter(t -> t instanceof Hcl.Block)
                         .findFirst()
                         .orElse(null);
             }
@@ -272,22 +271,17 @@ public class JsonPathMatcher {
 
                 scope = attr.getValue();
                 return visitProperty(ctx);
-            } else if (scope instanceof BodyContentContainer) {
-                BodyContentContainer block = (BodyContentContainer) scope;
+            } else if (scope instanceof Hcl.Block) {
+                Hcl.Block block = (Hcl.Block) scope;
                 if (isRecursiveDescent) {
                     scope = block.getBody();
                     return getResultFromList(visitProperty(ctx));
                 } else {
-                    for (Hcl body : block.getBody()) {
-                        if (body instanceof Hcl.Attribute) {
-                            Hcl.Attribute attr = (Hcl.Attribute) body;
-                            String key = attr.getSimpleName();
-                            String name = ctx.StringLiteral() != null ?
-                                    unquoteStringLiteral(ctx.StringLiteral().getText()) : ctx.Identifier().getText();
-                            if (key.equals(name)) {
-                                return attr;
-                            }
-                        }
+                    String key = block.getType().getName();
+                    String name = ctx.StringLiteral() != null ?
+                            unquoteStringLiteral(ctx.StringLiteral().getText()) : ctx.Identifier().getText();
+                    if (key.equals(name)) {
+                        scope = block.getBody();
                     }
                 }
             } else if (scope instanceof List) {
@@ -327,8 +321,8 @@ public class JsonPathMatcher {
                         })
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
-            } else if (scope instanceof BodyContentContainer) {
-                BodyContentContainer block = (BodyContentContainer) scope;
+            } else if (scope instanceof Hcl.Block) {
+                Hcl.Block block = (Hcl.Block) scope;
                 return block.getBody();
             }
 
@@ -368,8 +362,8 @@ public class JsonPathMatcher {
                     }
                     scope = attr.getValue();
                     return getResultFromList(visitUnaryExpression(ctx));
-                } else if (scope instanceof BodyContentContainer) {
-                    BodyContentContainer block = (BodyContentContainer) scope;
+                } else if (scope instanceof Hcl.Block) {
+                    Hcl.Block block = (Hcl.Block) scope;
                     for (Hcl body : block.getBody()) {
                         if (body instanceof Hcl.Attribute) {
                             Hcl.Attribute attr = (Hcl.Attribute) body;
@@ -442,8 +436,8 @@ public class JsonPathMatcher {
             if (ctx.children.get(0) instanceof JsonPathParser.UnaryExpressionContext) {
                 Object lhs = visitUnaryExpression(ctx.unaryExpression());
                 Object rhs = visitLiteralExpression(ctx.literalExpression());
-                if (lhs instanceof BodyContentContainer && rhs != null) {
-                    BodyContentContainer block = (BodyContentContainer) lhs;
+                if (lhs instanceof Hcl.Block && rhs != null) {
+                    Hcl.Block block = (Hcl.Block) lhs;
                     String key = ctx.children.get(0).getChild(2).getText();
                     lhs = getResultByKey(block, key);
                     if (lhs instanceof Hcl.Attribute) {
@@ -459,8 +453,8 @@ public class JsonPathMatcher {
             } else {
                 Object lhs = visitLiteralExpression(ctx.literalExpression());
                 Object rhs = visitUnaryExpression(ctx.unaryExpression());
-                if (rhs instanceof BodyContentContainer && lhs != null) {
-                    BodyContentContainer block = (BodyContentContainer) rhs;
+                if (rhs instanceof Hcl.Block && lhs != null) {
+                    Hcl.Block block = (Hcl.Block) rhs;
                     String key = ctx.children.get(2).getChild(2).getText();
                     rhs = getResultByKey(block, key);
                     if (rhs instanceof Hcl.Attribute) {
@@ -579,8 +573,8 @@ public class JsonPathMatcher {
                         return attr;
                     }
                 }
-            } else if (lhs instanceof BodyContentContainer) {
-                BodyContentContainer block = (BodyContentContainer) lhs;
+            } else if (lhs instanceof Hcl.Block) {
+                Hcl.Block block = (Hcl.Block) lhs;
                 for (Hcl body : block.getBody()) {
                     if (body instanceof Hcl.Attribute) {
                         Hcl.Attribute attr = (Hcl.Attribute) body;
@@ -617,8 +611,8 @@ public class JsonPathMatcher {
         // Extract the result from JSON objects that can match by key.
         @Nullable
         public Object getResultByKey(Object result, String key) {
-            if (result instanceof BodyContentContainer) {
-                BodyContentContainer block = (BodyContentContainer) result;
+            if (result instanceof Hcl.Block) {
+                Hcl.Block block = (Hcl.Block) result;
                 for (Hcl body : block.getBody()) {
                     if (body instanceof Hcl.Attribute) {
                         Hcl.Attribute attr = (Hcl.Attribute) body;
@@ -661,8 +655,8 @@ public class JsonPathMatcher {
         private Object getValue(Object result) {
             if (result instanceof Hcl.Attribute) {
                 return getValue(((Hcl.Attribute) result).getValue());
-            } else if (result instanceof BodyContentContainer) {
-                return ((BodyContentContainer) result).getBody();
+            } else if (result instanceof Hcl.Block) {
+                return ((Hcl.Block) result).getBody();
             } else if (result instanceof List) {
                 return ((List<Object>) result).stream()
                         .map(this::getValue)

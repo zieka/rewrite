@@ -336,7 +336,7 @@ public interface Hcl extends Tree {
     @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
     @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
     @Data
-    class Block implements BodyContent, BodyContentContainer, Expression {
+    class Block implements BodyContent, Expression {
         @With
         @EqualsAndHashCode.Include
         UUID id;
@@ -477,7 +477,7 @@ public interface Hcl extends Tree {
     @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
     @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
     @Data
-    class ConfigFile implements Hcl, BodyContentContainer, SourceFile {
+    class ConfigFile implements Hcl, SourceFile {
         @With
         @EqualsAndHashCode.Include
         UUID id;

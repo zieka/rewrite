@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.openrewrite.hcl.tree.Hcl
 import org.openrewrite.test.RewriteTest
 
-class JsonPatchMatcherTest : RewriteTest {
+class JsonPathMatcherTest : RewriteTest {
 
     fun anyMatch(hcl: Hcl, matcher: JsonPathMatcher): Boolean {
         var matches = false
@@ -29,6 +29,9 @@ class JsonPatchMatcherTest : RewriteTest {
                       purge_soft_delete_on_destroy = true
                     }
                   }
+                  somethingElse {
+                  }
+                  attr = 1
                 }
             """
         ) { spec ->
