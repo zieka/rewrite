@@ -71,6 +71,7 @@ public class JsonPathMatcher {
             start = cursorPath.peekFirst();
         }
         JsonPathParser.JsonPathContext ctx = jsonPath().jsonPath();
+        // The stop may be optimized by interpreting the ExpressionContext and pre-determining the last visit.
         JsonPathParser.ExpressionContext stop = (JsonPathParser.ExpressionContext) ctx.children.get(ctx.children.size() - 1);
         @SuppressWarnings("ConstantConditions") JsonPathParserVisitor<Object> v = new JsonPathParserHclVisitor(cursorPath, start, stop, false);
         Object result = v.visit(ctx);
@@ -581,6 +582,11 @@ public class JsonPathMatcher {
                 if (attr.getValue() instanceof Hcl.Literal) {
                     Hcl.Literal literal = (Hcl.Literal) attr.getValue();
                     if (checkObjectEquality(literal.getValue(), operator, rhs)) {
+                        return attr;
+                    }
+                } else if (attr.getValue() instanceof Hcl.VariableExpression) {
+                    Hcl.VariableExpression variable = (Hcl.VariableExpression) attr.getValue();
+                    if (checkObjectEquality(variable.getName().getName(), operator, rhs)) {
                         return attr;
                     }
                 }
