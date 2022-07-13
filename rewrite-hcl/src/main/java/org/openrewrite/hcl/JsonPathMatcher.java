@@ -20,12 +20,14 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 import org.openrewrite.Cursor;
 import org.openrewrite.Tree;
 import org.openrewrite.hcl.internal.grammar.JsonPathLexer;
 import org.openrewrite.hcl.internal.grammar.JsonPathParser;
 import org.openrewrite.hcl.internal.grammar.JsonPathParserBaseVisitor;
 import org.openrewrite.hcl.internal.grammar.JsonPathParserVisitor;
+import org.openrewrite.hcl.tree.BodyContent;
 import org.openrewrite.hcl.tree.Hcl;
 import org.openrewrite.internal.lang.Nullable;
 
@@ -35,6 +37,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.disjoint;
+import static java.util.Collections.max;
 
 /**
  * Provides methods for matching the given cursor location to a specific JsonPath expression.
@@ -67,8 +70,9 @@ public class JsonPathMatcher {
         } else {
             start = cursorPath.peekFirst();
         }
-        @SuppressWarnings("ConstantConditions") JsonPathParserVisitor<Object> v = new JsonPathParserHclVisitor(cursorPath, start, false);
         JsonPathParser.JsonPathContext ctx = jsonPath().jsonPath();
+        JsonPathParser.ExpressionContext stop = (JsonPathParser.ExpressionContext) ctx.children.get(ctx.children.size() - 1);
+        @SuppressWarnings("ConstantConditions") JsonPathParserVisitor<Object> v = new JsonPathParserHclVisitor(cursorPath, start, stop, false);
         Object result = v.visit(ctx);
 
         //noinspection unchecked
@@ -97,11 +101,13 @@ public class JsonPathMatcher {
 
         private final List<Tree> cursorPath;
         protected Object scope;
+        private final JsonPathParser.ExpressionContext stop;
         private final boolean isRecursiveDescent;
 
-        public JsonPathParserHclVisitor(List<Tree> cursorPath, Object scope, boolean isRecursiveDescent) {
+        public JsonPathParserHclVisitor(List<Tree> cursorPath, Object scope, JsonPathParser.ExpressionContext stop, boolean isRecursiveDescent) {
             this.cursorPath = cursorPath;
             this.scope = scope;
+            this.stop = stop;
             this.isRecursiveDescent = isRecursiveDescent;
         }
 
@@ -121,7 +127,10 @@ public class JsonPathMatcher {
                 scope = cursorPath.stream()
                         .filter(t -> t instanceof Hcl.Block)
                         .findFirst()
-                        .orElse(null);
+                        .orElseGet(() -> cursorPath.stream()
+                                .filter(t -> t instanceof Hcl.ConfigFile)
+                                .findFirst()
+                                .orElse(null));
             }
             return super.visitJsonPath(ctx);
         }
@@ -140,7 +149,7 @@ public class JsonPathMatcher {
             if (previous.indexOf(current) - 1 < 0 || "$".equals(previous.get(previous.indexOf(current) - 1).getText())) {
                 List<Object> results = new ArrayList<>();
                 for (Tree path : cursorPath) {
-                    JsonPathParserHclVisitor v = new JsonPathParserHclVisitor(cursorPath, path, false);
+                    JsonPathParserHclVisitor v = new JsonPathParserHclVisitor(cursorPath, path, null, false);
                     for (int i = 1; i < ctx.getChildCount(); i++) {
                         result = v.visit(ctx.getChild(i));
                         if (result != null) {
@@ -151,7 +160,7 @@ public class JsonPathMatcher {
                 return results;
                 // Otherwise, the recursive descent is scoped to the previous match. `$.foo..['find-in-foo']`.
             } else {
-                JsonPathParserHclVisitor v = new JsonPathParserHclVisitor(cursorPath, scope, true);
+                JsonPathParserHclVisitor v = new JsonPathParserHclVisitor(cursorPath, scope, null, true);
                 for (int i = 1; i < ctx.getChildCount(); i++) {
                     result = v.visit(ctx.getChild(i));
                     if (result != null) {
@@ -248,41 +257,37 @@ public class JsonPathMatcher {
 
         @Override
         public Object visitProperty(JsonPathParser.PropertyContext ctx) {
-            if (scope instanceof Hcl.Attribute) {
-                Hcl.Attribute attr = (Hcl.Attribute) scope;
-
+            if (scope instanceof Hcl.Block) {
+                Hcl.Block block = (Hcl.Block) scope;
                 List<Object> matches = new ArrayList<>();
-                String key = attr.getSimpleName();
+                String key = block.getType().getName();
                 String name = ctx.StringLiteral() != null ?
                         unquoteStringLiteral(ctx.StringLiteral().getText()) : ctx.Identifier().getText();
+
                 if (isRecursiveDescent) {
                     if (key.equals(name)) {
-                        matches.add(attr);
+                        matches.add(block);
                     }
-                    scope = attr.getValue();
+                    scope = block.getBody();
                     Object result = getResultFromList(visitProperty(ctx));
                     if (result != null) {
                         matches.add(result);
                     }
                     return getResultFromList(matches);
-                } else if (((attr.getValue() instanceof Hcl.Literal))) {
-                    return key.equals(name) ? attr : null;
-                }
-
-                scope = attr.getValue();
-                return visitProperty(ctx);
-            } else if (scope instanceof Hcl.Block) {
-                Hcl.Block block = (Hcl.Block) scope;
-                if (isRecursiveDescent) {
-                    scope = block.getBody();
-                    return getResultFromList(visitProperty(ctx));
-                } else {
-                    String key = block.getType().getName();
-                    String name = ctx.StringLiteral() != null ?
-                            unquoteStringLiteral(ctx.StringLiteral().getText()) : ctx.Identifier().getText();
-                    if (key.equals(name)) {
-                        scope = block.getBody();
+                } else if (key.equals(name)) {
+                    if (stop != null && getExpressionContext(ctx) == stop) {
+                        return block;
                     }
+                    scope = block.getBody();
+                    return block.getBody();
+                }
+            } else if (scope instanceof Hcl.Attribute) {
+                Hcl.Attribute attribute = (Hcl.Attribute) scope;
+                String key = attribute.getSimpleName();
+                String name = ctx.StringLiteral() != null ?
+                        unquoteStringLiteral(ctx.StringLiteral().getText()) : ctx.Identifier().getText();
+                if (key.equals(name)) {
+                    return attribute;
                 }
             } else if (scope instanceof List) {
                 List<Object> results = ((List<Object>) scope).stream()
@@ -292,7 +297,6 @@ public class JsonPathMatcher {
                         })
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
-
                 // Unwrap lists of results from visitProperty to match the position of the cursor.
                 List<Object> matches = new ArrayList<>();
                 for (Object result : results) {
@@ -306,6 +310,13 @@ public class JsonPathMatcher {
             }
 
             return null;
+        }
+
+        private JsonPathParser.ExpressionContext getExpressionContext(ParserRuleContext ctx) {
+            if (ctx == null || ctx instanceof JsonPathParser.ExpressionContext) {
+                return (JsonPathParser.ExpressionContext) ctx;
+            }
+            return getExpressionContext(ctx.getParent());
         }
 
         @Override
