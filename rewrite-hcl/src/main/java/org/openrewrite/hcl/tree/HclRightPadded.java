@@ -66,8 +66,8 @@ public class HclRightPadded<T> {
         }
     }
 
-    public static <T> List<T> getElements(List<HclRightPadded<T>> ls) {
-        List<T> list = new ArrayList<>();
+    public static <T> /*~~>*/List<T> getElements(/*~~>*/List<HclRightPadded<T>> ls) {
+        /*~~>*/List<T> list = new ArrayList<>();
         for (HclRightPadded<T> l : ls) {
             T elem = l.getElement();
             list.add(elem);
@@ -89,7 +89,7 @@ public class HclRightPadded<T> {
         return before.withElement(elements);
     }
 
-    public static <H extends Hcl> List<HclRightPadded<H>> withElements(List<HclRightPadded<H>> before, List<H> elements) {
+    public static <H extends Hcl> /*~~>*/List<HclRightPadded<H>> withElements(/*~~>*/List<HclRightPadded<H>> before, /*~~>*/List<H> elements) {
         // a cheaper check for the most common case when there are no changes
         if (elements.size() == before.size()) {
             boolean hasChanges = false;
@@ -104,7 +104,7 @@ public class HclRightPadded<T> {
             }
         }
 
-        List<HclRightPadded<H>> after = new ArrayList<>(elements.size());
+        /*~~>*/List<HclRightPadded<H>> after = new ArrayList<>(elements.size());
         Map<UUID, HclRightPadded<H>> beforeById = before.stream().collect(Collectors
                 .toMap(j -> j.getElement().getId(), Function.identity()));
 

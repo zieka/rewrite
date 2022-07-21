@@ -84,7 +84,7 @@ public class AddManagedDependencyVisitor extends MavenIsoVisitor<ExecutionContex
         }
 
         Xml.Tag root = document.getRoot();
-        List<? extends Content> rootContent = root.getContent() != null ? root.getContent() : emptyList();
+        /*~~>*/List<? extends Content> rootContent = root.getContent() != null ? root.getContent() : emptyList();
 
         Xml.Tag dependencyManagementTag = root.getChild("dependencyManagement").orElse(null);
         if (dependencyManagementTag == null) {

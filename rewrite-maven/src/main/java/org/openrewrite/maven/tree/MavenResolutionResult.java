@@ -46,14 +46,14 @@ public class MavenResolutionResult implements Marker {
      */
     @With
     @NonFinal
-    List<MavenResolutionResult> modules;
+    /*~~>*/List<MavenResolutionResult> modules;
 
     @Nullable
     @NonFinal
     MavenResolutionResult parent;
 
     @With
-    Map<Scope, List<ResolvedDependency>> dependencies;
+    Map<Scope, /*~~>*/List<ResolvedDependency>> dependencies;
 
     @Incubating(since = "7.18.0")
     @Nullable
@@ -84,7 +84,7 @@ public class MavenResolutionResult implements Marker {
      * @return A list of matching dependencies
      */
     @Incubating(since = "7.19.0")
-    public List<ResolvedDependency> findDependencies(String groupId, String artifactId, @Nullable Scope scope) {
+    public /*~~>*/List<ResolvedDependency> findDependencies(String groupId, String artifactId, @Nullable Scope scope) {
         return findDependencies(d -> matchesGlob(d.getGroupId(), groupId) && matchesGlob(d.getArtifactId(), artifactId), scope);
     }
 
@@ -100,9 +100,9 @@ public class MavenResolutionResult implements Marker {
      * @return A list of matching dependencies
      */
     @Incubating(since = "7.19.0")
-    public List<ResolvedDependency> findDependencies(Predicate<ResolvedDependency> matcher, @Nullable Scope scope) {
-        List<ResolvedDependency> found = null;
-        for (Map.Entry<Scope, List<ResolvedDependency>> entry : dependencies.entrySet()) {
+    public /*~~>*/List<ResolvedDependency> findDependencies(Predicate<ResolvedDependency> matcher, @Nullable Scope scope) {
+        /*~~>*/List<ResolvedDependency> found = null;
+        for (Map.Entry<Scope, /*~~>*/List<ResolvedDependency>> entry : dependencies.entrySet()) {
             if (scope != null && entry.getKey() != scope) {
                 continue;
             }
@@ -123,8 +123,8 @@ public class MavenResolutionResult implements Marker {
         this.parent = parent;
     }
 
-    public void unsafeSetModules(List<MavenResolutionResult> modules) {
-        this.modules = new ArrayList<>(modules);
+    public void unsafeSetModules(/*~~>*/List<MavenResolutionResult> modules) {
+        /*~~>*/this.modules = new ArrayList<>(modules);
     }
 
     @Incubating(since = "7.18.0")
@@ -139,7 +139,7 @@ public class MavenResolutionResult implements Marker {
     }
 
     public MavenResolutionResult resolveDependencies(MavenPomDownloader downloader, ExecutionContext ctx) {
-        Map<Scope, List<ResolvedDependency>> dependencies = new HashMap<>();
+        Map<Scope, /*~~>*/List<ResolvedDependency>> dependencies = new HashMap<>();
         dependencies.put(Scope.Compile, pom.resolveDependencies(Scope.Compile, downloader, ctx));
         dependencies.put(Scope.Test, pom.resolveDependencies(Scope.Test, downloader, ctx));
         dependencies.put(Scope.Runtime, pom.resolveDependencies(Scope.Runtime, downloader, ctx));

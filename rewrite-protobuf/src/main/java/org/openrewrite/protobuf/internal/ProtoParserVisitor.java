@@ -53,9 +53,9 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
         this.charsetBomMarked = charsetBomMarked;
     }
 
-    public Proto.Block visitBlock(List<ParseTree> statementTrees) {
+    public Proto.Block visitBlock(/*~~>*/List<ParseTree> statementTrees) {
         Space bodyPrefix = sourceBefore("{");
-        List<ProtoRightPadded<Proto>> statements = new ArrayList<>(statementTrees.size() - 2);
+        /*~~>*/List<ProtoRightPadded<Proto>> statements = new ArrayList<>(statementTrees.size() - 2);
         for (int i = 1; i < statementTrees.size() - 1; i++) {
             Proto s = visit(statementTrees.get(i));
             statements.add(ProtoRightPadded.build(s).withAfter(
@@ -94,7 +94,7 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
     public Proto.Enum visitEnumDefinition(Protobuf2Parser.EnumDefinitionContext ctx) {
         return new Proto.Enum(randomId(), sourceBefore("enum"), Markers.EMPTY,
                 visitIdent(ctx.ident()),
-                visitBlock(ctx.enumBody().children));
+                visitBlock(/*~~>*/ctx.enumBody().children));
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
         Proto.FullIdentifier name = visitFullIdent(ctx.fullIdent());
         Space blockPrefix = sourceBefore("{");
 
-        List<ProtoRightPadded<Proto>> statements = new ArrayList<>(ctx.messageField().size());
+        /*~~>*/List<ProtoRightPadded<Proto>> statements = new ArrayList<>(ctx.messageField().size());
         for (Protobuf2Parser.MessageFieldContext mfc : ctx.messageField()) {
             statements.add(new ProtoRightPadded<>(visitMessageField(mfc), sourceBefore(";"), Markers.EMPTY));
         }
@@ -167,7 +167,7 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
         return visitFullIdent(ctx.identOrReserved(), 0, null).withPrefix(prefix);
     }
 
-    private FullName visitFullIdent(List<? extends ParseTree> idents, int start, @Nullable FullName prefix) {
+    private FullName visitFullIdent(/*~~>*/List<? extends ParseTree> idents, int start, @Nullable FullName prefix) {
         FullName fi = prefix;
         for (int j = start; j < idents.size(); j++) {
             ParseTree i = idents.get(j);
@@ -219,7 +219,7 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
     public Proto.Message visitMessage(Protobuf2Parser.MessageContext ctx) {
         return new Proto.Message(randomId(), sourceBefore("message"), Markers.EMPTY,
                 visitIdent(ctx.ident()),
-                visitBlock(ctx.messageBody().children));
+                visitBlock(/*~~>*/ctx.messageBody().children));
     }
 
     @Override
@@ -239,8 +239,8 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
         Proto.Identifier ident = visitIdent(ctx.ident());
 
         Space fieldsPrefix = sourceBefore("{");
-        List<ProtoRightPadded<Proto>> fields = new ArrayList<>(ctx.field().size());
-        List<Protobuf2Parser.FieldContext> fieldContexts = ctx.field();
+        /*~~>*/List<ProtoRightPadded<Proto>> fields = new ArrayList<>(ctx.field().size());
+        /*~~>*/List<Protobuf2Parser.FieldContext> fieldContexts = ctx.field();
         for (Protobuf2Parser.FieldContext field : fieldContexts) {
             fields.add(new ProtoRightPadded<>(visitField(field), sourceBefore(";"), Markers.EMPTY));
         }
@@ -276,8 +276,8 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
                     null, ident.withPrefix(Space.EMPTY));
         }
 
-        if (ctx.children.size() > 1) {
-            return visitFullIdent(ctx.children, 1, name);
+        if (/*~~>*/ctx.children.size() > 1) {
+            return visitFullIdent(/*~~>*/ctx.children, 1, name);
         }
         return name;
     }
@@ -289,8 +289,8 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
         }
 
         Space optionsPrefix = sourceBefore("[");
-        List<ProtoRightPadded<Proto.Field.Option>> fieldOptions = new ArrayList<>(ctx.option().size());
-        List<Protobuf2Parser.OptionContext> fieldOption = ctx.option();
+        /*~~>*/List<ProtoRightPadded<Proto.Field.Option>> fieldOptions = new ArrayList<>(ctx.option().size());
+        /*~~>*/List<Protobuf2Parser.OptionContext> fieldOption = ctx.option();
         for (int i = 0; i < fieldOption.size(); i++) {
             Protobuf2Parser.OptionContext o = fieldOption.get(i);
             FullName name = visitOptionName(o.optionName());
@@ -311,11 +311,11 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
     @Override
     public Proto.Document visitProto(Protobuf2Parser.ProtoContext ctx) {
         Proto.Syntax syntax = visitSyntax(ctx.syntax());
-        List<ProtoRightPadded<Proto>> list = new ArrayList<>();
+        /*~~>*/List<ProtoRightPadded<Proto>> list = new ArrayList<>();
         // The first element is the syntax, which we've already parsed
         // The last element is a "TerminalNode" which we are uninterested in
-        for (int i = 1; i < ctx.children.size() - 1; i++) {
-            Proto s = visit(ctx.children.get(i));
+        for (int i = 1; i < /*~~>*/ctx.children.size() - 1; i++) {
+            Proto s = visit(/*~~>*/ctx.children.get(i));
             ProtoRightPadded<Proto> protoProtoRightPadded = ProtoRightPadded.build(s).withAfter(
                     (s instanceof Proto.Empty ||
                             s instanceof Proto.Import ||
@@ -356,9 +356,9 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
     @Override
     public Proto.Reserved visitReserved(Protobuf2Parser.ReservedContext ctx) {
         Space prefix = sourceBefore("reserved");
-        List<ProtoRightPadded<Proto>> reservations;
+        /*~~>*/List<ProtoRightPadded<Proto>> reservations;
         if (ctx.fieldNames() != null) {
-            List<Protobuf2Parser.StringLiteralContext> stringLiterals = ctx.fieldNames().stringLiteral();
+            /*~~>*/List<Protobuf2Parser.StringLiteralContext> stringLiterals = ctx.fieldNames().stringLiteral();
             reservations = new ArrayList<>(stringLiterals.size());
             for (int i = 0; i < stringLiterals.size(); i++) {
                 Protobuf2Parser.StringLiteralContext s = stringLiterals.get(i);
@@ -368,7 +368,7 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
                         .withAfter(i == stringLiterals.size() - 1 ? Space.EMPTY : sourceBefore(",")));
             }
         } else {
-            List<Protobuf2Parser.RangeContext> ranges = ctx.ranges().range();
+            /*~~>*/List<Protobuf2Parser.RangeContext> ranges = ctx.ranges().range();
             reservations = new ArrayList<>(ranges.size());
             for (int i = 0; i < ranges.size(); i++) {
                 Protobuf2Parser.RangeContext r = ranges.get(i);
@@ -393,7 +393,7 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
                 visitRpcInOut(ctx.rpcInOut(0)),
                 new Proto.Keyword(randomId(), sourceBefore("returns"), Markers.EMPTY, "returns"),
                 visitRpcInOut(ctx.rpcInOut(1)),
-                ctx.rpcBody() == null ? null : visitBlock(ctx.rpcBody().children));
+                ctx.rpcBody() == null ? null : visitBlock(/*~~>*/ctx.rpcBody().children));
     }
 
     @Override
@@ -407,7 +407,7 @@ public class ProtoParserVisitor extends Protobuf2ParserBaseVisitor<Proto> {
     public Proto visitService(Protobuf2Parser.ServiceContext ctx) {
         return new Proto.Service(randomId(), sourceBefore("service"), Markers.EMPTY,
                 visitIdent(ctx.ident()),
-                visitBlock(ctx.serviceBody().children));
+                visitBlock(/*~~>*/ctx.serviceBody().children));
     }
 
     @Override

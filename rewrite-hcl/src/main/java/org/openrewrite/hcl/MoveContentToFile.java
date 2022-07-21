@@ -67,12 +67,12 @@ public class MoveContentToFile extends Recipe {
     }
 
     @Override
-    protected List<SourceFile> visit(List<SourceFile> before, ExecutionContext ctx) {
+    protected /*~~>*/List<SourceFile> visit(/*~~>*/List<SourceFile> before, ExecutionContext ctx) {
         AtomicReference<BodyContent> toMove = new AtomicReference<>();
         JsonPathMatcher pathMatcher = new JsonPathMatcher(contentPath);
 
         Path from = Paths.get(fromPath);
-        List<SourceFile> after = ListUtils.map(before, sourceFile ->
+        /*~~>*/List<SourceFile> after = ListUtils.map(before, sourceFile ->
                 sourceFile.getSourcePath().equals(from) ?
                         (SourceFile) new HclIsoVisitor<ExecutionContext>() {
                             @Override

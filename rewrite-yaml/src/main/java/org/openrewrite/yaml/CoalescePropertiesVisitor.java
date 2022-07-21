@@ -39,7 +39,7 @@ public class CoalescePropertiesVisitor<P> extends YamlIsoVisitor<P> {
         Yaml.Mapping m = super.visitMapping(mapping, p);
 
         boolean changed = false;
-        List<Yaml.Mapping.Entry> entries = new ArrayList<>();
+        /*~~>*/List<Yaml.Mapping.Entry> entries = new ArrayList<>();
 
         for (Yaml.Mapping.Entry entry : m.getEntries()) {
             if (entry.getValue() instanceof Yaml.Mapping) {

@@ -183,7 +183,7 @@ public class HCLParser extends Parser {
 	}
 
 	public static class BodyContext extends ParserRuleContext {
-		public List<BodyContentContext> bodyContent() {
+		public /*~~>*/List<BodyContentContext> bodyContent() {
 			return getRuleContexts(BodyContentContext.class);
 		}
 		public BodyContentContext bodyContent(int i) {
@@ -357,7 +357,7 @@ public class HCLParser extends Parser {
 		public BlockExprContext blockExpr() {
 			return getRuleContext(BlockExprContext.class,0);
 		}
-		public List<BlockLabelContext> blockLabel() {
+		public /*~~>*/List<BlockLabelContext> blockLabel() {
 			return getRuleContexts(BlockLabelContext.class);
 		}
 		public BlockLabelContext blockLabel(int i) {
@@ -421,7 +421,7 @@ public class HCLParser extends Parser {
 	}
 
 	public static class BlockLabelContext extends ParserRuleContext {
-		public List<TerminalNode> QUOTE() { return getTokens(HCLParser.QUOTE); }
+		public /*~~>*/List<TerminalNode> QUOTE() { return getTokens(HCLParser.QUOTE); }
 		public TerminalNode QUOTE(int i) {
 			return getToken(HCLParser.QUOTE, i);
 		}
@@ -519,7 +519,7 @@ public class HCLParser extends Parser {
 		}
 	}
 	public static class ConditionalExpressionContext extends ExpressionContext {
-		public List<ExpressionContext> expression() {
+		public /*~~>*/List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
@@ -1200,13 +1200,13 @@ public class HCLParser extends Parser {
 	public static class TupleContext extends ParserRuleContext {
 		public TerminalNode LBRACK() { return getToken(HCLParser.LBRACK, 0); }
 		public TerminalNode RBRACK() { return getToken(HCLParser.RBRACK, 0); }
-		public List<ExpressionContext> expression() {
+		public /*~~>*/List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(HCLParser.COMMA); }
+		public /*~~>*/List<TerminalNode> COMMA() { return getTokens(HCLParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(HCLParser.COMMA, i);
 		}
@@ -1295,13 +1295,13 @@ public class HCLParser extends Parser {
 	public static class ObjectContext extends ParserRuleContext {
 		public TerminalNode LBRACE() { return getToken(HCLParser.LBRACE, 0); }
 		public TerminalNode RBRACE() { return getToken(HCLParser.RBRACE, 0); }
-		public List<ObjectelemContext> objectelem() {
+		public /*~~>*/List<ObjectelemContext> objectelem() {
 			return getRuleContexts(ObjectelemContext.class);
 		}
 		public ObjectelemContext objectelem(int i) {
 			return getRuleContext(ObjectelemContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(HCLParser.COMMA); }
+		public /*~~>*/List<TerminalNode> COMMA() { return getTokens(HCLParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(HCLParser.COMMA, i);
 		}
@@ -1609,7 +1609,7 @@ public class HCLParser extends Parser {
 			return getRuleContext(ForIntroContext.class,0);
 		}
 		public TerminalNode COLON() { return getToken(HCLParser.COLON, 0); }
-		public List<ExpressionContext> expression() {
+		public /*~~>*/List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
@@ -1695,7 +1695,7 @@ public class HCLParser extends Parser {
 	}
 
 	public static class ForIntroContext extends ParserRuleContext {
-		public List<TerminalNode> Identifier() { return getTokens(HCLParser.Identifier); }
+		public /*~~>*/List<TerminalNode> Identifier() { return getTokens(HCLParser.Identifier); }
 		public TerminalNode Identifier(int i) {
 			return getToken(HCLParser.Identifier, i);
 		}
@@ -1913,13 +1913,13 @@ public class HCLParser extends Parser {
 	}
 
 	public static class ArgumentsContext extends ParserRuleContext {
-		public List<ExpressionContext> expression() {
+		public /*~~>*/List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(HCLParser.COMMA); }
+		public /*~~>*/List<TerminalNode> COMMA() { return getTokens(HCLParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(HCLParser.COMMA, i);
 		}
@@ -2162,7 +2162,7 @@ public class HCLParser extends Parser {
 	public static class AttrSplatContext extends ParserRuleContext {
 		public TerminalNode DOT() { return getToken(HCLParser.DOT, 0); }
 		public TerminalNode MUL() { return getToken(HCLParser.MUL, 0); }
-		public List<GetAttrContext> getAttr() {
+		public /*~~>*/List<GetAttrContext> getAttr() {
 			return getRuleContexts(GetAttrContext.class);
 		}
 		public GetAttrContext getAttr(int i) {
@@ -2231,13 +2231,13 @@ public class HCLParser extends Parser {
 		public TerminalNode LBRACK() { return getToken(HCLParser.LBRACK, 0); }
 		public TerminalNode MUL() { return getToken(HCLParser.MUL, 0); }
 		public TerminalNode RBRACK() { return getToken(HCLParser.RBRACK, 0); }
-		public List<GetAttrContext> getAttr() {
+		public /*~~>*/List<GetAttrContext> getAttr() {
 			return getRuleContexts(GetAttrContext.class);
 		}
 		public GetAttrContext getAttr(int i) {
 			return getRuleContext(GetAttrContext.class,i);
 		}
-		public List<IndexContext> index() {
+		public /*~~>*/List<IndexContext> index() {
 			return getRuleContexts(IndexContext.class);
 		}
 		public IndexContext index(int i) {
@@ -2449,7 +2449,7 @@ public class HCLParser extends Parser {
 	}
 
 	public static class BinaryOpContext extends ParserRuleContext {
-		public List<ExprTermContext> exprTerm() {
+		public /*~~>*/List<ExprTermContext> exprTerm() {
 			return getRuleContexts(ExprTermContext.class);
 		}
 		public ExprTermContext exprTerm(int i) {
@@ -2759,11 +2759,11 @@ public class HCLParser extends Parser {
 		}
 	}
 	public static class QuotedTemplateContext extends TemplateExprContext {
-		public List<TerminalNode> QUOTE() { return getTokens(HCLParser.QUOTE); }
+		public /*~~>*/List<TerminalNode> QUOTE() { return getTokens(HCLParser.QUOTE); }
 		public TerminalNode QUOTE(int i) {
 			return getToken(HCLParser.QUOTE, i);
 		}
-		public List<QuotedTemplatePartContext> quotedTemplatePart() {
+		public /*~~>*/List<QuotedTemplatePartContext> quotedTemplatePart() {
 			return getRuleContexts(QuotedTemplatePartContext.class);
 		}
 		public QuotedTemplatePartContext quotedTemplatePart(int i) {
@@ -2786,15 +2786,15 @@ public class HCLParser extends Parser {
 	}
 	public static class HeredocContext extends TemplateExprContext {
 		public TerminalNode HEREDOC_START() { return getToken(HCLParser.HEREDOC_START, 0); }
-		public List<TerminalNode> Identifier() { return getTokens(HCLParser.Identifier); }
+		public /*~~>*/List<TerminalNode> Identifier() { return getTokens(HCLParser.Identifier); }
 		public TerminalNode Identifier(int i) {
 			return getToken(HCLParser.Identifier, i);
 		}
-		public List<TerminalNode> NEWLINE() { return getTokens(HCLParser.NEWLINE); }
+		public /*~~>*/List<TerminalNode> NEWLINE() { return getTokens(HCLParser.NEWLINE); }
 		public TerminalNode NEWLINE(int i) {
 			return getToken(HCLParser.NEWLINE, i);
 		}
-		public List<HeredocTemplatePartContext> heredocTemplatePart() {
+		public /*~~>*/List<HeredocTemplatePartContext> heredocTemplatePart() {
 			return getRuleContexts(HeredocTemplatePartContext.class);
 		}
 		public HeredocTemplatePartContext heredocTemplatePart(int i) {

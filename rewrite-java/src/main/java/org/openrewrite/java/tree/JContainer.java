@@ -44,21 +44,21 @@ public class JContainer<T> {
     private static final JContainer<?> EMPTY = new JContainer<>(Space.EMPTY, emptyList(), Markers.EMPTY);
 
     private final Space before;
-    private final List<JRightPadded<T>> elements;
+    private final /*~~>*/List<JRightPadded<T>> elements;
     private final Markers markers;
 
-    private JContainer(Space before, List<JRightPadded<T>> elements, Markers markers) {
+    private JContainer(Space before, /*~~>*/List<JRightPadded<T>> elements, Markers markers) {
         this.before = before;
         this.elements = elements;
         this.markers = markers;
     }
 
-    public static <T> JContainer<T> build(List<JRightPadded<T>> elements) {
+    public static <T> JContainer<T> build(/*~~>*/List<JRightPadded<T>> elements) {
         return build(Space.EMPTY, elements, Markers.EMPTY);
     }
 
     @JsonCreator
-    public static <T> JContainer<T> build(Space before, List<JRightPadded<T>> elements, Markers markers) {
+    public static <T> JContainer<T> build(Space before, /*~~>*/List<JRightPadded<T>> elements, Markers markers) {
         if (before.isEmpty() && elements.isEmpty() && markers.getMarkers().isEmpty()) {
             return empty();
         }
@@ -82,7 +82,7 @@ public class JContainer<T> {
         return markers;
     }
 
-    public List<T> getElements() {
+    public /*~~>*/List<T> getElements() {
         return JRightPadded.getElements(elements);
     }
 
@@ -140,17 +140,17 @@ public class JContainer<T> {
     public static class Padding<T> {
         private final JContainer<T> c;
 
-        public List<JRightPadded<T>> getElements() {
+        public /*~~>*/List<JRightPadded<T>> getElements() {
             return c.elements;
         }
 
-        public JContainer<T> withElements(List<JRightPadded<T>> elements) {
+        public JContainer<T> withElements(/*~~>*/List<JRightPadded<T>> elements) {
             return c.elements == elements ? c : build(c.before, elements, c.markers);
         }
     }
 
     @Nullable
-    public static <J2 extends J> JContainer<J2> withElementsNullable(@Nullable JContainer<J2> before, @Nullable List<J2> elements) {
+    public static <J2 extends J> JContainer<J2> withElementsNullable(@Nullable JContainer<J2> before, @Nullable /*~~>*/List<J2> elements) {
         if (before == null) {
             if (elements == null || elements.isEmpty()) {
                 return null;
@@ -163,7 +163,7 @@ public class JContainer<T> {
         return before.getPadding().withElements(JRightPadded.withElements(before.elements, elements));
     }
 
-    public static <J2 extends J> JContainer<J2> withElements(JContainer<J2> before, @Nullable List<J2> elements) {
+    public static <J2 extends J> JContainer<J2> withElements(JContainer<J2> before, @Nullable /*~~>*/List<J2> elements) {
         if (elements == null) {
             return before.getPadding().withElements(emptyList());
         }

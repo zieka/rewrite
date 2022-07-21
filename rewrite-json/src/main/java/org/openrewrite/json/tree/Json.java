@@ -80,14 +80,14 @@ public interface Json extends Tree {
         @With
         Markers markers;
 
-        List<JsonRightPadded<JsonValue>> values;
+        /*~~>*/List<JsonRightPadded<JsonValue>> values;
 
-        public List<JsonValue> getValues() {
+        public /*~~>*/List<JsonValue> getValues() {
             return JsonRightPadded.getElements(values);
         }
 
-        public Array withValues(List<JsonValue> values) {
-            return getPadding().withParameters(JsonRightPadded.withElements(this.values, values));
+        public Array withValues(/*~~>*/List<JsonValue> values) {
+            return getPadding().withParameters(JsonRightPadded.withElements(/*~~>*/this.values, values));
         }
 
         @Override
@@ -114,12 +114,12 @@ public interface Json extends Tree {
         public static class Padding {
             private final Array t;
 
-            public List<JsonRightPadded<JsonValue>> getValues() {
-                return t.values;
+            public /*~~>*/List<JsonRightPadded<JsonValue>> getValues() {
+                return /*~~>*/t.values;
             }
 
-            public Array withParameters(List<JsonRightPadded<JsonValue>> values) {
-                return t.values == values ? t : new Array(t.id, t.prefix, t.markers, values);
+            public Array withParameters(/*~~>*/List<JsonRightPadded<JsonValue>> values) {
+                return /*~~>*/t.values == values ? t : new Array(t.id, t.prefix, t.markers, values);
             }
         }
     }
@@ -364,14 +364,14 @@ public interface Json extends Tree {
         /**
          * Either {@link Member} or {@link Empty}
          */
-        List<JsonRightPadded<Json>> members;
+        /*~~>*/List<JsonRightPadded<Json>> members;
 
-        public List<Json> getMembers() {
+        public /*~~>*/List<Json> getMembers() {
             return JsonRightPadded.getElements(members);
         }
 
-        public JsonObject withMembers(List<Json> members) {
-            return getPadding().withMembers(JsonRightPadded.withElements(this.members, members));
+        public JsonObject withMembers(/*~~>*/List<Json> members) {
+            return getPadding().withMembers(JsonRightPadded.withElements(/*~~>*/this.members, members));
         }
 
         @Override
@@ -398,12 +398,12 @@ public interface Json extends Tree {
         public static class Padding {
             private final JsonObject t;
 
-            public List<JsonRightPadded<Json>> getMembers() {
-                return t.members;
+            public /*~~>*/List<JsonRightPadded<Json>> getMembers() {
+                return /*~~>*/t.members;
             }
 
-            public JsonObject withMembers(List<JsonRightPadded<Json>> members) {
-                return t.members == members ? t : new JsonObject(t.id, t.prefix, t.markers, members);
+            public JsonObject withMembers(/*~~>*/List<JsonRightPadded<Json>> members) {
+                return /*~~>*/t.members == members ? t : new JsonObject(t.id, t.prefix, t.markers, members);
             }
         }
     }

@@ -148,31 +148,31 @@ public class Protobuf2Parser extends Parser {
 			return getRuleContext(SyntaxContext.class,0);
 		}
 		public TerminalNode EOF() { return getToken(Protobuf2Parser.EOF, 0); }
-		public List<ImportStatementContext> importStatement() {
+		public /*~~>*/List<ImportStatementContext> importStatement() {
 			return getRuleContexts(ImportStatementContext.class);
 		}
 		public ImportStatementContext importStatement(int i) {
 			return getRuleContext(ImportStatementContext.class,i);
 		}
-		public List<PackageStatementContext> packageStatement() {
+		public /*~~>*/List<PackageStatementContext> packageStatement() {
 			return getRuleContexts(PackageStatementContext.class);
 		}
 		public PackageStatementContext packageStatement(int i) {
 			return getRuleContext(PackageStatementContext.class,i);
 		}
-		public List<OptionDefContext> optionDef() {
+		public /*~~>*/List<OptionDefContext> optionDef() {
 			return getRuleContexts(OptionDefContext.class);
 		}
 		public OptionDefContext optionDef(int i) {
 			return getRuleContext(OptionDefContext.class,i);
 		}
-		public List<TopLevelDefContext> topLevelDef() {
+		public /*~~>*/List<TopLevelDefContext> topLevelDef() {
 			return getRuleContexts(TopLevelDefContext.class);
 		}
 		public TopLevelDefContext topLevelDef(int i) {
 			return getRuleContext(TopLevelDefContext.class,i);
 		}
-		public List<EmptyStatementContext> emptyStatement() {
+		public /*~~>*/List<EmptyStatementContext> emptyStatement() {
 			return getRuleContexts(EmptyStatementContext.class);
 		}
 		public EmptyStatementContext emptyStatement(int i) {
@@ -565,11 +565,11 @@ public class Protobuf2Parser extends Parser {
 			return getRuleContext(FullIdentContext.class,0);
 		}
 		public TerminalNode RPAREN() { return getToken(Protobuf2Parser.RPAREN, 0); }
-		public List<TerminalNode> DOT() { return getTokens(Protobuf2Parser.DOT); }
+		public /*~~>*/List<TerminalNode> DOT() { return getTokens(Protobuf2Parser.DOT); }
 		public TerminalNode DOT(int i) {
 			return getToken(Protobuf2Parser.DOT, i);
 		}
-		public List<IdentOrReservedContext> identOrReserved() {
+		public /*~~>*/List<IdentOrReservedContext> identOrReserved() {
 			return getRuleContexts(IdentOrReservedContext.class);
 		}
 		public IdentOrReservedContext identOrReserved(int i) {
@@ -756,14 +756,14 @@ public class Protobuf2Parser extends Parser {
 
 	public static class OptionListContext extends ParserRuleContext {
 		public TerminalNode LBRACK() { return getToken(Protobuf2Parser.LBRACK, 0); }
-		public List<OptionContext> option() {
+		public /*~~>*/List<OptionContext> option() {
 			return getRuleContexts(OptionContext.class);
 		}
 		public OptionContext option(int i) {
 			return getRuleContext(OptionContext.class,i);
 		}
 		public TerminalNode RBRACK() { return getToken(Protobuf2Parser.RBRACK, 0); }
-		public List<TerminalNode> COMMA() { return getTokens(Protobuf2Parser.COMMA); }
+		public /*~~>*/List<TerminalNode> COMMA() { return getTokens(Protobuf2Parser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(Protobuf2Parser.COMMA, i);
 		}
@@ -1067,55 +1067,55 @@ public class Protobuf2Parser extends Parser {
 	public static class MessageBodyContext extends ParserRuleContext {
 		public TerminalNode LBRACE() { return getToken(Protobuf2Parser.LBRACE, 0); }
 		public TerminalNode RBRACE() { return getToken(Protobuf2Parser.RBRACE, 0); }
-		public List<MessageFieldContext> messageField() {
+		public /*~~>*/List<MessageFieldContext> messageField() {
 			return getRuleContexts(MessageFieldContext.class);
 		}
 		public MessageFieldContext messageField(int i) {
 			return getRuleContext(MessageFieldContext.class,i);
 		}
-		public List<EnumDefinitionContext> enumDefinition() {
+		public /*~~>*/List<EnumDefinitionContext> enumDefinition() {
 			return getRuleContexts(EnumDefinitionContext.class);
 		}
 		public EnumDefinitionContext enumDefinition(int i) {
 			return getRuleContext(EnumDefinitionContext.class,i);
 		}
-		public List<ExtendContext> extend() {
+		public /*~~>*/List<ExtendContext> extend() {
 			return getRuleContexts(ExtendContext.class);
 		}
 		public ExtendContext extend(int i) {
 			return getRuleContext(ExtendContext.class,i);
 		}
-		public List<MessageContext> message() {
+		public /*~~>*/List<MessageContext> message() {
 			return getRuleContexts(MessageContext.class);
 		}
 		public MessageContext message(int i) {
 			return getRuleContext(MessageContext.class,i);
 		}
-		public List<OptionDefContext> optionDef() {
+		public /*~~>*/List<OptionDefContext> optionDef() {
 			return getRuleContexts(OptionDefContext.class);
 		}
 		public OptionDefContext optionDef(int i) {
 			return getRuleContext(OptionDefContext.class,i);
 		}
-		public List<OneOfContext> oneOf() {
+		public /*~~>*/List<OneOfContext> oneOf() {
 			return getRuleContexts(OneOfContext.class);
 		}
 		public OneOfContext oneOf(int i) {
 			return getRuleContext(OneOfContext.class,i);
 		}
-		public List<MapFieldContext> mapField() {
+		public /*~~>*/List<MapFieldContext> mapField() {
 			return getRuleContexts(MapFieldContext.class);
 		}
 		public MapFieldContext mapField(int i) {
 			return getRuleContext(MapFieldContext.class,i);
 		}
-		public List<ReservedContext> reserved() {
+		public /*~~>*/List<ReservedContext> reserved() {
 			return getRuleContexts(ReservedContext.class);
 		}
 		public ReservedContext reserved(int i) {
 			return getRuleContext(ReservedContext.class,i);
 		}
-		public List<EmptyStatementContext> emptyStatement() {
+		public /*~~>*/List<EmptyStatementContext> emptyStatement() {
 			return getRuleContexts(EmptyStatementContext.class);
 		}
 		public EmptyStatementContext emptyStatement(int i) {
@@ -1243,13 +1243,13 @@ public class Protobuf2Parser extends Parser {
 		}
 		public TerminalNode LBRACE() { return getToken(Protobuf2Parser.LBRACE, 0); }
 		public TerminalNode RBRACE() { return getToken(Protobuf2Parser.RBRACE, 0); }
-		public List<MessageFieldContext> messageField() {
+		public /*~~>*/List<MessageFieldContext> messageField() {
 			return getRuleContexts(MessageFieldContext.class);
 		}
 		public MessageFieldContext messageField(int i) {
 			return getRuleContext(MessageFieldContext.class,i);
 		}
-		public List<EmptyStatementContext> emptyStatement() {
+		public /*~~>*/List<EmptyStatementContext> emptyStatement() {
 			return getRuleContexts(EmptyStatementContext.class);
 		}
 		public EmptyStatementContext emptyStatement(int i) {
@@ -1387,19 +1387,19 @@ public class Protobuf2Parser extends Parser {
 	public static class EnumBodyContext extends ParserRuleContext {
 		public TerminalNode LBRACE() { return getToken(Protobuf2Parser.LBRACE, 0); }
 		public TerminalNode RBRACE() { return getToken(Protobuf2Parser.RBRACE, 0); }
-		public List<OptionDefContext> optionDef() {
+		public /*~~>*/List<OptionDefContext> optionDef() {
 			return getRuleContexts(OptionDefContext.class);
 		}
 		public OptionDefContext optionDef(int i) {
 			return getRuleContext(OptionDefContext.class,i);
 		}
-		public List<EnumFieldContext> enumField() {
+		public /*~~>*/List<EnumFieldContext> enumField() {
 			return getRuleContexts(EnumFieldContext.class);
 		}
 		public EnumFieldContext enumField(int i) {
 			return getRuleContext(EnumFieldContext.class,i);
 		}
-		public List<EmptyStatementContext> emptyStatement() {
+		public /*~~>*/List<EmptyStatementContext> emptyStatement() {
 			return getRuleContexts(EmptyStatementContext.class);
 		}
 		public EmptyStatementContext emptyStatement(int i) {
@@ -1615,19 +1615,19 @@ public class Protobuf2Parser extends Parser {
 	public static class ServiceBodyContext extends ParserRuleContext {
 		public TerminalNode LBRACE() { return getToken(Protobuf2Parser.LBRACE, 0); }
 		public TerminalNode RBRACE() { return getToken(Protobuf2Parser.RBRACE, 0); }
-		public List<OptionDefContext> optionDef() {
+		public /*~~>*/List<OptionDefContext> optionDef() {
 			return getRuleContexts(OptionDefContext.class);
 		}
 		public OptionDefContext optionDef(int i) {
 			return getRuleContext(OptionDefContext.class,i);
 		}
-		public List<RpcContext> rpc() {
+		public /*~~>*/List<RpcContext> rpc() {
 			return getRuleContexts(RpcContext.class);
 		}
 		public RpcContext rpc(int i) {
 			return getRuleContext(RpcContext.class,i);
 		}
-		public List<EmptyStatementContext> emptyStatement() {
+		public /*~~>*/List<EmptyStatementContext> emptyStatement() {
 			return getRuleContexts(EmptyStatementContext.class);
 		}
 		public EmptyStatementContext emptyStatement(int i) {
@@ -1715,7 +1715,7 @@ public class Protobuf2Parser extends Parser {
 		public IdentContext ident() {
 			return getRuleContext(IdentContext.class,0);
 		}
-		public List<RpcInOutContext> rpcInOut() {
+		public /*~~>*/List<RpcInOutContext> rpcInOut() {
 			return getRuleContexts(RpcInOutContext.class);
 		}
 		public RpcInOutContext rpcInOut(int i) {
@@ -1857,13 +1857,13 @@ public class Protobuf2Parser extends Parser {
 	public static class RpcBodyContext extends ParserRuleContext {
 		public TerminalNode LBRACE() { return getToken(Protobuf2Parser.LBRACE, 0); }
 		public TerminalNode RBRACE() { return getToken(Protobuf2Parser.RBRACE, 0); }
-		public List<OptionDefContext> optionDef() {
+		public /*~~>*/List<OptionDefContext> optionDef() {
 			return getRuleContexts(OptionDefContext.class);
 		}
 		public OptionDefContext optionDef(int i) {
 			return getRuleContext(OptionDefContext.class,i);
 		}
-		public List<EmptyStatementContext> emptyStatement() {
+		public /*~~>*/List<EmptyStatementContext> emptyStatement() {
 			return getRuleContexts(EmptyStatementContext.class);
 		}
 		public EmptyStatementContext emptyStatement(int i) {
@@ -2010,13 +2010,13 @@ public class Protobuf2Parser extends Parser {
 	}
 
 	public static class RangesContext extends ParserRuleContext {
-		public List<RangeContext> range() {
+		public /*~~>*/List<RangeContext> range() {
 			return getRuleContexts(RangeContext.class);
 		}
 		public RangeContext range(int i) {
 			return getRuleContext(RangeContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(Protobuf2Parser.COMMA); }
+		public /*~~>*/List<TerminalNode> COMMA() { return getTokens(Protobuf2Parser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(Protobuf2Parser.COMMA, i);
 		}
@@ -2078,7 +2078,7 @@ public class Protobuf2Parser extends Parser {
 	}
 
 	public static class RangeContext extends ParserRuleContext {
-		public List<TerminalNode> IntegerLiteral() { return getTokens(Protobuf2Parser.IntegerLiteral); }
+		public /*~~>*/List<TerminalNode> IntegerLiteral() { return getTokens(Protobuf2Parser.IntegerLiteral); }
 		public TerminalNode IntegerLiteral(int i) {
 			return getToken(Protobuf2Parser.IntegerLiteral, i);
 		}
@@ -2137,13 +2137,13 @@ public class Protobuf2Parser extends Parser {
 	}
 
 	public static class FieldNamesContext extends ParserRuleContext {
-		public List<StringLiteralContext> stringLiteral() {
+		public /*~~>*/List<StringLiteralContext> stringLiteral() {
 			return getRuleContexts(StringLiteralContext.class);
 		}
 		public StringLiteralContext stringLiteral(int i) {
 			return getRuleContext(StringLiteralContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(Protobuf2Parser.COMMA); }
+		public /*~~>*/List<TerminalNode> COMMA() { return getTokens(Protobuf2Parser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(Protobuf2Parser.COMMA, i);
 		}
@@ -2391,13 +2391,13 @@ public class Protobuf2Parser extends Parser {
 		}
 		public TerminalNode LBRACE() { return getToken(Protobuf2Parser.LBRACE, 0); }
 		public TerminalNode RBRACE() { return getToken(Protobuf2Parser.RBRACE, 0); }
-		public List<FieldContext> field() {
+		public /*~~>*/List<FieldContext> field() {
 			return getRuleContexts(FieldContext.class);
 		}
 		public FieldContext field(int i) {
 			return getRuleContext(FieldContext.class,i);
 		}
-		public List<EmptyStatementContext> emptyStatement() {
+		public /*~~>*/List<EmptyStatementContext> emptyStatement() {
 			return getRuleContexts(EmptyStatementContext.class);
 		}
 		public EmptyStatementContext emptyStatement(int i) {
@@ -2713,13 +2713,13 @@ public class Protobuf2Parser extends Parser {
 	}
 
 	public static class FullIdentContext extends ParserRuleContext {
-		public List<IdentOrReservedContext> identOrReserved() {
+		public /*~~>*/List<IdentOrReservedContext> identOrReserved() {
 			return getRuleContexts(IdentOrReservedContext.class);
 		}
 		public IdentOrReservedContext identOrReserved(int i) {
 			return getRuleContext(IdentOrReservedContext.class,i);
 		}
-		public List<TerminalNode> DOT() { return getTokens(Protobuf2Parser.DOT); }
+		public /*~~>*/List<TerminalNode> DOT() { return getTokens(Protobuf2Parser.DOT); }
 		public TerminalNode DOT(int i) {
 			return getToken(Protobuf2Parser.DOT, i);
 		}

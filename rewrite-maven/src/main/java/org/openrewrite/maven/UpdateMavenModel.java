@@ -54,8 +54,8 @@ public class UpdateMavenModel<P> extends MavenVisitor<P> {
 
             Optional<Xml.Tag> dependencies = document.getRoot().getChild("dependencies");
             if (dependencies.isPresent()) {
-                List<Xml.Tag> eachDependency = dependencies.get().getChildren("dependency");
-                List<Dependency> requestedDependencies = new ArrayList<>(eachDependency.size());
+                /*~~>*/List<Xml.Tag> eachDependency = dependencies.get().getChildren("dependency");
+                /*~~>*/List<Dependency> requestedDependencies = new ArrayList<>(eachDependency.size());
                 for (Xml.Tag dependency : eachDependency) {
                     requestedDependencies.add(new Dependency(
                             new GroupArtifactVersion(
@@ -79,8 +79,8 @@ public class UpdateMavenModel<P> extends MavenVisitor<P> {
             if (dependencyManagement.isPresent()) {
                 dependencies = dependencyManagement.get().getChild("dependencies");
                 if (dependencies.isPresent()) {
-                    List<Xml.Tag> eachDependency = dependencies.get().getChildren("dependency");
-                    List<ManagedDependency> requestedManagedDependencies = new ArrayList<>(eachDependency.size());
+                    /*~~>*/List<Xml.Tag> eachDependency = dependencies.get().getChildren("dependency");
+                    /*~~>*/List<ManagedDependency> requestedManagedDependencies = new ArrayList<>(eachDependency.size());
                     for (Xml.Tag dependency : eachDependency) {
                         String scope = dependency.getChildValue("scope").orElse("compile");
                         GroupArtifactVersion gav = new GroupArtifactVersion(
@@ -112,11 +112,11 @@ public class UpdateMavenModel<P> extends MavenVisitor<P> {
     }
 
     @Nullable
-    private List<GroupArtifact> mapExclusions(Xml.Tag tag) {
+    private /*~~>*/List<GroupArtifact> mapExclusions(Xml.Tag tag) {
         return tag.getChild("exclusions")
                 .map(exclusions -> {
-                    List<Xml.Tag> eachExclusion = exclusions.getChildren("exclusion");
-                    List<GroupArtifact> requestedExclusions = new ArrayList<>(eachExclusion.size());
+                    /*~~>*/List<Xml.Tag> eachExclusion = exclusions.getChildren("exclusion");
+                    /*~~>*/List<GroupArtifact> requestedExclusions = new ArrayList<>(eachExclusion.size());
                     for (Xml.Tag exclusion : eachExclusion) {
                         requestedExclusions.add(new GroupArtifact(
                                 exclusion.getChildValue("groupId").orElse(null),

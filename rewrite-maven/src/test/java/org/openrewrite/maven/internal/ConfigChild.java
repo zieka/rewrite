@@ -28,7 +28,7 @@ public class ConfigChild {
 
     @JacksonXmlElementWrapper(localName = "stringList")
     @JacksonXmlProperty(localName = "element")
-    private List<String> stringList;
+    private /*~~>*/List<String> stringList;
 
     public ConfigChild(String stringValue, Integer intValue) {
         this.stringValue = stringValue;
@@ -43,11 +43,11 @@ public class ConfigChild {
         return intValue;
     }
 
-    public List<String> getStringList() {
+    public /*~~>*/List<String> getStringList() {
         return stringList;
     }
 
-    public void setStringList(List<String> stringList) {
-        this.stringList = stringList;
+    public void setStringList(/*~~>*/List<String> stringList) {
+        /*~~>*/this.stringList = stringList;
     }
 }

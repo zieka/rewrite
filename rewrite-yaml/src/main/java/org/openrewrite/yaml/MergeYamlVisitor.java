@@ -74,7 +74,7 @@ public class MergeYamlVisitor<P> extends YamlVisitor<P> {
     }
 
     private Yaml.Mapping mergeMapping(Yaml.Mapping m1, Yaml.Mapping m2, P p, Cursor cursor) {
-        List<Yaml.Mapping.Entry> mutatedEntries = ListUtils.map(m1.getEntries(), existingEntry -> {
+        /*~~>*/List<Yaml.Mapping.Entry> mutatedEntries = ListUtils.map(m1.getEntries(), existingEntry -> {
             for (Yaml.Mapping.Entry incomingEntry : m2.getEntries()) {
                 if (keyMatches(existingEntry, incomingEntry)) {
                     return existingEntry.withValue((Yaml.Block) new MergeYamlVisitor<>(existingEntry.getValue(),
@@ -103,7 +103,7 @@ public class MergeYamlVisitor<P> extends YamlVisitor<P> {
             return s1;
         }
 
-        List<Yaml.Sequence.Entry> incomingEntries = new ArrayList<>(s2.getEntries());
+        /*~~>*/List<Yaml.Sequence.Entry> incomingEntries = new ArrayList<>(s2.getEntries());
         for (Yaml.Sequence.Entry incomingEntry : incomingEntries) {
             if (!(incomingEntry.getBlock() instanceof Yaml.Scalar)) {
                 return s1;

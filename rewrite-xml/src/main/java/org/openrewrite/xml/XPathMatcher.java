@@ -41,13 +41,13 @@ public class XPathMatcher {
     }
 
     public boolean matches(Cursor cursor) {
-        List<Xml.Tag> path = cursor.getPathAsStream()
+        /*~~>*/List<Xml.Tag> path = cursor.getPathAsStream()
                 .filter(p -> p instanceof Xml.Tag)
                 .map(Xml.Tag.class::cast)
                 .collect(Collectors.toList());
 
         if (expression.startsWith("//") || !expression.startsWith("/")) {
-            List<String> parts = new ArrayList<>(Arrays.asList((expression.startsWith("//") ?
+            /*~~>*/List<String> parts = new ArrayList<>(Arrays.asList((expression.startsWith("//") ?
                     expression.substring(2) : expression).split("/")));
             Collections.reverse(parts);
 

@@ -40,7 +40,7 @@ import static java.util.stream.Collectors.toList;
 
 public class JsonParser implements Parser<Json.Document> {
     @Override
-    public List<Json.Document> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
+    public /*~~>*/List<Json.Document> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
         ParsingEventListener parsingListener = ParsingExecutionContextView.view(ctx).getParsingListener();
         return acceptedInputs(sourceFiles).stream()
                 .map(sourceFile -> {
@@ -74,7 +74,7 @@ public class JsonParser implements Parser<Json.Document> {
     }
 
     @Override
-    public List<Json.Document> parse(@Language("Json") String... sources) {
+    public /*~~>*/List<Json.Document> parse(@Language("Json") String... sources) {
         return parse(new InMemoryExecutionContext(), sources);
     }
 

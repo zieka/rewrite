@@ -158,7 +158,7 @@ public interface RewriteTest extends SourceSpecs {
             executionContext = defaultExecutionContext(sourceSpecs);
         }
 
-        Map<ParserSupplier, List<SourceSpec<?>>> sourceSpecsByParser = new HashMap<>();
+        Map<ParserSupplier, /*~~>*/List<SourceSpec<?>>> sourceSpecsByParser = new HashMap<>();
 
         for (SourceSpec<?> sourceSpec : sourceSpecs) {
             // ----- method specific parser -------------------------
@@ -228,7 +228,7 @@ public interface RewriteTest extends SourceSpecs {
         }
 
         Map<SourceFile, SourceSpec<?>> specBySourceFile = new HashMap<>(sourceSpecs.length);
-        for (Map.Entry<ParserSupplier, List<SourceSpec<?>>> sourceSpecsForParser : sourceSpecsByParser.entrySet()) {
+        for (Map.Entry<ParserSupplier, /*~~>*/List<SourceSpec<?>>> sourceSpecsForParser : sourceSpecsByParser.entrySet()) {
             Map<SourceSpec<?>, Parser.Input> inputs = new LinkedHashMap<>(sourceSpecsForParser.getValue().size());
             for (SourceSpec<?> sourceSpec : sourceSpecsForParser.getValue()) {
                 if (sourceSpec.before == null) {
@@ -250,7 +250,7 @@ public interface RewriteTest extends SourceSpecs {
             Iterator<SourceSpec<?>> sourceSpecIter = inputs.keySet().iterator();
 
             //noinspection unchecked,rawtypes
-            List<SourceFile> sourceFiles = (List) sourceSpecsForParser.getKey().get()
+            /*~~>*/List<SourceFile> sourceFiles = (/*~~>*/List) sourceSpecsForParser.getKey().get()
                     .parseInputs(inputs.values(), relativeTo, executionContext);
             assertThat(sourceFiles.size())
                     .as("Every input should be parsed into a SourceFile.")
@@ -259,13 +259,13 @@ public interface RewriteTest extends SourceSpecs {
             for (int i = 0; i < sourceFiles.size(); i++) {
                 SourceFile sourceFile = sourceFiles.get(i);
                 sourceFile = sourceFile.withMarkers(sourceFile.getMarkers().withMarkers(ListUtils.concatAll(
-                        sourceFile.getMarkers().getMarkers(), testClassSpec.allSources.markers)));
+                        sourceFile.getMarkers().getMarkers(), /*~~>*/testClassSpec.allSources.markers)));
                 sourceFile = sourceFile.withMarkers(sourceFile.getMarkers().withMarkers(ListUtils.concatAll(
-                        sourceFile.getMarkers().getMarkers(), testMethodSpec.allSources.markers)));
+                        sourceFile.getMarkers().getMarkers(), /*~~>*/testMethodSpec.allSources.markers)));
 
                 SourceSpec<?> nextSpec = sourceSpecIter.next();
                 sourceFile = sourceFile.withMarkers(sourceFile.getMarkers().withMarkers(ListUtils.concatAll(
-                        sourceFile.getMarkers().getMarkers(), nextSpec.markers)));
+                        sourceFile.getMarkers().getMarkers(), /*~~>*/nextSpec.markers)));
 
                 // Update the default 'main' JavaSourceSet Marker added by the JavaParser with the specs sourceSetName
                 sourceFile = sourceFile.withMarkers((sourceFile.getMarkers().withMarkers(ListUtils.map(sourceFile.getMarkers().getMarkers(), m -> {
@@ -295,12 +295,12 @@ public interface RewriteTest extends SourceSpecs {
             }
         }
 
-        List<SourceFile> beforeSourceFiles = new ArrayList<>(specBySourceFile.keySet());
+        /*~~>*/List<SourceFile> beforeSourceFiles = new ArrayList<>(specBySourceFile.keySet());
 
         testClassSpec.beforeRecipe.accept(beforeSourceFiles);
         testMethodSpec.beforeRecipe.accept(beforeSourceFiles);
 
-        List<Result> results = recipe.run(
+        /*~~>*/List<Result> results = recipe.run(
                 beforeSourceFiles,
                 executionContext,
                 recipeSchedulerCheckingExpectedCycles,
@@ -468,8 +468,8 @@ public interface RewriteTest extends SourceSpecs {
 }
 
 class RewriteTestUtils {
-    static boolean groupSourceSpecsByParser(RecipeSpec testMethodSpec, Map<ParserSupplier, List<SourceSpec<?>>> sourceSpecsByParser, SourceSpec<?> sourceSpec) {
-        for (Parser<?> parser : testMethodSpec.parsers) {
+    static boolean groupSourceSpecsByParser(RecipeSpec testMethodSpec, Map<ParserSupplier, /*~~>*/List<SourceSpec<?>>> sourceSpecsByParser, SourceSpec<?> sourceSpec) {
+        for (Parser<?> parser : /*~~>*/testMethodSpec.parsers) {
             if (parserType(parser).equals(sourceSpec.sourceFileType)) {
                 sourceSpecsByParser.computeIfAbsent(
                         new ParserSupplier(sourceSpec.sourceFileType, sourceSpec.dsl, () -> parser),

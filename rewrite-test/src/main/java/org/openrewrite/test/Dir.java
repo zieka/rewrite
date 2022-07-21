@@ -32,7 +32,7 @@ public class Dir implements Iterable<SourceSpec<?>>, SourceSpecs {
 
     @Override
     public Iterator<SourceSpec<?>> iterator() {
-        List<SourceSpec<?>> asList = new ArrayList<>();
+        /*~~>*/List<SourceSpec<?>> asList = new ArrayList<>();
         for (SourceSpecs many : sourceSpecs) {
             for (SourceSpec<?> sourceSpec : many) {
                 //noinspection unchecked

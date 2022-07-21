@@ -89,7 +89,7 @@ public class MavenRepositoryMirror {
             mirrorOfWithoutExternal = mirrorOf.substring(colonIndex + 1);
         }
 
-        List<String> mirrorsOf = Arrays.stream(mirrorOfWithoutExternal.split(",")).collect(Collectors.toList());
+        /*~~>*/List<String> mirrorsOf = Arrays.stream(mirrorOfWithoutExternal.split(",")).collect(Collectors.toList());
         Set<String> excludedRepos = new HashSet<>();
         Set<String> includedRepos = new HashSet<>();
         for (String mirror : mirrorsOf) {

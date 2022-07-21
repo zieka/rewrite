@@ -87,7 +87,7 @@ public class HclTemplate implements SourceTemplate<Hcl, HclCoordinates> {
             public Hcl visitConfigFile(Hcl.ConfigFile configFile, Integer p) {
                 Hcl.ConfigFile c = (Hcl.ConfigFile) super.visitConfigFile(configFile, p);
                 if (loc.equals(Location.CONFIG_FILE_EOF)) {
-                    List<BodyContent> gen = substitutions.unsubstitute(templateParser.parseBodyContent(substitutedTemplate));
+                    /*~~>*/List<BodyContent> gen = substitutions.unsubstitute(templateParser.parseBodyContent(substitutedTemplate));
 
                     if (coordinates.getComparator() != null) {
                         for (int i = 0; i < gen.size(); i++) {
@@ -118,7 +118,7 @@ public class HclTemplate implements SourceTemplate<Hcl, HclCoordinates> {
                         );
                     }
                 } else if (loc.equals(Location.CONFIG_FILE)) {
-                    List<BodyContent> gen = substitutions.unsubstitute(templateParser.parseBodyContent(substitutedTemplate));
+                    /*~~>*/List<BodyContent> gen = substitutions.unsubstitute(templateParser.parseBodyContent(substitutedTemplate));
                     c = c.withBody(
                             ListUtils.concatAll(
                                     ListUtils.map(gen, (i, s) -> autoFormat(s, p, getCursor())),
@@ -135,7 +135,7 @@ public class HclTemplate implements SourceTemplate<Hcl, HclCoordinates> {
                 Hcl.Block b = (Hcl.Block) super.visitBlock(block, p);
                 if (loc.equals(Location.BLOCK_CLOSE)) {
                     if (b.isScope(insertionPoint)) {
-                        List<BodyContent> gen = substitutions.unsubstitute(templateParser.parseBodyContent(substitutedTemplate));
+                        /*~~>*/List<BodyContent> gen = substitutions.unsubstitute(templateParser.parseBodyContent(substitutedTemplate));
 
                         if (coordinates.getComparator() != null) {
                             for (BodyContent g : gen) {

@@ -45,8 +45,8 @@ public final class PrintMavenAsCycloneDxBom {
                 .append(maven.getId().toString()).append("\" version=\"1\">\n");
         writeMetadata(pom, bom);
 
-        List<ResolvedDependency> compileScopeDependencies = resolutionResult.getDependencies().get(Scope.Compile);
-        List<ResolvedDependency> providedScopeDependencies = resolutionResult.getDependencies().get(Scope.Provided);
+        /*~~>*/List<ResolvedDependency> compileScopeDependencies = resolutionResult.getDependencies().get(Scope.Compile);
+        /*~~>*/List<ResolvedDependency> providedScopeDependencies = resolutionResult.getDependencies().get(Scope.Provided);
 
         if (providedScopeDependencies != null && !providedScopeDependencies.isEmpty()) {
             //Filter out duplicate group/artifacts that already exist in compile scope
@@ -94,7 +94,7 @@ public final class PrintMavenAsCycloneDxBom {
         bom.append("    </metadata>\n");
     }
 
-    private static void writeComponents(List<ResolvedDependency> dependencies, List<ResolvedDependency> provided, StringBuilder bom) {
+    private static void writeComponents(/*~~>*/List<ResolvedDependency> dependencies, /*~~>*/List<ResolvedDependency> provided, StringBuilder bom) {
         if (dependencies.isEmpty()) {
             return;
         }
@@ -122,7 +122,7 @@ public final class PrintMavenAsCycloneDxBom {
         }
         bom.append("    </components>\n");
     }
-    private static void writeDependencies(List<ResolvedDependency> dependencies, StringBuilder bom) {
+    private static void writeDependencies(/*~~>*/List<ResolvedDependency> dependencies, StringBuilder bom) {
         if (dependencies.isEmpty()) {
             return;
         }
@@ -150,7 +150,7 @@ public final class PrintMavenAsCycloneDxBom {
     }
 
     private static void writeComponent(Scope scope, String groupId, String artifactId, String version,
-                                       String packaging, List<License> licenses, StringBuilder bom) {
+                                       String packaging, /*~~>*/List<License> licenses, StringBuilder bom) {
 
         String indent = "        ";
         String bomReference = getBomReference(groupId, artifactId, version);
@@ -182,7 +182,7 @@ public final class PrintMavenAsCycloneDxBom {
         bom.append(indent).append("</component>\n");
     }
 
-    private static void writeLicenses(List<License> licenses, StringBuilder bom, String indent) {
+    private static void writeLicenses(/*~~>*/List<License> licenses, StringBuilder bom, String indent) {
 
         if (!licenses.isEmpty()) {
             bom.append(indent).append("    <licenses>\n");

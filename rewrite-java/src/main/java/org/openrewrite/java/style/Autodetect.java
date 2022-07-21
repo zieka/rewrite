@@ -44,7 +44,7 @@ public class Autodetect extends NamedStyles {
                 emptySet(), styles);
     }
 
-    public static Autodetect detect(List<? extends JavaSourceFile> cus) {
+    public static Autodetect detect(/*~~>*/List<? extends JavaSourceFile> cus) {
         Builder builder = builder();
         for (JavaSourceFile cu : cus) {
             builder.phase1(cu);
@@ -263,7 +263,7 @@ public class Autodetect extends NamedStyles {
     }
 
     private static class ImportLayoutStatistics {
-        List<List<Block>> blocksPerSourceFile = new ArrayList<>();
+        /*~~>*/List</*~~>*/List<Block>> blocksPerSourceFile = new ArrayList<>();
         Map<String, String> pkgToBlockPattern = new LinkedHashMap<>();
         int staticAtTopCount = 0;
         int staticAtBotCount = 0;

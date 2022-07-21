@@ -50,7 +50,7 @@ public class ParentModelResolver extends ProjectModelResolver {
     public ParentModelResolver(RepositorySystemSession session,
                                RepositorySystem resolver,
                                RemoteRepositoryManager remoteRepositoryManager,
-                               List<RemoteRepository> repositories) {
+                               /*~~>*/List<RemoteRepository> repositories) {
         super(session,
                 new RequestTrace(null),
                 resolver,

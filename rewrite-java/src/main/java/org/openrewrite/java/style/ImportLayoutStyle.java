@@ -75,15 +75,15 @@ public class ImportLayoutStyle implements JavaStyle {
     private final int nameCountToUseStarImport;
 
     @EqualsAndHashCode.Include
-    private final List<Block> layout;
+    private final /*~~>*/List<Block> layout;
 
     @EqualsAndHashCode.Include
-    private final List<Block> packagesToFold;
+    private final /*~~>*/List<Block> packagesToFold;
 
-    private final List<Block> blocksNoCatchalls;
-    private final List<Block> blocksOnlyCatchalls;
+    private final /*~~>*/List<Block> blocksNoCatchalls;
+    private final /*~~>*/List<Block> blocksOnlyCatchalls;
 
-    public ImportLayoutStyle(int classCountToUseStarImport, int nameCountToUseStarImport, List<Block> layout, List<Block> packagesToFold) {
+    public ImportLayoutStyle(int classCountToUseStarImport, int nameCountToUseStarImport, /*~~>*/List<Block> layout, /*~~>*/List<Block> packagesToFold) {
         this.classCountToUseStarImport = classCountToUseStarImport;
         this.nameCountToUseStarImport = nameCountToUseStarImport;
         this.layout = layout.isEmpty() ? IntelliJ.importLayout().getLayout() : layout;
@@ -105,7 +105,7 @@ public class ImportLayoutStyle implements JavaStyle {
      * @param pkg             A package declaration, if one exists.
      * @return The import list with a new import added.
      */
-    public List<JRightPadded<J.Import>> addImport(List<JRightPadded<J.Import>> originalImports,
+    public /*~~>*/List<JRightPadded<J.Import>> addImport(/*~~>*/List<JRightPadded<J.Import>> originalImports,
                                                   J.Import toAdd, @Nullable J.Package pkg,
                                                   Collection<JavaType.FullyQualified> classpath) {
         JRightPadded<J.Import> paddedToAdd = new JRightPadded<>(toAdd, Space.EMPTY, Markers.EMPTY);
@@ -311,7 +311,7 @@ public class ImportLayoutStyle implements JavaStyle {
      * @param originalImports A list of potentially unordered imports.
      * @return A list of imports that are grouped and ordered.
      */
-    public List<JRightPadded<J.Import>> orderImports(List<JRightPadded<J.Import>> originalImports, Collection<JavaType.FullyQualified> classpath) {
+    public /*~~>*/List<JRightPadded<J.Import>> orderImports(/*~~>*/List<JRightPadded<J.Import>> originalImports, Collection<JavaType.FullyQualified> classpath) {
         LayoutState layoutState = new LayoutState();
         ImportLayoutConflictDetection importLayoutConflictDetection = new ImportLayoutConflictDetection(classpath, originalImports);
         List<JRightPadded<J.Import>> orderedImports = new ArrayList<>();
@@ -386,8 +386,8 @@ public class ImportLayoutStyle implements JavaStyle {
     }
 
     public static class Builder {
-        private final List<Block> blocks = new ArrayList<>();
-        private final List<Block> packagesToFold = new ArrayList<>();
+        private final /*~~>*/List<Block> blocks = new ArrayList<>();
+        private final /*~~>*/List<Block> packagesToFold = new ArrayList<>();
         private int classCountToUseStarImport = 5;
         private int nameCountToUseStarImport = 3;
 
@@ -479,18 +479,18 @@ public class ImportLayoutStyle implements JavaStyle {
      * The in-progress state of a single layout operation.
      */
     private static class LayoutState {
-        Map<Block, List<JRightPadded<J.Import>>> imports = new HashMap<>();
+        Map<Block, /*~~>*/List<JRightPadded<J.Import>>> imports = new HashMap<>();
 
         public void claimImport(Block block, JRightPadded<J.Import> impoort) {
             imports.computeIfAbsent(block, b -> new ArrayList<>()).add(impoort);
         }
 
-        public List<JRightPadded<J.Import>> getImports(Block block) {
+        public /*~~>*/List<JRightPadded<J.Import>> getImports(Block block) {
             return imports.getOrDefault(block, emptyList());
         }
     }
 
-    public static boolean isPackageAlwaysFolded(List<Block> packagesToFold, J.Import checkImport) {
+    public static boolean isPackageAlwaysFolded(/*~~>*/List<Block> packagesToFold, J.Import checkImport) {
         boolean isPackageFolded = false;
         String anImportName = checkImport.getQualid().printTrimmed(new JavaPrinter<>());
         for (Block block : packagesToFold) {
@@ -506,11 +506,11 @@ public class ImportLayoutStyle implements JavaStyle {
 
     private static class ImportLayoutConflictDetection {
         private final Collection<JavaType.FullyQualified> classpath;
-        private final List<JRightPadded<J.Import>> originalImports;
+        private final /*~~>*/List<JRightPadded<J.Import>> originalImports;
         private final Set<String> jvmClasspathNames = new HashSet<>();
         private @Nullable Set<String> containsClassNameConflict = null;
 
-        ImportLayoutConflictDetection(Collection<JavaType.FullyQualified> classpath, List<JRightPadded<J.Import>> originalImports) {
+        ImportLayoutConflictDetection(Collection<JavaType.FullyQualified> classpath, /*~~>*/List<JRightPadded<J.Import>> originalImports) {
             this.classpath = classpath;
             this.originalImports = originalImports;
         }
@@ -602,7 +602,7 @@ public class ImportLayoutStyle implements JavaStyle {
         /**
          * @return Imports belonging to this block, folded appropriately.
          */
-        List<JRightPadded<J.Import>> orderedImports(LayoutState layoutState, int classCountToUseStarImport, int nameCountToUseStarImport, ImportLayoutConflictDetection importLayoutConflictDetection, List<Block> packagesToFold);
+        /*~~>*/List<JRightPadded<J.Import>> orderedImports(LayoutState layoutState, int classCountToUseStarImport, int nameCountToUseStarImport, ImportLayoutConflictDetection importLayoutConflictDetection, /*~~>*/List<Block> packagesToFold);
 
         /**
          * A specialized block implementation to act as a blank line separator between import groupings.
@@ -620,7 +620,7 @@ public class ImportLayoutStyle implements JavaStyle {
             }
 
             @Override
-            public List<JRightPadded<J.Import>> orderedImports(LayoutState layoutState, int classCountToUseStarImport, int nameCountToUseStartImport, ImportLayoutConflictDetection importLayoutConflictDetection, List<Block> packagesToFold) {
+            public /*~~>*/List<JRightPadded<J.Import>> orderedImports(LayoutState layoutState, int classCountToUseStarImport, int nameCountToUseStartImport, ImportLayoutConflictDetection importLayoutConflictDetection, /*~~>*/List<Block> packagesToFold) {
                 return emptyList();
             }
 
@@ -677,7 +677,7 @@ public class ImportLayoutStyle implements JavaStyle {
             }
 
             @Override
-            public List<JRightPadded<J.Import>> orderedImports(LayoutState layoutState, int classCountToUseStarImport, int nameCountToUseStarImport, ImportLayoutConflictDetection importLayoutConflictDetection, List<Block> packagesToFold) {
+            public /*~~>*/List<JRightPadded<J.Import>> orderedImports(LayoutState layoutState, int classCountToUseStarImport, int nameCountToUseStarImport, ImportLayoutConflictDetection importLayoutConflictDetection, /*~~>*/List<Block> packagesToFold) {
                 List<JRightPadded<J.Import>> imports = layoutState.getImports(this);
 
                 Map<String, List<JRightPadded<J.Import>>> groupedImports = imports

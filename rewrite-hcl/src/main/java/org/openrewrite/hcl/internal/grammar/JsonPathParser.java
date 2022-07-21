@@ -126,7 +126,7 @@ public class JsonPathParser extends Parser {
 
 	public static class JsonPathContext extends ParserRuleContext {
 		public TerminalNode ROOT() { return getToken(JsonPathParser.ROOT, 0); }
-		public List<ExpressionContext> expression() {
+		public /*~~>*/List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
@@ -409,7 +409,7 @@ public class JsonPathParser extends Parser {
 		public IndexesContext indexes() {
 			return getRuleContext(IndexesContext.class,0);
 		}
-		public List<PropertyContext> property() {
+		public /*~~>*/List<PropertyContext> property() {
 			return getRuleContexts(PropertyContext.class);
 		}
 		public PropertyContext property(int i) {
@@ -502,7 +502,7 @@ public class JsonPathParser extends Parser {
 		public TerminalNode QUESTION() { return getToken(JsonPathParser.QUESTION, 0); }
 		public TerminalNode LPAREN() { return getToken(JsonPathParser.LPAREN, 0); }
 		public TerminalNode RPAREN() { return getToken(JsonPathParser.RPAREN, 0); }
-		public List<FilterExpressionContext> filterExpression() {
+		public /*~~>*/List<FilterExpressionContext> filterExpression() {
 			return getRuleContexts(FilterExpressionContext.class);
 		}
 		public FilterExpressionContext filterExpression(int i) {
@@ -648,20 +648,20 @@ public class JsonPathParser extends Parser {
 	}
 
 	public static class BinaryExpressionContext extends ParserRuleContext {
-		public List<RegexExpressionContext> regexExpression() {
+		public /*~~>*/List<RegexExpressionContext> regexExpression() {
 			return getRuleContexts(RegexExpressionContext.class);
 		}
 		public RegexExpressionContext regexExpression(int i) {
 			return getRuleContext(RegexExpressionContext.class,i);
 		}
 		public TerminalNode LOGICAL_OPERATOR() { return getToken(JsonPathParser.LOGICAL_OPERATOR, 0); }
-		public List<BinaryExpressionContext> binaryExpression() {
+		public /*~~>*/List<BinaryExpressionContext> binaryExpression() {
 			return getRuleContexts(BinaryExpressionContext.class);
 		}
 		public BinaryExpressionContext binaryExpression(int i) {
 			return getRuleContext(BinaryExpressionContext.class,i);
 		}
-		public List<ContainsExpressionContext> containsExpression() {
+		public /*~~>*/List<ContainsExpressionContext> containsExpression() {
 			return getRuleContexts(ContainsExpressionContext.class);
 		}
 		public ContainsExpressionContext containsExpression(int i) {
@@ -1430,7 +1430,7 @@ public class JsonPathParser extends Parser {
 	}
 
 	public static class IndexesContext extends ParserRuleContext {
-		public List<TerminalNode> PositiveNumber() { return getTokens(JsonPathParser.PositiveNumber); }
+		public /*~~>*/List<TerminalNode> PositiveNumber() { return getTokens(JsonPathParser.PositiveNumber); }
 		public TerminalNode PositiveNumber(int i) {
 			return getToken(JsonPathParser.PositiveNumber, i);
 		}

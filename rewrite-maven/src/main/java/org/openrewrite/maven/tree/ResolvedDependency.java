@@ -45,9 +45,9 @@ public class ResolvedDependency {
      * Direct dependencies only that survived conflict resolution and exclusion.
      */
     @NonFinal
-    List<ResolvedDependency> dependencies;
+    /*~~>*/List<ResolvedDependency> dependencies;
 
-    List<License> licenses;
+    /*~~>*/List<License> licenses;
 
     int depth;
 
@@ -55,8 +55,8 @@ public class ResolvedDependency {
      * Only used by dependency resolution to avoid unnecessary empty list allocations for leaf dependencies.
      * @param dependencies A dependency list
      */
-    void unsafeSetDependencies(List<ResolvedDependency> dependencies) {
-        this.dependencies = dependencies;
+    void unsafeSetDependencies(/*~~>*/List<ResolvedDependency> dependencies) {
+        /*~~>*/this.dependencies = dependencies;
     }
 
     public ResolvedGroupArtifactVersion getGav() {

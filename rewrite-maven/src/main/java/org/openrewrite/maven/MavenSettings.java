@@ -150,8 +150,8 @@ public class MavenSettings {
         );
     }
 
-    public List<RawRepositories.Repository> getActiveRepositories(Iterable<String> activeProfiles) {
-        List<RawRepositories.Repository> activeRepositories = new ArrayList<>();
+    public /*~~>*/List<RawRepositories.Repository> getActiveRepositories(Iterable<String> activeProfiles) {
+        /*~~>*/List<RawRepositories.Repository> activeRepositories = new ArrayList<>();
 
         if (profiles != null) {
             for (Profile profile : profiles.getProfiles()) {
@@ -249,11 +249,11 @@ public class MavenSettings {
     public static class Profiles {
         @JacksonXmlProperty(localName = "profile")
         @JacksonXmlElementWrapper(useWrapping = false)
-        List<Profile> profiles = emptyList();
+        /*~~>*/List<Profile> profiles = emptyList();
 
         public Profiles merge(@Nullable Profiles profiles) {
             final Map<String, Profile> merged = new LinkedHashMap<>();
-            for (Profile profile : this.profiles) {
+            for (Profile profile : /*~~>*/this.profiles) {
                 merged.put(profile.id, profile);
             }
             if (profiles != null) {
@@ -271,15 +271,15 @@ public class MavenSettings {
     public static class ActiveProfiles {
         @JacksonXmlProperty(localName = "activeProfile")
         @JacksonXmlElementWrapper(useWrapping = false)
-        List<String> activeProfiles = emptyList();
+        /*~~>*/List<String> activeProfiles = emptyList();
 
         public ActiveProfiles merge(@Nullable ActiveProfiles activeProfiles) {
             if (activeProfiles == null) {
-                return new ActiveProfiles(new ArrayList<>(this.activeProfiles));
+                return new ActiveProfiles(new ArrayList<>(/*~~>*/this.activeProfiles));
             }
-            List<String> result = new ArrayList<>();
+            /*~~>*/List<String> result = new ArrayList<>();
             Set<String> uniqueValues = new HashSet<>();
-            for (String s : ListUtils.concatAll(this.activeProfiles, activeProfiles.activeProfiles)) {
+            for (String s : ListUtils.concatAll(/*~~>*/this.activeProfiles, /*~~>*/activeProfiles.activeProfiles)) {
                 if (uniqueValues.add(s)) {
                     result.add(s);
                 }
@@ -318,11 +318,11 @@ public class MavenSettings {
     public static class Mirrors {
         @JacksonXmlProperty(localName = "mirror")
         @JacksonXmlElementWrapper(useWrapping = false)
-        List<Mirror> mirrors = emptyList();
+        /*~~>*/List<Mirror> mirrors = emptyList();
 
         public Mirrors merge(@Nullable Mirrors mirrors) {
             final Map<String, Mirror> merged = new LinkedHashMap<>();
-            for (Mirror mirror : this.mirrors) {
+            for (Mirror mirror : /*~~>*/this.mirrors) {
                 merged.put(mirror.id, mirror);
             }
             if (mirrors != null) {
@@ -359,11 +359,11 @@ public class MavenSettings {
     public static class Servers {
         @JacksonXmlProperty(localName = "server")
         @JacksonXmlElementWrapper(useWrapping = false)
-        List<Server> servers = emptyList();
+        /*~~>*/List<Server> servers = emptyList();
 
         public Servers merge(@Nullable Servers servers) {
             final Map<String, Server> merged = new LinkedHashMap<>();
-            for (Server server : this.servers) {
+            for (Server server : /*~~>*/this.servers) {
                 merged.put(server.id, server);
             }
             if (servers != null) {

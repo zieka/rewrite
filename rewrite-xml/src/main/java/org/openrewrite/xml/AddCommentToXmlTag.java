@@ -61,7 +61,7 @@ public class AddCommentToXmlTag extends Recipe {
                 Xml.Tag t = (Xml.Tag) super.visitTag(tag, ctx);
                 if (matcher.matches(getCursor())) {
                     if (tag.getContent() != null) {
-                        List<Content> contents = new ArrayList<>(tag.getContent());
+                        /*~~>*/List<Content> contents = new ArrayList<>(tag.getContent());
                         boolean containsComment = contents.stream()
                                 .anyMatch(c -> c instanceof Xml.Comment &&
                                         commentText.equals(((Xml.Comment) c).getText()));

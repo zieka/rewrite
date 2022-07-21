@@ -30,7 +30,7 @@ import java.util.Scanner;
  */
 @Incubating(since = "7.4.0")
 public class MaybeUsesImport<P> extends JavaIsoVisitor<P> {
-    private final List<String> fullyQualifiedTypeSegments;
+    private final /*~~>*/List<String> fullyQualifiedTypeSegments;
 
     public MaybeUsesImport(String fullyQualifiedType) {
         Scanner scanner = new Scanner(fullyQualifiedType);

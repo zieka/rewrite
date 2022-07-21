@@ -96,7 +96,7 @@ public class JRightPadded<T> {
         }
     }
 
-    public static <T> List<T> getElements(List<JRightPadded<T>> ls) {
+    public static <T> /*~~>*/List<T> getElements(/*~~>*/List<JRightPadded<T>> ls) {
         List<T> list = new ArrayList<>();
         for (JRightPadded<T> l : ls) {
             T elem = l.getElement();
@@ -119,7 +119,7 @@ public class JRightPadded<T> {
         return before.withElement(elements);
     }
 
-    public static <J2 extends J> List<JRightPadded<J2>> withElements(List<JRightPadded<J2>> before, List<J2> elements) {
+    public static <J2 extends J> /*~~>*/List<JRightPadded<J2>> withElements(/*~~>*/List<JRightPadded<J2>> before, /*~~>*/List<J2> elements) {
         // a cheaper check for the most common case when there are no changes
         if (elements.size() == before.size()) {
             boolean hasChanges = false;

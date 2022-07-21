@@ -54,20 +54,20 @@ public class MavenMetadata {
     @Getter
     public static class Versioning {
 
-        List<String> versions;
+        /*~~>*/List<String> versions;
 
         @Nullable
-        List<SnapshotVersion> snapshotVersions;
+        /*~~>*/List<SnapshotVersion> snapshotVersions;
 
         @Nullable
         Snapshot snapshot;
 
         public Versioning(
-                @JacksonXmlElementWrapper(localName = "versions") List<String> versions,
-                @Nullable List<SnapshotVersion> snapshotVersions,
+                @JacksonXmlElementWrapper(localName = "versions") /*~~>*/List<String> versions,
+                @Nullable /*~~>*/List<SnapshotVersion> snapshotVersions,
                 @Nullable Snapshot snapshot) {
-            this.versions = versions;
-            this.snapshotVersions = snapshotVersions;
+            /*~~>*/this.versions = versions;
+            /*~~>*/this.snapshotVersions = snapshotVersions;
             this.snapshot = snapshot;
         }
     }

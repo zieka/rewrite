@@ -52,8 +52,8 @@ public class ProtoRightPadded<T> {
         return withElement(map.apply(element));
     }
 
-    public static <T> List<T> getElements(List<ProtoRightPadded<T>> ls) {
-        List<T> list = new ArrayList<>();
+    public static <T> /*~~>*/List<T> getElements(/*~~>*/List<ProtoRightPadded<T>> ls) {
+        /*~~>*/List<T> list = new ArrayList<>();
         for (ProtoRightPadded<T> l : ls) {
             T elem = l.getElement();
             list.add(elem);
@@ -61,7 +61,7 @@ public class ProtoRightPadded<T> {
         return list;
     }
 
-    public static <P extends Proto> List<ProtoRightPadded<P>> withElements(List<ProtoRightPadded<P>> before, List<P> elements) {
+    public static <P extends Proto> /*~~>*/List<ProtoRightPadded<P>> withElements(/*~~>*/List<ProtoRightPadded<P>> before, /*~~>*/List<P> elements) {
         // a cheaper check for the most common case when there are no changes
         if (elements.size() == before.size()) {
             boolean hasChanges = false;
@@ -76,7 +76,7 @@ public class ProtoRightPadded<T> {
             }
         }
 
-        List<ProtoRightPadded<P>> after = new ArrayList<>(elements.size());
+        /*~~>*/List<ProtoRightPadded<P>> after = new ArrayList<>(elements.size());
         Map<UUID, ProtoRightPadded<P>> beforeById = before.stream().collect(Collectors
                 .toMap(j -> j.getElement().getId(), Function.identity()));
 

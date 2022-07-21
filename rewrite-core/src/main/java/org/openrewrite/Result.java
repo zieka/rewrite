@@ -74,8 +74,8 @@ public class Result {
      * The method transforms the flat, stack-based representation into descriptors where children are grouped under their common parents.
      */
     @Incubating(since = "7.22.0")
-    public List<RecipeDescriptor> getRecipeDescriptorsThatMadeChanges() {
-        List<RecipeDescriptor> recipesToDisplay = new ArrayList<>();
+    public /*~~>*/List<RecipeDescriptor> getRecipeDescriptorsThatMadeChanges() {
+        /*~~>*/List<RecipeDescriptor> recipesToDisplay = new ArrayList<>();
 
         for (Stack<Recipe> currentStack : recipes) {
             Recipe root;

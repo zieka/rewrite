@@ -67,7 +67,7 @@ public abstract class TreeVisitor<T extends Tree, P> {
         };
     }
 
-    private List<TreeVisitor<T, P>> afterVisit;
+    private /*~~>*/List<TreeVisitor<T, P>> afterVisit;
 
     private int visitCount;
     private final DistributionSummary visitCountSummary = DistributionSummary.builder("rewrite.visitor.visit.method.count")
@@ -121,7 +121,7 @@ public abstract class TreeVisitor<T extends Tree, P> {
         afterVisit.add((TreeVisitor<T, P>) recipe.getVisitor());
     }
 
-    protected List<TreeVisitor<T, P>> getAfterVisit() {
+    protected /*~~>*/List<TreeVisitor<T, P>> getAfterVisit() {
         return afterVisit;
     }
 
@@ -262,7 +262,7 @@ public abstract class TreeVisitor<T extends Tree, P> {
         return isAcceptable ? t : (T) tree;
     }
 
-    public void visit(@Nullable List<? extends T> nodes, P p) {
+    public void visit(@Nullable /*~~>*/List<? extends T> nodes, P p) {
         if (nodes != null) {
             for (T node : nodes) {
                 visit(node, p);

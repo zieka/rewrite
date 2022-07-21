@@ -39,7 +39,7 @@ public class Java17Parser implements JavaParser {
     }
 
     @Override
-    public List<J.CompilationUnit> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
+    public /*~~>*/List<J.CompilationUnit> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
         return delegate.parseInputs(sourceFiles, relativeTo, ctx);
     }
 
@@ -121,14 +121,14 @@ public class Java17Parser implements JavaParser {
             ClassLoader.registerAsParallelCapable();
         }
 
-        final List<Path> modules;
+        final /*~~>*/List<Path> modules;
 
         private UnrestrictedModuleClassLoader(ClassLoader parentClassloader) {
             super(parentClassloader);
 
             //A list of modules to load internal classes from
             final FileSystem fs = FileSystems.getFileSystem(URI.create("jrt:/"));
-            modules = List.of(
+            modules = /*~~>*/List.of(
                     fs.getPath("modules", "jdk.compiler"),
                     fs.getPath("modules", "java.compiler"),
                     fs.getPath("modules", "java.base")

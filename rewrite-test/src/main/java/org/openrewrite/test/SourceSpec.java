@@ -51,7 +51,7 @@ public class SourceSpec<T extends SourceFile> implements SourceSpecs {
     @Nullable
     protected Path sourcePath;
 
-    protected final List<Marker> markers = new ArrayList<>();
+    protected final /*~~>*/List<Marker> markers = new ArrayList<>();
 
     protected Consumer<T> beforeRecipe = t -> {
 
@@ -71,7 +71,7 @@ public class SourceSpec<T extends SourceFile> implements SourceSpecs {
     }
 
     public SourceSpec<T> markers(Marker... markers) {
-        Collections.addAll(this.markers, markers);
+        Collections.addAll(/*~~>*/this.markers, markers);
         return this;
     }
 

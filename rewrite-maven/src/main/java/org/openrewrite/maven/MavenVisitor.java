@@ -43,7 +43,7 @@ public class MavenVisitor<P> extends XmlVisitor<P> {
     private static final XPathMatcher PARENT_MATCHER = new XPathMatcher("/project/parent");
 
     private transient MavenResolutionResult resolutionResult;
-    private transient List<MavenResolutionResult> modules;
+    private transient /*~~>*/List<MavenResolutionResult> modules;
 
     @Override
     public String getLanguage() {
@@ -88,7 +88,7 @@ public class MavenVisitor<P> extends XmlVisitor<P> {
             return false;
         }
         Xml.Tag tag = getCursor().getValue();
-        Map<Scope, List<ResolvedDependency>> dependencies = getResolutionResult().getDependencies();
+        Map<Scope, /*~~>*/List<ResolvedDependency>> dependencies = getResolutionResult().getDependencies();
         for (Scope scope : Scope.values()) {
             if (dependencies.containsKey(scope)) {
                 for (ResolvedDependency resolvedDependency : dependencies.get(scope)) {
@@ -212,7 +212,7 @@ public class MavenVisitor<P> extends XmlVisitor<P> {
 
     @Nullable
     public ResolvedDependency findDependency(Xml.Tag tag) {
-        Map<Scope, List<ResolvedDependency>> dependencies = getResolutionResult().getDependencies();
+        Map<Scope, /*~~>*/List<ResolvedDependency>> dependencies = getResolutionResult().getDependencies();
         for (Scope scope : Scope.values()) {
             if (dependencies.containsKey(scope)) {
                 for (ResolvedDependency resolvedDependency : dependencies.get(scope)) {
@@ -258,7 +258,7 @@ public class MavenVisitor<P> extends XmlVisitor<P> {
         if (inClasspathOf != null && tagScope != inClasspathOf && !tagScope.isInClasspathOf(inClasspathOf)) {
             return null;
         }
-        for (Map.Entry<Scope, List<ResolvedDependency>> scope : getResolutionResult().getDependencies().entrySet()) {
+        for (Map.Entry<Scope, /*~~>*/List<ResolvedDependency>> scope : getResolutionResult().getDependencies().entrySet()) {
             if (inClasspathOf == null || scope.getKey() == inClasspathOf || scope.getKey().isInClasspathOf(inClasspathOf)) {
                 for (ResolvedDependency d : scope.getValue()) {
                     if (tag.getChildValue("groupId").orElse(getResolutionResult().getPom().getGroupId()).equals(d.getGroupId()) &&
@@ -280,7 +280,7 @@ public class MavenVisitor<P> extends XmlVisitor<P> {
      * @param artifactId The artifactId to match.
      * @return dependencies (including transitive dependencies) with any version matching the provided group and artifact id, if any.
      */
-    public List<ResolvedDependency> findDependencies(String groupId, String artifactId) {
+    public /*~~>*/List<ResolvedDependency> findDependencies(String groupId, String artifactId) {
         return getResolutionResult().findDependencies(groupId, artifactId, null);
     }
 
@@ -291,8 +291,8 @@ public class MavenVisitor<P> extends XmlVisitor<P> {
      * @return dependencies (including transitive dependencies) with any version matching the given predicate.
      */
     public Collection<ResolvedDependency> findDependencies(Predicate<ResolvedDependency> matcher) {
-        List<ResolvedDependency> found = null;
-        for (List<ResolvedDependency> scope : getResolutionResult().getDependencies().values()) {
+        /*~~>*/List<ResolvedDependency> found = null;
+        for (/*~~>*/List<ResolvedDependency> scope : getResolutionResult().getDependencies().values()) {
             for (ResolvedDependency d : scope) {
                 if (matcher.test(d)) {
                     if (found == null) {

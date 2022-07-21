@@ -64,30 +64,30 @@ public class ResolvedPom {
     }
 
     @JsonCreator
-    ResolvedPom(Pom requested, Iterable<String> activeProfiles, Map<String, String> properties, List<ResolvedManagedDependency> dependencyManagement, @Nullable List<MavenRepository> initialRepositories, List<MavenRepository> repositories, List<Dependency> requestedDependencies) {
+    ResolvedPom(Pom requested, Iterable<String> activeProfiles, Map<String, String> properties, /*~~>*/List<ResolvedManagedDependency> dependencyManagement, @Nullable /*~~>*/List<MavenRepository> initialRepositories, /*~~>*/List<MavenRepository> repositories, /*~~>*/List<Dependency> requestedDependencies) {
         this.requested = requested;
         this.activeProfiles = activeProfiles;
         this.properties = properties;
-        this.dependencyManagement = dependencyManagement;
-        this.initialRepositories = initialRepositories;
-        this.repositories = repositories;
-        this.requestedDependencies = requestedDependencies;
+        /*~~>*/this.dependencyManagement = dependencyManagement;
+        /*~~>*/this.initialRepositories = initialRepositories;
+        /*~~>*/this.repositories = repositories;
+        /*~~>*/this.requestedDependencies = requestedDependencies;
     }
 
     @NonFinal
     Map<String, String> properties;
 
     @NonFinal
-    List<ResolvedManagedDependency> dependencyManagement;
+    /*~~>*/List<ResolvedManagedDependency> dependencyManagement;
 
     @NonFinal
-    List<MavenRepository> initialRepositories;
+    /*~~>*/List<MavenRepository> initialRepositories;
 
     @NonFinal
-    List<MavenRepository> repositories;
+    /*~~>*/List<MavenRepository> repositories;
 
     @NonFinal
-    List<Dependency> requestedDependencies;
+    /*~~>*/List<Dependency> requestedDependencies;
 
     /**
      * Deduplicate dependencies and dependency management dependencies
@@ -97,12 +97,12 @@ public class ResolvedPom {
     public ResolvedPom deduplicate() {
         Set<UniqueDependencyKey> uniqueManagedDependencies = new HashSet<>(dependencyManagement.size());
 
-        List<ResolvedManagedDependency> dedupMd = ListUtils.map(dependencyManagement, dm -> uniqueManagedDependencies.add(new UniqueDependencyKey(dm.getGav(), dm.getType(), dm.getClassifier(), dm.getScope())) ?
+        /*~~>*/List<ResolvedManagedDependency> dedupMd = ListUtils.map(dependencyManagement, dm -> uniqueManagedDependencies.add(new UniqueDependencyKey(dm.getGav(), dm.getType(), dm.getClassifier(), dm.getScope())) ?
                 dm : null);
         dependencyManagement = dedupMd;
 
         uniqueManagedDependencies.clear();
-        List<Dependency> dedupD = ListUtils.map(requestedDependencies, d -> uniqueManagedDependencies.add(new UniqueDependencyKey(d.getGav(), d.getType(), d.getClassifier(), d.getScope())) ?
+        /*~~>*/List<Dependency> dedupD = ListUtils.map(requestedDependencies, d -> uniqueManagedDependencies.add(new UniqueDependencyKey(d.getGav(), d.getType(), d.getClassifier(), d.getScope())) ?
                 d : null);
         requestedDependencies = dedupD;
         return this;
@@ -147,7 +147,7 @@ public class ResolvedPom {
             }
         }
 
-        List<Dependency> resolvedRequestedDependencies = resolved.getRequestedDependencies();
+        /*~~>*/List<Dependency> resolvedRequestedDependencies = resolved.getRequestedDependencies();
         if (requestedDependencies.size() != resolvedRequestedDependencies.size()) {
             return resolved;
         }
@@ -157,7 +157,7 @@ public class ResolvedPom {
             }
         }
 
-        List<ResolvedManagedDependency> resolvedDependencyManagement = resolved.getDependencyManagement();
+        /*~~>*/List<ResolvedManagedDependency> resolvedDependencyManagement = resolved.getDependencyManagement();
         if (dependencyManagement.size() != resolvedDependencyManagement.size()) {
             return resolved;
         }
@@ -168,7 +168,7 @@ public class ResolvedPom {
             }
         }
 
-        List<MavenRepository> resolvedRepositories = resolved.getRepositories();
+        /*~~>*/List<MavenRepository> resolvedRepositories = resolved.getRepositories();
         if (repositories.size() != resolvedRepositories.size()) {
             return resolved;
         }
@@ -258,7 +258,7 @@ public class ResolvedPom {
         return null;
     }
 
-    public List<GroupArtifact> getManagedExclusions(String groupId, String artifactId, @Nullable String type, @Nullable String classifier) {
+    public /*~~>*/List<GroupArtifact> getManagedExclusions(String groupId, String artifactId, @Nullable String type, @Nullable String classifier) {
         for (ResolvedManagedDependency dm : dependencyManagement) {
             if (dm.matches(groupId, artifactId, type, classifier)) {
                 return dm.getExclusions() == null ? emptyList() : dm.getExclusions();
@@ -299,7 +299,7 @@ public class ResolvedPom {
         }
 
         void resolveParentsRecursively(Pom requested) {
-            List<Pom> pomAncestry = new ArrayList<>();
+            /*~~>*/List<Pom> pomAncestry = new ArrayList<>();
             pomAncestry.add(requested);
 
             if (initialRepositories != null) {
@@ -328,7 +328,7 @@ public class ResolvedPom {
             resolveParentDependenciesRecursively(pomAncestry);
         }
 
-        private void resolveParentPropertiesAndRepositoriesRecursively(List<Pom> pomAncestry) {
+        private void resolveParentPropertiesAndRepositoriesRecursively(/*~~>*/List<Pom> pomAncestry) {
             Pom pom = pomAncestry.get(0);
 
             //Resolve properties
@@ -363,7 +363,7 @@ public class ResolvedPom {
             }
         }
 
-        private void resolveParentDependenciesRecursively(List<Pom> pomAncestry) {
+        private void resolveParentDependenciesRecursively(/*~~>*/List<Pom> pomAncestry) {
             Pom pom = pomAncestry.get(0);
 
             for (Profile profile : pom.getProfiles()) {
@@ -396,7 +396,7 @@ public class ResolvedPom {
             }
         }
 
-        private void mergeRequestedDependencies(List<Dependency> incomingRequestedDependencies) {
+        private void mergeRequestedDependencies(/*~~>*/List<Dependency> incomingRequestedDependencies) {
             if (!incomingRequestedDependencies.isEmpty()) {
                 if (requestedDependencies == null || requestedDependencies.isEmpty()) {
                     //It is possible for the dependencies to be an empty, immutable list.
@@ -408,7 +408,7 @@ public class ResolvedPom {
             }
         }
 
-        private void mergeRepositories(List<MavenRepository> incomingRepositories) {
+        private void mergeRepositories(/*~~>*/List<MavenRepository> incomingRepositories) {
             if (!incomingRepositories.isEmpty()) {
                 if (repositories == null || repositories.isEmpty()) {
                     //It is possible for the repositories to be an empty, immutable list.
@@ -459,7 +459,7 @@ public class ResolvedPom {
             }
         }
 
-        private void mergeDependencyManagement(List<ManagedDependency> incomingDependencyManagement, Pom pom) {
+        private void mergeDependencyManagement(/*~~>*/List<ManagedDependency> incomingDependencyManagement, Pom pom) {
             if (!incomingDependencyManagement.isEmpty()) {
                 if (dependencyManagement == null || dependencyManagement.isEmpty()) {
                     dependencyManagement = new ArrayList<>();
@@ -495,15 +495,15 @@ public class ResolvedPom {
         }
     }
 
-    public List<ResolvedDependency> resolveDependencies(Scope scope, MavenPomDownloader downloader, ExecutionContext ctx) {
+    public /*~~>*/List<ResolvedDependency> resolveDependencies(Scope scope, MavenPomDownloader downloader, ExecutionContext ctx) {
         return resolveDependencies(scope, new HashMap<>(), downloader, ctx);
     }
 
-    public List<ResolvedDependency> resolveDependencies(Scope scope, Map<GroupArtifact, VersionRequirement> requirements,
+    public /*~~>*/List<ResolvedDependency> resolveDependencies(Scope scope, Map<GroupArtifact, VersionRequirement> requirements,
                                                         MavenPomDownloader downloader, ExecutionContext ctx) {
-        List<ResolvedDependency> dependencies = new ArrayList<>();
+        /*~~>*/List<ResolvedDependency> dependencies = new ArrayList<>();
 
-        List<DependencyAndDependent> dependenciesAtDepth = new ArrayList<>();
+        /*~~>*/List<DependencyAndDependent> dependenciesAtDepth = new ArrayList<>();
         for (Dependency requestedDependency : getRequestedDependencies()) {
             Dependency d = getValues(requestedDependency, 0);
             Scope dScope = Scope.fromName(d.getScope());
@@ -514,7 +514,7 @@ public class ResolvedPom {
 
         int depth = 0;
         while (!dependenciesAtDepth.isEmpty()) {
-            List<DependencyAndDependent> dependenciesAtNextDepth = new ArrayList<>();
+            /*~~>*/List<DependencyAndDependent> dependenciesAtNextDepth = new ArrayList<>();
 
             for (DependencyAndDependent dd : dependenciesAtDepth) {
                 //First get the dependency (relative to the pom it was defined in)
@@ -669,7 +669,7 @@ public class ResolvedPom {
             scope = getValue(d.getScope());
         }
 
-        List<GroupArtifact> managedExclusions = getManagedExclusions(d.getGroupId(), d.getArtifactId(), d.getType(), d.getClassifier());
+        /*~~>*/List<GroupArtifact> managedExclusions = getManagedExclusions(d.getGroupId(), d.getArtifactId(), d.getType(), d.getClassifier());
         if (!managedExclusions.isEmpty()) {
             d = d.withExclusions(ListUtils.concatAll(d.getExclusions(), managedExclusions));
         }

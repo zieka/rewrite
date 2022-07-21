@@ -37,7 +37,7 @@ public class Dependency {
     String scope;
 
     @With
-    List<GroupArtifact> exclusions;
+    /*~~>*/List<GroupArtifact> exclusions;
 
     @With
     boolean optional;

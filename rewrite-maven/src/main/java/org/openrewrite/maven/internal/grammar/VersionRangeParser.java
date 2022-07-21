@@ -110,13 +110,13 @@ public class VersionRangeParser extends Parser {
 	}
 
 	public static class VersionRequirementContext extends ParserRuleContext {
-		public List<RangeContext> range() {
+		public /*~~>*/List<RangeContext> range() {
 			return getRuleContexts(RangeContext.class);
 		}
 		public RangeContext range(int i) {
 			return getRuleContext(RangeContext.class,i);
 		}
-		public List<TerminalNode> COMMA() { return getTokens(VersionRangeParser.COMMA); }
+		public /*~~>*/List<TerminalNode> COMMA() { return getTokens(VersionRangeParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(VersionRangeParser.COMMA, i);
 		}
@@ -359,7 +359,7 @@ public class VersionRangeParser extends Parser {
 	}
 
 	public static class BoundedLowerContext extends ParserRuleContext {
-		public List<TerminalNode> Version() { return getTokens(VersionRangeParser.Version); }
+		public /*~~>*/List<TerminalNode> Version() { return getTokens(VersionRangeParser.Version); }
 		public TerminalNode Version(int i) {
 			return getToken(VersionRangeParser.Version, i);
 		}

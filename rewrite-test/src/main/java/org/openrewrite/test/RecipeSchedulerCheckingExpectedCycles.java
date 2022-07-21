@@ -45,10 +45,10 @@ class RecipeSchedulerCheckingExpectedCycles implements RecipeScheduler {
     }
 
     @Override
-    public <S extends SourceFile> List<S> scheduleVisit(Stack<Recipe> recipeStack, List<S> before,
+    public <S extends SourceFile> /*~~>*/List<S> scheduleVisit(Stack<Recipe> recipeStack, /*~~>*/List<S> before,
                                                         ExecutionContext ctx, Map<UUID, Stack<Recipe>> recipeThatDeletedSourceFile) {
         ctx.putMessage("cyclesThatResultedInChanges", cyclesThatResultedInChanges);
-        List<S> afterList = delegate.scheduleVisit(recipeStack, before, ctx, recipeThatDeletedSourceFile);
+        /*~~>*/List<S> afterList = delegate.scheduleVisit(recipeStack, before, ctx, recipeThatDeletedSourceFile);
         if (afterList != before) {
             cyclesThatResultedInChanges++;
             if (cyclesThatResultedInChanges > expectedCyclesThatMakeChanges &&

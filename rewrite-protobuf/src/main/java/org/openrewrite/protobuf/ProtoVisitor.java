@@ -275,7 +275,7 @@ public class ProtoVisitor<P> extends TreeVisitor<Proto, P> {
         setCursor(new Cursor(getCursor(), container));
 
         Space before = visitSpace(container.getBefore(), p);
-        List<ProtoRightPadded<P2>> ps = ListUtils.map(container.getPadding().getElements(), t -> visitRightPadded(t, p));
+        /*~~>*/List<ProtoRightPadded<P2>> ps = ListUtils.map(container.getPadding().getElements(), t -> visitRightPadded(t, p));
 
         setCursor(getCursor().getParent());
 

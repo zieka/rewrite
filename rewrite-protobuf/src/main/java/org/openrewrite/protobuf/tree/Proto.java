@@ -80,18 +80,18 @@ public interface Proto extends Tree {
         @Getter
         Markers markers;
 
-        List<ProtoRightPadded<Proto>> statements;
+        /*~~>*/List<ProtoRightPadded<Proto>> statements;
 
         @With
         @Getter
         Space end;
 
-        public List<Proto> getStatements() {
+        public /*~~>*/List<Proto> getStatements() {
             return ProtoRightPadded.getElements(statements);
         }
 
-        public Block withStatements(List<Proto> statements) {
-            return getPadding().withStatements(ProtoRightPadded.withElements(this.statements, statements));
+        public Block withStatements(/*~~>*/List<Proto> statements) {
+            return getPadding().withStatements(ProtoRightPadded.withElements(/*~~>*/this.statements, statements));
         }
 
         @Override
@@ -118,12 +118,12 @@ public interface Proto extends Tree {
         public static class Padding {
             private final Block t;
 
-            public List<ProtoRightPadded<Proto>> getStatements() {
-                return t.statements;
+            public /*~~>*/List<ProtoRightPadded<Proto>> getStatements() {
+                return /*~~>*/t.statements;
             }
 
-            public Block withStatements(List<ProtoRightPadded<Proto>> statements) {
-                return t.statements == statements ? t : new Block(t.id, t.prefix, t.markers, statements, t.end);
+            public Block withStatements(/*~~>*/List<ProtoRightPadded<Proto>> statements) {
+                return /*~~>*/t.statements == statements ? t : new Block(t.id, t.prefix, t.markers, statements, t.end);
             }
         }
     }
@@ -203,14 +203,14 @@ public interface Proto extends Tree {
         @Getter
         Syntax syntax;
 
-        List<ProtoRightPadded<Proto>> body;
+        /*~~>*/List<ProtoRightPadded<Proto>> body;
 
-        public List<Proto> getBody() {
+        public /*~~>*/List<Proto> getBody() {
             return ProtoRightPadded.getElements(body);
         }
 
-        public Document withBody(List<Proto> body) {
-            return getPadding().withBody(ProtoRightPadded.withElements(this.body, body));
+        public Document withBody(/*~~>*/List<Proto> body) {
+            return getPadding().withBody(ProtoRightPadded.withElements(/*~~>*/this.body, body));
         }
 
         @With
@@ -246,12 +246,12 @@ public interface Proto extends Tree {
         public static class Padding {
             private final Document t;
 
-            public List<ProtoRightPadded<Proto>> getBody() {
-                return t.body;
+            public /*~~>*/List<ProtoRightPadded<Proto>> getBody() {
+                return /*~~>*/t.body;
             }
 
-            public Document withBody(List<ProtoRightPadded<Proto>> body) {
-                return t.body == body ? t : new Document(t.id, t.sourcePath, t.fileAttributes, t.prefix, t.markers, t.charsetName, t.charsetBomMarked, t.checksum, t.syntax, body, t.eof);
+            public Document withBody(/*~~>*/List<ProtoRightPadded<Proto>> body) {
+                return /*~~>*/t.body == body ? t : new Document(t.id, t.sourcePath, t.fileAttributes, t.prefix, t.markers, t.charsetName, t.charsetBomMarked, t.checksum, t.syntax, body, t.eof);
             }
         }
     }
@@ -360,11 +360,11 @@ public interface Proto extends Tree {
         ProtoContainer<Option> options;
 
         @Nullable
-        public List<Option> getOptions() {
+        public /*~~>*/List<Option> getOptions() {
             return options == null ? null : options.getElements();
         }
 
-        public Field withOptions(List<Option> fieldOptions) {
+        public Field withOptions(/*~~>*/List<Option> fieldOptions) {
             return getPadding().withOptions(ProtoContainer.withElementsNullable(this.options, fieldOptions));
         }
 
@@ -517,11 +517,11 @@ public interface Proto extends Tree {
         ProtoContainer<Option> options;
 
         @Nullable
-        public List<Option> getOptions() {
+        public /*~~>*/List<Option> getOptions() {
             return options == null ? null : options.getElements();
         }
 
-        public EnumField withOptions(List<Option> fieldOptions) {
+        public EnumField withOptions(/*~~>*/List<Option> fieldOptions) {
             return getPadding().withOptions(ProtoContainer.withElementsNullable(this.options, fieldOptions));
         }
 
@@ -814,11 +814,11 @@ public interface Proto extends Tree {
         ProtoContainer<Option> options;
 
         @Nullable
-        public List<Option> getOptions() {
+        public /*~~>*/List<Option> getOptions() {
             return options == null ? null : options.getElements();
         }
 
-        public MapField withOptions(@Nullable List<Option> options) {
+        public MapField withOptions(@Nullable /*~~>*/List<Option> options) {
             return getPadding().withOptions(ProtoContainer.withElementsNullable(this.options, options));
         }
 
@@ -1202,11 +1202,11 @@ public interface Proto extends Tree {
         ProtoContainer<Proto> reservations;
 
         @Nullable
-        public List<Proto> getReservations() {
+        public /*~~>*/List<Proto> getReservations() {
             return reservations == null ? null : reservations.getElements();
         }
 
-        public Reserved withReservations(@Nullable List<Proto> reservations) {
+        public Reserved withReservations(@Nullable /*~~>*/List<Proto> reservations) {
             return getPadding().withReservations(ProtoContainer.withElementsNullable(this.reservations, reservations));
         }
 

@@ -69,11 +69,11 @@ public interface J extends Tree {
 
     Space getPrefix();
 
-    default List<Comment> getComments() {
+    default /*~~>*/List<Comment> getComments() {
         return getPrefix().getComments();
     }
 
-    default <J2 extends J> J2 withComments(List<Comment> comments) {
+    default <J2 extends J> J2 withComments(/*~~>*/List<Comment> comments) {
         return withPrefix(getPrefix().withComments(comments));
     }
 
@@ -124,7 +124,7 @@ public interface J extends Tree {
         Markers markers;
 
         @With
-        List<J.Annotation> annotations;
+        /*~~>*/List<J.Annotation> annotations;
 
         @With
         TypeTree typeExpression;
@@ -191,11 +191,11 @@ public interface J extends Tree {
         JContainer<Expression> arguments;
 
         @Nullable
-        public List<Expression> getArguments() {
+        public /*~~>*/List<Expression> getArguments() {
             return arguments == null ? null : arguments.getElements();
         }
 
-        public Annotation withArguments(@Nullable List<Expression> arguments) {
+        public Annotation withArguments(@Nullable /*~~>*/List<Expression> arguments) {
             return getPadding().withArguments(JContainer.withElementsNullable(this.arguments, arguments));
         }
 
@@ -311,7 +311,7 @@ public interface J extends Tree {
         TypeTree elementType;
 
         @With
-        List<JRightPadded<Space>> dimensions;
+        /*~~>*/List<JRightPadded<Space>> dimensions;
 
         @Override
         public JavaType getType() {
@@ -429,7 +429,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return singletonList(this);
         }
 
@@ -523,7 +523,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return singletonList(this);
         }
 
@@ -625,7 +625,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             List<J> sideEffects = new ArrayList<>(2);
             sideEffects.addAll(left.getSideEffects());
             sideEffects.addAll(right.getSideEffects());
@@ -721,13 +721,13 @@ public interface J extends Tree {
             return getPadding().withStatic(this.statik.withElement(statik));
         }
 
-        List<JRightPadded<Statement>> statements;
+        /*~~>*/List<JRightPadded<Statement>> statements;
 
-        public List<Statement> getStatements() {
+        public /*~~>*/List<Statement> getStatements() {
             return JRightPadded.getElements(statements);
         }
 
-        public Block withStatements(List<Statement> statements) {
+        public Block withStatements(/*~~>*/List<Statement> statements) {
             return getPadding().withStatements(JRightPadded.withElements(this.statements, statements));
         }
 
@@ -771,11 +771,11 @@ public interface J extends Tree {
                 return t.statik == statik ? t : new Block(t.id, t.prefix, t.markers, statik, t.statements, t.end);
             }
 
-            public List<JRightPadded<Statement>> getStatements() {
+            public /*~~>*/List<JRightPadded<Statement>> getStatements() {
                 return t.statements;
             }
 
-            public Block withStatements(List<JRightPadded<Statement>> statements) {
+            public Block withStatements(/*~~>*/List<JRightPadded<Statement>> statements) {
                 return t.statements == statements ? t : new Block(t.id, t.prefix, t.markers, t.statik, statements, t.end);
             }
         }
@@ -895,11 +895,11 @@ public interface J extends Tree {
 
         JContainer<Statement> statements;
 
-        public List<Statement> getStatements() {
+        public /*~~>*/List<Statement> getStatements() {
             return statements.getElements();
         }
 
-        public Case withStatements(List<Statement> statements) {
+        public Case withStatements(/*~~>*/List<Statement> statements) {
             return getPadding().withStatements(this.statements.getPadding().withElements(JRightPadded.withElements(
                     this.statements.getPadding().getElements(), statements)));
         }
@@ -976,11 +976,11 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<Annotation> leadingAnnotations;
+        /*~~>*/List<Annotation> leadingAnnotations;
 
         @With
         @Getter
-        List<Modifier> modifiers;
+        /*~~>*/List<Modifier> modifiers;
 
         Kind kind;
 
@@ -1005,11 +1005,11 @@ public interface J extends Tree {
         JContainer<TypeParameter> typeParameters;
 
         @Nullable
-        public List<TypeParameter> getTypeParameters() {
+        public /*~~>*/List<TypeParameter> getTypeParameters() {
             return typeParameters == null ? null : typeParameters.getElements();
         }
 
-        public ClassDeclaration withTypeParameters(@Nullable List<TypeParameter> typeParameters) {
+        public ClassDeclaration withTypeParameters(@Nullable /*~~>*/List<TypeParameter> typeParameters) {
             return getPadding().withTypeParameters(JContainer.withElementsNullable(this.typeParameters, typeParameters));
         }
 
@@ -1029,11 +1029,11 @@ public interface J extends Tree {
         JContainer<TypeTree> implementings;
 
         @Nullable
-        public List<TypeTree> getImplements() {
+        public /*~~>*/List<TypeTree> getImplements() {
             return implementings == null ? null : implementings.getElements();
         }
 
-        public ClassDeclaration withImplements(@Nullable List<TypeTree> implementings) {
+        public ClassDeclaration withImplements(@Nullable /*~~>*/List<TypeTree> implementings) {
             return getPadding().withImplements(JContainer.withElementsNullable(this.implementings, implementings));
         }
 
@@ -1065,7 +1065,7 @@ public interface J extends Tree {
         }
 
         // gather annotations from everywhere they may occur
-        public List<J.Annotation> getAllAnnotations() {
+        public /*~~>*/List<J.Annotation> getAllAnnotations() {
             List<Annotation> allAnnotations = new ArrayList<>(leadingAnnotations);
             for (J.Modifier modifier : modifiers) {
                 allAnnotations.addAll(modifier.getAnnotations());
@@ -1103,7 +1103,7 @@ public interface J extends Tree {
 
             @With
             @Getter
-            List<Annotation> annotations;
+            /*~~>*/List<Annotation> annotations;
 
             @With
             @Getter
@@ -1276,19 +1276,19 @@ public interface J extends Tree {
             return getPadding().withPackageDeclaration(JRightPadded.withElement(this.packageDeclaration, packageDeclaration));
         }
 
-        List<JRightPadded<Import>> imports;
+        /*~~>*/List<JRightPadded<Import>> imports;
 
-        public List<Import> getImports() {
+        public /*~~>*/List<Import> getImports() {
             return JRightPadded.getElements(imports);
         }
 
-        public CompilationUnit withImports(List<Import> imports) {
+        public CompilationUnit withImports(/*~~>*/List<Import> imports) {
             return getPadding().withImports(JRightPadded.withElements(this.imports, imports));
         }
 
         @With
         @Getter
-        List<ClassDeclaration> classes;
+        /*~~>*/List<ClassDeclaration> classes;
 
         @With
         @Getter
@@ -1353,12 +1353,12 @@ public interface J extends Tree {
             }
 
             @Override
-            public List<JRightPadded<Import>> getImports() {
+            public /*~~>*/List<JRightPadded<Import>> getImports() {
                 return t.imports;
             }
 
             @Override
-            public CompilationUnit withImports(List<JRightPadded<Import>> imports) {
+            public CompilationUnit withImports(/*~~>*/List<JRightPadded<Import>> imports) {
                 return t.imports == imports ? t : new CompilationUnit(t.id, t.prefix, t.markers, t.sourcePath, t.fileAttributes, t.charsetName, t.charsetBomMarked, null,
                         t.packageDeclaration, imports, t.classes, t.eof);
             }
@@ -1541,7 +1541,7 @@ public interface J extends Tree {
         Markers markers;
 
         @With
-        List<J.Annotation> annotations;
+        /*~~>*/List<J.Annotation> annotations;
 
         @With
         Identifier name;
@@ -1584,13 +1584,13 @@ public interface J extends Tree {
         @Getter
         Markers markers;
 
-        List<JRightPadded<EnumValue>> enums;
+        /*~~>*/List<JRightPadded<EnumValue>> enums;
 
-        public List<EnumValue> getEnums() {
+        public /*~~>*/List<EnumValue> getEnums() {
             return JRightPadded.getElements(enums);
         }
 
-        public EnumValueSet withEnums(List<EnumValue> enums) {
+        public EnumValueSet withEnums(/*~~>*/List<EnumValue> enums) {
             return getPadding().withEnums(JRightPadded.withElements(this.enums, enums));
         }
 
@@ -1627,11 +1627,11 @@ public interface J extends Tree {
         public static class Padding {
             private final EnumValueSet t;
 
-            public List<JRightPadded<EnumValue>> getEnums() {
+            public /*~~>*/List<JRightPadded<EnumValue>> getEnums() {
                 return t.enums;
             }
 
-            public EnumValueSet withEnums(List<JRightPadded<EnumValue>> enums) {
+            public EnumValueSet withEnums(/*~~>*/List<JRightPadded<EnumValue>> enums) {
                 return t.enums == enums ? t : new EnumValueSet(t.id, t.prefix, t.markers, enums, t.terminatedWithSemicolon);
             }
         }
@@ -1688,7 +1688,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return target.getSideEffects();
         }
 
@@ -2003,13 +2003,13 @@ public interface J extends Tree {
             @Getter
             Markers markers;
 
-            List<JRightPadded<Statement>> init;
+            /*~~>*/List<JRightPadded<Statement>> init;
 
-            public List<Statement> getInit() {
+            public /*~~>*/List<Statement> getInit() {
                 return JRightPadded.getElements(init);
             }
 
-            public Control withInit(List<Statement> init) {
+            public Control withInit(/*~~>*/List<Statement> init) {
                 return getPadding().withInit(JRightPadded.withElements(this.init, init));
             }
 
@@ -2023,13 +2023,13 @@ public interface J extends Tree {
                 return getPadding().withCondition(this.condition.withElement(condition));
             }
 
-            List<JRightPadded<Statement>> update;
+            /*~~>*/List<JRightPadded<Statement>> update;
 
-            public List<Statement> getUpdate() {
+            public /*~~>*/List<Statement> getUpdate() {
                 return JRightPadded.getElements(update);
             }
 
-            public Control withUpdate(List<Statement> update) {
+            public Control withUpdate(/*~~>*/List<Statement> update) {
                 return getPadding().withUpdate(JRightPadded.withElements(this.update, update));
             }
 
@@ -2062,11 +2062,11 @@ public interface J extends Tree {
             public static class Padding {
                 private final Control t;
 
-                public List<JRightPadded<Statement>> getInit() {
+                public /*~~>*/List<JRightPadded<Statement>> getInit() {
                     return t.init;
                 }
 
-                public ForLoop.Control withInit(List<JRightPadded<Statement>> init) {
+                public ForLoop.Control withInit(/*~~>*/List<JRightPadded<Statement>> init) {
                     return t.init == init ? t : new ForLoop.Control(t.id, t.prefix, t.markers, init, t.condition, t.update);
                 }
 
@@ -2078,11 +2078,11 @@ public interface J extends Tree {
                     return t.condition == condition ? t : new ForLoop.Control(t.id, t.prefix, t.markers, t.init, condition, t.update);
                 }
 
-                public List<JRightPadded<Statement>> getUpdate() {
+                public /*~~>*/List<JRightPadded<Statement>> getUpdate() {
                     return t.update;
                 }
 
-                public ForLoop.Control withUpdate(List<JRightPadded<Statement>> update) {
+                public ForLoop.Control withUpdate(/*~~>*/List<JRightPadded<Statement>> update) {
                     return t.update == update ? t : new ForLoop.Control(t.id, t.prefix, t.markers, t.init, t.condition, update);
                 }
             }
@@ -2724,13 +2724,13 @@ public interface J extends Tree {
             @Getter
             boolean parenthesized;
 
-            List<JRightPadded<J>> parameters;
+            /*~~>*/List<JRightPadded<J>> parameters;
 
-            public List<J> getParameters() {
+            public /*~~>*/List<J> getParameters() {
                 return JRightPadded.getElements(parameters);
             }
 
-            public Parameters withParameters(List<J> parameters) {
+            public Parameters withParameters(/*~~>*/List<J> parameters) {
                 return getPadding().withParams(JRightPadded.withElements(this.parameters, parameters));
             }
 
@@ -2757,11 +2757,11 @@ public interface J extends Tree {
             public static class Padding {
                 private final Parameters t;
 
-                public List<JRightPadded<J>> getParams() {
+                public /*~~>*/List<JRightPadded<J>> getParams() {
                     return t.parameters;
                 }
 
-                public Parameters withParams(List<JRightPadded<J>> parameters) {
+                public Parameters withParams(/*~~>*/List<JRightPadded<J>> parameters) {
                     return t.parameters == parameters ? t : new Parameters(t.id, t.prefix, t.markers, t.parenthesized, parameters);
                 }
             }
@@ -2792,7 +2792,7 @@ public interface J extends Tree {
 
         @With
         @Nullable
-        List<UnicodeEscape> unicodeEscapes;
+        /*~~>*/List<UnicodeEscape> unicodeEscapes;
 
         /**
          * Including String literals
@@ -2877,21 +2877,21 @@ public interface J extends Tree {
         JContainer<Expression> typeParameters;
 
         @Nullable
-        public List<Expression> getTypeParameters() {
+        public /*~~>*/List<Expression> getTypeParameters() {
             return typeParameters == null ? null : typeParameters.getElements();
         }
 
-        public MemberReference withTypeParameters(@Nullable List<Expression> typeParameters) {
+        public MemberReference withTypeParameters(@Nullable /*~~>*/List<Expression> typeParameters) {
             return getPadding().withTypeParameters(JContainer.withElementsNullable(this.typeParameters, typeParameters));
         }
 
         @Override
-        public List<Expression> getArguments() {
+        public /*~~>*/List<Expression> getArguments() {
             return emptyList();
         }
 
         @Override
-        public MemberReference withArguments(List<Expression> arguments) {
+        public MemberReference withArguments(/*~~>*/List<Expression> arguments) {
             return this;
         }
 
@@ -3019,21 +3019,21 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<Annotation> leadingAnnotations;
+        /*~~>*/List<Annotation> leadingAnnotations;
 
         @With
         @Getter
-        List<Modifier> modifiers;
+        /*~~>*/List<Modifier> modifiers;
 
         @Nullable
         TypeParameters typeParameters;
 
         @Nullable
-        public List<TypeParameter> getTypeParameters() {
+        public /*~~>*/List<TypeParameter> getTypeParameters() {
             return typeParameters == null ? null : typeParameters.getTypeParameters();
         }
 
-        public MethodDeclaration withTypeParameters(@Nullable List<TypeParameter> typeParameters) {
+        public MethodDeclaration withTypeParameters(@Nullable /*~~>*/List<TypeParameter> typeParameters) {
             if (typeParameters == null) {
                 if (this.getAnnotations().getTypeParameters() == null) {
                     return this;
@@ -3071,11 +3071,11 @@ public interface J extends Tree {
 
         JContainer<Statement> parameters;
 
-        public List<Statement> getParameters() {
+        public /*~~>*/List<Statement> getParameters() {
             return parameters.getElements();
         }
 
-        public MethodDeclaration withParameters(List<Statement> parameters) {
+        public MethodDeclaration withParameters(/*~~>*/List<Statement> parameters) {
             return getPadding().withParameters(JContainer.withElements(this.parameters, parameters));
         }
 
@@ -3083,11 +3083,11 @@ public interface J extends Tree {
         JContainer<NameTree> throwz;
 
         @Nullable
-        public List<NameTree> getThrows() {
+        public /*~~>*/List<NameTree> getThrows() {
             return throwz == null ? null : throwz.getElements();
         }
 
-        public MethodDeclaration withThrows(@Nullable List<NameTree> throwz) {
+        public MethodDeclaration withThrows(@Nullable /*~~>*/List<NameTree> throwz) {
             return getPadding().withThrows(JContainer.withElementsNullable(this.throwz, throwz));
         }
 
@@ -3162,7 +3162,7 @@ public interface J extends Tree {
         }
 
         // gather annotations from everywhere they may occur
-        public List<J.Annotation> getAllAnnotations() {
+        public /*~~>*/List<J.Annotation> getAllAnnotations() {
             List<Annotation> allAnnotations = new ArrayList<>(leadingAnnotations);
             for (J.Modifier modifier : modifiers) {
                 allAnnotations.addAll(modifier.getAnnotations());
@@ -3194,7 +3194,7 @@ public interface J extends Tree {
 
             @Getter
             @With
-            List<Annotation> annotations;
+            /*~~>*/List<Annotation> annotations;
         }
 
         public Padding getPadding() {
@@ -3332,7 +3332,7 @@ public interface J extends Tree {
         JContainer<Expression> typeParameters;
 
         @Nullable
-        public List<Expression> getTypeParameters() {
+        public /*~~>*/List<Expression> getTypeParameters() {
             return typeParameters == null ? null : typeParameters.getElements();
         }
 
@@ -3352,11 +3352,11 @@ public interface J extends Tree {
 
         JContainer<Expression> arguments;
 
-        public List<Expression> getArguments() {
+        public /*~~>*/List<Expression> getArguments() {
             return arguments.getElements();
         }
 
-        public MethodInvocation withArguments(List<Expression> arguments) {
+        public MethodInvocation withArguments(/*~~>*/List<Expression> arguments) {
             if (this.arguments.getElements() == arguments) {
                 return this;
             }
@@ -3409,7 +3409,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return singletonList(this);
         }
 
@@ -3488,7 +3488,7 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<Annotation> annotations;
+        /*~~>*/List<Annotation> annotations;
 
         @Override
         public String toString() {
@@ -3537,13 +3537,13 @@ public interface J extends Tree {
         @Getter
         Markers markers;
 
-        List<JRightPadded<NameTree>> alternatives;
+        /*~~>*/List<JRightPadded<NameTree>> alternatives;
 
-        public List<NameTree> getAlternatives() {
+        public /*~~>*/List<NameTree> getAlternatives() {
             return JRightPadded.getElements(alternatives);
         }
 
-        public MultiCatch withAlternatives(List<NameTree> alternatives) {
+        public MultiCatch withAlternatives(/*~~>*/List<NameTree> alternatives) {
             return getPadding().withAlternatives(JRightPadded.withElements(this.alternatives, alternatives));
         }
 
@@ -3591,11 +3591,11 @@ public interface J extends Tree {
         public static class Padding {
             private final MultiCatch t;
 
-            public List<JRightPadded<NameTree>> getAlternatives() {
+            public /*~~>*/List<JRightPadded<NameTree>> getAlternatives() {
                 return t.alternatives;
             }
 
-            public MultiCatch withAlternatives(List<JRightPadded<NameTree>> alternatives) {
+            public MultiCatch withAlternatives(/*~~>*/List<JRightPadded<NameTree>> alternatives) {
                 return t.alternatives == alternatives ? t : new MultiCatch(t.id, t.prefix, t.markers, alternatives);
             }
         }
@@ -3631,17 +3631,17 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<ArrayDimension> dimensions;
+        /*~~>*/List<ArrayDimension> dimensions;
 
         @Nullable
         JContainer<Expression> initializer;
 
         @Nullable
-        public List<Expression> getInitializer() {
+        public /*~~>*/List<Expression> getInitializer() {
             return initializer == null ? null : initializer.getElements();
         }
 
-        public NewArray withInitializer(List<Expression> initializer) {
+        public NewArray withInitializer(/*~~>*/List<Expression> initializer) {
             return getPadding().withInitializer(JContainer.withElementsNullable(this.initializer, initializer));
         }
 
@@ -3818,11 +3818,11 @@ public interface J extends Tree {
 
         JContainer<Expression> arguments;
 
-        public List<Expression> getArguments() {
+        public /*~~>*/List<Expression> getArguments() {
             return arguments.getElements();
         }
 
-        public NewClass withArguments(List<Expression> arguments) {
+        public NewClass withArguments(/*~~>*/List<Expression> arguments) {
             return getPadding().withArguments(JContainer.withElements(this.arguments, arguments));
         }
 
@@ -3877,7 +3877,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return singletonList(this);
         }
 
@@ -3942,7 +3942,7 @@ public interface J extends Tree {
         Expression expression;
 
         @With
-        List<Annotation> annotations;
+        /*~~>*/List<Annotation> annotations;
 
         @Override
         public <P> J acceptJava(JavaVisitor<P> v, P p) {
@@ -3984,11 +3984,11 @@ public interface J extends Tree {
         JContainer<Expression> typeParameters;
 
         @Nullable
-        public List<Expression> getTypeParameters() {
+        public /*~~>*/List<Expression> getTypeParameters() {
             return typeParameters == null ? null : typeParameters.getElements();
         }
 
-        public ParameterizedType withTypeParameters(@Nullable List<Expression> typeParameters) {
+        public ParameterizedType withTypeParameters(@Nullable /*~~>*/List<Expression> typeParameters) {
             return getPadding().withTypeParameters(JContainer.withElementsNullable(this.typeParameters, typeParameters));
         }
 
@@ -4089,7 +4089,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return tree.getElement() instanceof Expression ? ((Expression) tree.getElement()).getSideEffects() : emptyList();
         }
 
@@ -4185,7 +4185,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return tree.getElement() instanceof Expression ? ((Expression) tree.getElement()).getSideEffects() : emptyList();
         }
 
@@ -4563,11 +4563,11 @@ public interface J extends Tree {
         JContainer<Resource> resources;
 
         @Nullable
-        public List<Resource> getResources() {
+        public /*~~>*/List<Resource> getResources() {
             return resources == null ? null : resources.getElements();
         }
 
-        public Try withResources(@Nullable List<Resource> resources) {
+        public Try withResources(@Nullable /*~~>*/List<Resource> resources) {
             return getPadding().withResources(JContainer.withElementsNullable(this.resources, resources));
         }
 
@@ -4577,7 +4577,7 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<Catch> catches;
+        /*~~>*/List<Catch> catches;
 
         @Nullable
         JLeftPadded<Block> finallie;
@@ -4772,7 +4772,7 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<Annotation> annotations;
+        /*~~>*/List<Annotation> annotations;
 
         /**
          * Will be either a {@link TypeTree} or {@link Wildcard}. Wildcards aren't possible in
@@ -4786,11 +4786,11 @@ public interface J extends Tree {
         JContainer<TypeTree> bounds;
 
         @Nullable
-        public List<TypeTree> getBounds() {
+        public /*~~>*/List<TypeTree> getBounds() {
             return bounds == null ? null : bounds.getElements();
         }
 
-        public TypeParameter withBounds(@Nullable List<TypeTree> bounds) {
+        public TypeParameter withBounds(@Nullable /*~~>*/List<TypeTree> bounds) {
             return getPadding().withBounds(JContainer.withElementsNullable(this.bounds, bounds));
         }
 
@@ -4853,15 +4853,15 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<Annotation> annotations;
+        /*~~>*/List<Annotation> annotations;
 
-        List<JRightPadded<TypeParameter>> typeParameters;
+        /*~~>*/List<JRightPadded<TypeParameter>> typeParameters;
 
-        public List<TypeParameter> getTypeParameters() {
+        public /*~~>*/List<TypeParameter> getTypeParameters() {
             return JRightPadded.getElements(typeParameters);
         }
 
-        public TypeParameters withTypeParameters(List<TypeParameter> typeParameters) {
+        public TypeParameters withTypeParameters(/*~~>*/List<TypeParameter> typeParameters) {
             return getPadding().withTypeParameters(JRightPadded.withElements(this.typeParameters, typeParameters));
         }
 
@@ -4889,11 +4889,11 @@ public interface J extends Tree {
         public static class Padding {
             private final TypeParameters t;
 
-            public List<JRightPadded<TypeParameter>> getTypeParameters() {
+            public /*~~>*/List<JRightPadded<TypeParameter>> getTypeParameters() {
                 return t.typeParameters;
             }
 
-            public TypeParameters withTypeParameters(List<JRightPadded<TypeParameter>> typeParameters) {
+            public TypeParameters withTypeParameters(/*~~>*/List<JRightPadded<TypeParameter>> typeParameters) {
                 return t.typeParameters == typeParameters ? t : new TypeParameters(t.id, t.prefix, t.markers, t.annotations, typeParameters);
             }
         }
@@ -4951,7 +4951,7 @@ public interface J extends Tree {
         }
 
         @Override
-        public List<J> getSideEffects() {
+        public /*~~>*/List<J> getSideEffects() {
             return expression.getSideEffects();
         }
 
@@ -5024,11 +5024,11 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<Annotation> leadingAnnotations;
+        /*~~>*/List<Annotation> leadingAnnotations;
 
         @With
         @Getter
-        List<Modifier> modifiers;
+        /*~~>*/List<Modifier> modifiers;
 
         @With
         @Nullable
@@ -5042,15 +5042,15 @@ public interface J extends Tree {
 
         @With
         @Getter
-        List<JLeftPadded<Space>> dimensionsBeforeName;
+        /*~~>*/List<JLeftPadded<Space>> dimensionsBeforeName;
 
-        List<JRightPadded<NamedVariable>> variables;
+        /*~~>*/List<JRightPadded<NamedVariable>> variables;
 
-        public List<NamedVariable> getVariables() {
+        public /*~~>*/List<NamedVariable> getVariables() {
             return JRightPadded.getElements(variables);
         }
 
-        public VariableDeclarations withVariables(List<NamedVariable> vars) {
+        public VariableDeclarations withVariables(/*~~>*/List<NamedVariable> vars) {
             return getPadding().withVariables(JRightPadded.withElements(this.variables, vars));
         }
 
@@ -5065,7 +5065,7 @@ public interface J extends Tree {
         }
 
         // gather annotations from everywhere they may occur
-        public List<J.Annotation> getAllAnnotations() {
+        public /*~~>*/List<J.Annotation> getAllAnnotations() {
             List<Annotation> allAnnotations = new ArrayList<>(leadingAnnotations);
             for (J.Modifier modifier : modifiers) {
                 allAnnotations.addAll(modifier.getAnnotations());
@@ -5127,7 +5127,7 @@ public interface J extends Tree {
 
             @With
             @Getter
-            List<JLeftPadded<Space>> dimensionsAfterName;
+            /*~~>*/List<JLeftPadded<Space>> dimensionsAfterName;
 
             @Nullable
             JLeftPadded<Expression> initializer;
@@ -5236,11 +5236,11 @@ public interface J extends Tree {
         public static class Padding {
             private final VariableDeclarations t;
 
-            public List<JRightPadded<NamedVariable>> getVariables() {
+            public /*~~>*/List<JRightPadded<NamedVariable>> getVariables() {
                 return t.variables;
             }
 
-            public VariableDeclarations withVariables(List<JRightPadded<NamedVariable>> variables) {
+            public VariableDeclarations withVariables(/*~~>*/List<JRightPadded<NamedVariable>> variables) {
                 return t.variables == variables ? t : new VariableDeclarations(t.id, t.prefix, t.markers, t.leadingAnnotations, t.modifiers, t.typeExpression, t.varargs, t.dimensionsBeforeName, variables);
             }
         }

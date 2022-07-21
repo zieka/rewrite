@@ -52,8 +52,8 @@ public class JsonRightPadded<T> {
         return withElement(map.apply(element));
     }
 
-    public static <T> List<T> getElements(List<JsonRightPadded<T>> ls) {
-        List<T> list = new ArrayList<>();
+    public static <T> /*~~>*/List<T> getElements(/*~~>*/List<JsonRightPadded<T>> ls) {
+        /*~~>*/List<T> list = new ArrayList<>();
         for (JsonRightPadded<T> l : ls) {
             T elem = l.getElement();
             list.add(elem);
@@ -61,7 +61,7 @@ public class JsonRightPadded<T> {
         return list;
     }
 
-    public static <J2 extends Json> List<JsonRightPadded<J2>> withElements(List<JsonRightPadded<J2>> before, List<J2> elements) {
+    public static <J2 extends Json> /*~~>*/List<JsonRightPadded<J2>> withElements(/*~~>*/List<JsonRightPadded<J2>> before, /*~~>*/List<J2> elements) {
         // a cheaper check for the most common case when there are no changes
         if (elements.size() == before.size()) {
             boolean hasChanges = false;
@@ -76,7 +76,7 @@ public class JsonRightPadded<T> {
             }
         }
 
-        List<JsonRightPadded<J2>> after = new ArrayList<>(elements.size());
+        /*~~>*/List<JsonRightPadded<J2>> after = new ArrayList<>(elements.size());
         Map<UUID, JsonRightPadded<J2>> beforeById = before.stream().collect(Collectors
                 .toMap(j -> j.getElement().getId(), Function.identity()));
 

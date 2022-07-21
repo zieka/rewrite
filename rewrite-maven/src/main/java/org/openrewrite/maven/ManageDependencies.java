@@ -81,7 +81,7 @@ public class ManageDependencies extends Recipe {
     }
 
     @Override
-    protected List<SourceFile> visit(List<SourceFile> before, ExecutionContext ctx) {
+    protected /*~~>*/List<SourceFile> visit(/*~~>*/List<SourceFile> before, ExecutionContext ctx) {
         Map<GroupArtifactVersion, Collection<ResolvedDependency>> rootGavToDependencies = new HashMap<>();
         if (Boolean.TRUE.equals(addToRootPom)) {
             for (SourceFile source : before) {

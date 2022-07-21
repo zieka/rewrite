@@ -96,7 +96,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
             JavaType.FullyQualified supertype = TypeUtils.asFullyQualified(type(node.getSuperClass()));
             JavaType.FullyQualified owner = TypeUtils.asFullyQualified(type(node.getOuterClass()));
 
-            List<JavaType.Variable> fields = null;
+            /*~~>*/List<JavaType.Variable> fields = null;
             if(node.getFields().size() > 0) {
                 fields = new ArrayList<>(node.getFields().size());
                 for (FieldNode field : node.getFields()) {
@@ -106,7 +106,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
                 }
             }
 
-            List<JavaType.Method> methods = null;
+            /*~~>*/List<JavaType.Method> methods = null;
             if(node.getAllDeclaredMethods().size() > 0) {
                 methods = new ArrayList<>(node.getAllDeclaredMethods().size());
                 for (MethodNode method : node.getAllDeclaredMethods()) {
@@ -116,7 +116,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
                 }
             }
 
-            List<JavaType.FullyQualified> interfaces = null;
+            /*~~>*/List<JavaType.FullyQualified> interfaces = null;
             if (node.getInterfaces().length > 0) {
                 interfaces = new ArrayList<>(node.getInterfaces().length);
                 for (ClassNode iParam : node.getInterfaces()) {
@@ -127,7 +127,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
                 }
             }
 
-            List<JavaType.FullyQualified> annotations = getAnnotations(node);
+            /*~~>*/List<JavaType.FullyQualified> annotations = getAnnotations(node);
 
             clazz.unsafeSet(null, supertype, owner, annotations, interfaces, fields, methods);
         }
@@ -141,7 +141,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
 
         JavaType.Class clazz = classType(type, type.getPlainNodeReference().getName());
 
-        List<JavaType> typeParameters = emptyList();
+        /*~~>*/List<JavaType> typeParameters = emptyList();
         if (type.getGenericsTypes() != null && type.getGenericsTypes().length > 0) {
             typeParameters = new ArrayList<>(type.getGenericsTypes().length);
             for (GenericsType g : type.getGenericsTypes()) {
@@ -177,7 +177,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
         JavaType.GenericTypeVariable gtv = new JavaType.GenericTypeVariable(null, g.getName(), variance, null);
         typeCache.put(signature, gtv);
 
-        List<JavaType> bounds = null;
+        /*~~>*/List<JavaType> bounds = null;
 
         if (g.getUpperBounds() != null) {
             for (ClassNode bound : g.getUpperBounds()) {
@@ -214,7 +214,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
             return existing;
         }
 
-        List<String> paramNames = null;
+        /*~~>*/List<String> paramNames = null;
         if (node.getParameters().length > 0) {
             paramNames = new ArrayList<>(node.getParameters().length);
             for (org.codehaus.groovy.ast.Parameter parameter : node.getParameters()) {
@@ -233,7 +233,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
         );
         typeCache.put(signature, method);
 
-        List<JavaType> parameterTypes = null;
+        /*~~>*/List<JavaType> parameterTypes = null;
         if (node.getParameters().length > 0) {
             parameterTypes = new ArrayList<>(node.getParameters().length);
             for (org.codehaus.groovy.ast.Parameter parameter : node.getParameters()) {
@@ -241,14 +241,14 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
             }
         }
 
-        List<JavaType.FullyQualified> thrownExceptions = null;
+        /*~~>*/List<JavaType.FullyQualified> thrownExceptions = null;
         for (ClassNode e : node.getExceptions()) {
             thrownExceptions = new ArrayList<>(node.getExceptions().length);
             JavaType.FullyQualified qualified = (JavaType.FullyQualified) type(e);
             thrownExceptions.add(qualified);
         }
 
-        List<JavaType.FullyQualified> annotations = getAnnotations(node);
+        /*~~>*/List<JavaType.FullyQualified> annotations = getAnnotations(node);
 
         method.unsafeSet(
                 (JavaType.FullyQualified) type(node.getDeclaringClass()),
@@ -281,7 +281,7 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
 
         typeCache.put(signature, variable);
 
-        List<JavaType.FullyQualified> annotations = getAnnotations(node);
+        /*~~>*/List<JavaType.FullyQualified> annotations = getAnnotations(node);
 
         variable.unsafeSet(type(node.getOwner()), type(node.getType()), annotations);
 
@@ -322,8 +322,8 @@ class GroovyTypeMapping implements JavaTypeMapping<ASTNode> {
     }
 
     @Nullable
-    private List<JavaType.FullyQualified> getAnnotations(AnnotatedNode node) {
-        List<JavaType.FullyQualified> annotations = null;
+    private /*~~>*/List<JavaType.FullyQualified> getAnnotations(AnnotatedNode node) {
+        /*~~>*/List<JavaType.FullyQualified> annotations = null;
         for (AnnotationNode a : node.getAnnotations()) {
             annotations = new ArrayList<>(node.getAnnotations().size());
             JavaType.FullyQualified fullyQualified = (JavaType.FullyQualified) type(a.getClassNode());

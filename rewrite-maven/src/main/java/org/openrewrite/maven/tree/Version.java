@@ -33,7 +33,7 @@ public class Version implements Comparable<Version> {
     }
 
     private static Version.Item[] parse(String version) {
-        List<Item> items = new ArrayList<>();
+        /*~~>*/List<Item> items = new ArrayList<>();
         Version.Tokenizer tokenizer = new Version.Tokenizer(version);
 
         while (tokenizer.next()) {
@@ -45,7 +45,7 @@ public class Version implements Comparable<Version> {
         return items.toArray(new Item[0]);
     }
 
-    private static void trimPadding(List<Version.Item> items) {
+    private static void trimPadding(/*~~>*/List<Version.Item> items) {
         Boolean number = null;
         int end = items.size() - 1;
 

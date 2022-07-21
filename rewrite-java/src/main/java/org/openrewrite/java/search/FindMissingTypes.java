@@ -48,7 +48,7 @@ public class FindMissingTypes extends Recipe {
         return new FindMissingTypesVisitor();
     }
 
-    public static List<MissingTypeResult> findMissingTypes(J j) {
+    public static /*~~>*/List<MissingTypeResult> findMissingTypes(J j) {
         J j1 = new FindMissingTypesVisitor().visit(j, new InMemoryExecutionContext());
         List<MissingTypeResult> results = new ArrayList<>();
         if (j1 != j) {

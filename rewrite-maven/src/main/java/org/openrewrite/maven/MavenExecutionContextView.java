@@ -100,12 +100,12 @@ public class MavenExecutionContextView extends DelegatingExecutionContext {
         return getMessage(MAVEN_LOCAL_REPOSITORY, MAVEN_LOCAL_DEFAULT);
     }
 
-    public MavenExecutionContextView setRepositories(List<MavenRepository> repositories) {
+    public MavenExecutionContextView setRepositories(/*~~>*/List<MavenRepository> repositories) {
         putMessage(MAVEN_REPOSITORIES, repositories);
         return this;
     }
 
-    public List<MavenRepository> getRepositories() {
+    public /*~~>*/List<MavenRepository> getRepositories() {
         return getMessage(MAVEN_REPOSITORIES, emptyList());
     }
 

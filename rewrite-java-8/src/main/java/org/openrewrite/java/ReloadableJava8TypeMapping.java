@@ -89,7 +89,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
         typeCache.put(signature, gtv);
 
         JavaType.GenericTypeVariable.Variance variance;
-        List<JavaType> bounds;
+        /*~~>*/List<JavaType> bounds;
 
         switch (wildcard.kind) {
             case SUPER:
@@ -122,7 +122,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
                 name, INVARIANT, null);
         typeCache.put(signature, gtv);
 
-        List<JavaType> bounds = null;
+        /*~~>*/List<JavaType> bounds = null;
         if (type.getUpperBound() instanceof Type.IntersectionClassType) {
             Type.IntersectionClassType intersectionBound = (Type.IntersectionClassType) type.getUpperBound();
             boolean isIntersectionSuperType = !"java.lang.Object".equals(intersectionBound.supertype_field.tsym.getQualifiedName().toString());
@@ -170,7 +170,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
                 owner = TypeUtils.asFullyQualified(type(sym.owner.type));
             }
 
-            List<JavaType.FullyQualified> interfaces = null;
+            /*~~>*/List<JavaType.FullyQualified> interfaces = null;
             if (symType.interfaces_field != null) {
                 interfaces = new ArrayList<>(symType.interfaces_field.length());
                 for (com.sun.tools.javac.code.Type iParam : symType.interfaces_field) {
@@ -181,8 +181,8 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
                 }
             }
 
-            List<JavaType.Variable> fields = null;
-            List<JavaType.Method> methods = null;
+            /*~~>*/List<JavaType.Variable> fields = null;
+            /*~~>*/List<JavaType.Method> methods = null;
 
             if (sym.members_field != null) {
                 for (Symbol elem : sym.members_field.getElements()) {
@@ -213,7 +213,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
                 }
             }
 
-            List<JavaType> typeParameters = null;
+            /*~~>*/List<JavaType> typeParameters = null;
             if (symType.typarams_field != null && symType.typarams_field.length() > 0) {
                 typeParameters = new ArrayList<>(symType.typarams_field.length());
                 for (Type tParam : symType.typarams_field) {
@@ -231,7 +231,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
                 pt = new JavaType.Parameterized(null, null, null);
                 typeCache.put(signature, pt);
 
-                List<JavaType> typeParameters = new ArrayList<>(classType.typarams_field.length());
+                /*~~>*/List<JavaType> typeParameters = new ArrayList<>(classType.typarams_field.length());
                 for (Type tParam : classType.typarams_field) {
                     typeParameters.add(type(tParam));
                 }
@@ -386,7 +386,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
             return existing;
         }
 
-        List<String> paramNames = null;
+        /*~~>*/List<String> paramNames = null;
         if (!methodSymbol.params().isEmpty()) {
             paramNames = new ArrayList<>(methodSymbol.params().size());
             for (Symbol.VarSymbol p : methodSymbol.params()) {
@@ -407,8 +407,8 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
         typeCache.put(signature, method);
 
         JavaType returnType = null;
-        List<JavaType> parameterTypes = null;
-        List<JavaType.FullyQualified> exceptionTypes = null;
+        /*~~>*/List<JavaType> parameterTypes = null;
+        /*~~>*/List<JavaType.FullyQualified> exceptionTypes = null;
 
         if (selectType instanceof Type.MethodType) {
             Type.MethodType methodType = (Type.MethodType) selectType;
@@ -481,7 +481,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
                 return existing;
             }
 
-            List<String> paramNames = null;
+            /*~~>*/List<String> paramNames = null;
             if (!methodSymbol.params().isEmpty()) {
                 paramNames = new ArrayList<>(methodSymbol.params().size());
                 for (Symbol.VarSymbol p : methodSymbol.params()) {
@@ -505,7 +505,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
                     ((Type.ForAll) methodSymbol.type).qtype :
                     methodSymbol.type;
 
-            List<JavaType.FullyQualified> exceptionTypes = null;
+            /*~~>*/List<JavaType.FullyQualified> exceptionTypes = null;
 
             Type selectType = methodSymbol.type;
             if (selectType instanceof Type.ForAll) {
@@ -547,7 +547,7 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
             }
 
             JavaType returnType;
-            List<JavaType> parameterTypes = null;
+            /*~~>*/List<JavaType> parameterTypes = null;
 
             if (signatureType instanceof Type.ForAll) {
                 signatureType = ((Type.ForAll) signatureType).qtype;
@@ -587,8 +587,8 @@ class ReloadableJava8TypeMapping implements JavaTypeMapping<Tree> {
     }
 
     @Nullable
-    private List<JavaType.FullyQualified> listAnnotations(Symbol symb) {
-        List<JavaType.FullyQualified> annotations = null;
+    private /*~~>*/List<JavaType.FullyQualified> listAnnotations(Symbol symb) {
+        /*~~>*/List<JavaType.FullyQualified> annotations = null;
         if (!symb.getDeclarationAttributes().isEmpty()) {
             annotations = new ArrayList<>(symb.getDeclarationAttributes().size());
             for (Attribute.Compound a : symb.getDeclarationAttributes()) {

@@ -31,7 +31,7 @@ import static java.util.Collections.emptyList;
 public class RawRepositories {
     @JacksonXmlProperty(localName = "repository")
     @JacksonXmlElementWrapper(useWrapping = false)
-    List<Repository> repositories = emptyList();
+    /*~~>*/List<Repository> repositories = emptyList();
 
     @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
     @Data

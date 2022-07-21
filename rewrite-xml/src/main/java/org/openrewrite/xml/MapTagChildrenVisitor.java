@@ -38,7 +38,7 @@ public class MapTagChildrenVisitor<T> extends XmlVisitor<T> {
         Xml.Tag t = (Xml.Tag) super.visitTag(tag, ctx);
         if (scope.isScope(t)) {
             //noinspection unchecked
-            t = t.withContent(ListUtils.map((List<Content>)t.getContent(), map));
+            t = t.withContent(ListUtils.map((/*~~>*/List<Content>)t.getContent(), map));
         }
         return t;
     }

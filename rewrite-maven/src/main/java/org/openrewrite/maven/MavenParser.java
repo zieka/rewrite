@@ -59,12 +59,12 @@ public class MavenParser implements Parser<Xml.Document> {
     }
 
     @Override
-    public List<Xml.Document> parse(@Language("xml") String... sources) {
+    public /*~~>*/List<Xml.Document> parse(@Language("xml") String... sources) {
         return parse(new InMemoryExecutionContext(), sources);
     }
 
     @Override
-    public List<Xml.Document> parse(ExecutionContext ctx, @Language("xml") String... sources) {
+    public /*~~>*/List<Xml.Document> parse(ExecutionContext ctx, @Language("xml") String... sources) {
         return Parser.super.parse(ctx, sources);
     }
 
@@ -76,7 +76,7 @@ public class MavenParser implements Parser<Xml.Document> {
     }
 
     @Override
-    public List<Xml.Document> parseInputs(Iterable<Input> sources, @Nullable Path relativeTo,
+    public /*~~>*/List<Xml.Document> parseInputs(Iterable<Input> sources, @Nullable Path relativeTo,
                                           ExecutionContext ctx) {
         Map<Xml.Document, Pom> projectPoms = new LinkedHashMap<>();
         Map<Path, Pom> projectPomsByPath = new HashMap<>();
@@ -98,7 +98,7 @@ public class MavenParser implements Parser<Xml.Document> {
             projectPomsByPath.put(source.getPath(), pom);
         }
 
-        List<Xml.Document> parsed = new ArrayList<>();
+        /*~~>*/List<Xml.Document> parsed = new ArrayList<>();
 
         if (httpSender != null) {
             ctx = HttpSenderExecutionContextView.view(ctx).setHttpSender(httpSender);
@@ -117,7 +117,7 @@ public class MavenParser implements Parser<Xml.Document> {
             MavenResolutionResult resolutionResult = maven.getMarkers().findFirst(MavenResolutionResult.class)
                     .orElseThrow(() -> new IllegalStateException("Expected to find a maven resolution marker"));
 
-            List<MavenResolutionResult> modules = new ArrayList<>(0);
+            /*~~>*/List<MavenResolutionResult> modules = new ArrayList<>(0);
             for (Xml.Document possibleModule : parsed) {
                 if (possibleModule == maven) {
                     continue;

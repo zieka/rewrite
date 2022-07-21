@@ -345,7 +345,7 @@ public class ProtoPrinter<P> extends ProtoVisitor<PrintOutputCapture<P>> {
         }
     }
 
-    protected void visitRightPadded(List<? extends ProtoRightPadded<? extends Proto>> nodes, String suffixBetween, PrintOutputCapture<P> p) {
+    protected void visitRightPadded(/*~~>*/List<? extends ProtoRightPadded<? extends Proto>> nodes, String suffixBetween, PrintOutputCapture<P> p) {
         for (int i = 0; i < nodes.size(); i++) {
             ProtoRightPadded<? extends Proto> node = nodes.get(i);
             visit(node.getElement(), p);
@@ -368,7 +368,7 @@ public class ProtoPrinter<P> extends ProtoVisitor<PrintOutputCapture<P>> {
         return (M) marker;
     }
 
-    protected void visitStatements(List<ProtoRightPadded<Proto>> statements, PrintOutputCapture<P> p) {
+    protected void visitStatements(/*~~>*/List<ProtoRightPadded<Proto>> statements, PrintOutputCapture<P> p) {
         for (ProtoRightPadded<Proto> paddedStat : statements) {
             visitStatement(paddedStat, p);
         }

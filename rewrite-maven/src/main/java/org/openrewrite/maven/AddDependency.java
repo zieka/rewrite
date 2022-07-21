@@ -151,7 +151,7 @@ public class AddDependency extends Recipe {
         return new UsesType<>(onlyIfUsing);
     }
 
-    protected List<SourceFile> visit(List<SourceFile> before, ExecutionContext ctx) {
+    protected /*~~>*/List<SourceFile> visit(/*~~>*/List<SourceFile> before, ExecutionContext ctx) {
         Map<JavaProject, String> scopeByProject = new HashMap<>();
         for (SourceFile source : before) {
             source.getMarkers().findFirst(JavaProject.class).ifPresent(javaProject ->

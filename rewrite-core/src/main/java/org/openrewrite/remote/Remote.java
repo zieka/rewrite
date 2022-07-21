@@ -94,7 +94,7 @@ public interface Remote extends SourceFile {
         return v instanceof BinaryVisitor;
     }
 
-    static void applyPatch(List<Remote> remotes, Path projectDir) {
+    static void applyPatch(/*~~>*/List<Remote> remotes, Path projectDir) {
 
     }
 

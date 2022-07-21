@@ -42,7 +42,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.openrewrite.Tree.randomId;
 
-public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Javadoc>> {
+public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, /*~~>*/List<Javadoc>> {
     private final Attr attr;
 
     @Nullable
@@ -186,11 +186,11 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitAttribute(AttributeTree node, List<Javadoc> body) {
+    public Tree visitAttribute(AttributeTree node, /*~~>*/List<Javadoc> body) {
         String name = node.getName().toString();
         cursor += name.length();
-        List<Javadoc> beforeEqual;
-        List<Javadoc> value;
+        /*~~>*/List<Javadoc> beforeEqual;
+        /*~~>*/List<Javadoc> value;
 
         if (node.getValueKind() == AttributeTree.ValueKind.EMPTY) {
             beforeEqual = emptyList();
@@ -245,25 +245,25 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitAuthor(AuthorTree node, List<Javadoc> body) {
+    public Tree visitAuthor(AuthorTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@author"));
         return new Javadoc.Author(randomId(), Markers.EMPTY, convertMultiline(node.getName()));
     }
 
     @Override
-    public Tree visitComment(CommentTree node, List<Javadoc> body) {
+    public Tree visitComment(CommentTree node, /*~~>*/List<Javadoc> body) {
         cursor += node.getBody().length();
         return new Javadoc.Text(randomId(), Markers.EMPTY, node.getBody());
     }
 
     @Override
-    public Tree visitDeprecated(DeprecatedTree node, List<Javadoc> body) {
+    public Tree visitDeprecated(DeprecatedTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@deprecated"));
         return new Javadoc.Deprecated(randomId(), Markers.EMPTY, convertMultiline(node.getBody()));
     }
 
     @Override
-    public Tree visitDocComment(DocCommentTree node, List<Javadoc> body) {
+    public Tree visitDocComment(DocCommentTree node, /*~~>*/List<Javadoc> body) {
         init();
 
         Javadoc.LineBreak leadingLineBreak = lineBreaks.remove(0);
@@ -279,7 +279,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
             body.add(new Javadoc.Text(randomId(), Markers.EMPTY, firstPrefix));
         }
 
-        List<? extends DocTree> firstSentence = node.getFirstSentence();
+        /*~~>*/List<? extends DocTree> firstSentence = node.getFirstSentence();
         for (int i = 0; i < firstSentence.size(); i++) {
             DocTree docTree = firstSentence.get(i);
             if (!(docTree instanceof DCTree.DCText && i > 0)) {
@@ -292,7 +292,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
             }
         }
 
-        List<? extends DocTree> restOfBody = node.getBody();
+        /*~~>*/List<? extends DocTree> restOfBody = node.getBody();
         for (int i = 0; i < restOfBody.size(); i++) {
             DocTree docTree = restOfBody.get(i);
             if (!(docTree instanceof DCTree.DCText && i > 0)) {
@@ -378,7 +378,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitDocRoot(DocRootTree node, List<Javadoc> body) {
+    public Tree visitDocRoot(DocRootTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("{@docRoot"));
         return new Javadoc.DocRoot(
                 randomId(),
@@ -388,7 +388,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitEndElement(EndElementTree node, List<Javadoc> body) {
+    public Tree visitEndElement(EndElementTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("</"));
         String name = node.getName().toString();
         cursor += name.length();
@@ -401,19 +401,19 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitEntity(EntityTree node, List<Javadoc> body) {
+    public Tree visitEntity(EntityTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("&"));
         cursor += node.getName().length() + 1;
         return new Javadoc.Text(randomId(), Markers.EMPTY, "&" + node.getName().toString() + ";");
     }
 
     @Override
-    public Tree visitErroneous(ErroneousTree node, List<Javadoc> body) {
+    public Tree visitErroneous(ErroneousTree node, /*~~>*/List<Javadoc> body) {
         return new Javadoc.Erroneous(randomId(), Markers.EMPTY, visitText(node.getBody()));
     }
 
     @Override
-    public J.Identifier visitIdentifier(com.sun.source.doctree.IdentifierTree node, List<Javadoc> body) {
+    public J.Identifier visitIdentifier(com.sun.source.doctree.IdentifierTree node, /*~~>*/List<Javadoc> body) {
         String name = node.getName().toString();
         sourceBefore(name);
         return new J.Identifier(
@@ -427,7 +427,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitInheritDoc(InheritDocTree node, List<Javadoc> body) {
+    public Tree visitInheritDoc(InheritDocTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("{@inheritDoc"));
         return new Javadoc.InheritDoc(
                 randomId(),
@@ -437,10 +437,10 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitLink(LinkTree node, List<Javadoc> body) {
+    public Tree visitLink(LinkTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore(node.getKind() == DocTree.Kind.LINK ? "{@link" : "{@linkplain"));
 
-        List<Javadoc> spaceBeforeRef = whitespaceBefore();
+        /*~~>*/List<Javadoc> spaceBeforeRef = whitespaceBefore();
         Javadoc.Reference reference = null;
         J ref = visitReference(node.getReference(), body);
         //noinspection ConstantConditions
@@ -448,7 +448,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
             reference = new Javadoc.Reference(randomId(), ref, lineBreaksInMultilineJReference());
         }
 
-        List<Javadoc> label = convertMultiline(node.getLabel());
+        /*~~>*/List<Javadoc> label = convertMultiline(node.getLabel());
 
         return new Javadoc.Link(
                 randomId(),
@@ -463,10 +463,10 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitLiteral(LiteralTree node, List<Javadoc> body) {
+    public Tree visitLiteral(LiteralTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore(node.getKind() == DocTree.Kind.CODE ? "{@code" : "{@literal"));
 
-        List<Javadoc> description = whitespaceBefore();
+        /*~~>*/List<Javadoc> description = whitespaceBefore();
         description.addAll(visitText(node.getBody().getBody()));
 
         return new Javadoc.Literal(
@@ -479,11 +479,11 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitParam(ParamTree node, List<Javadoc> body) {
+    public Tree visitParam(ParamTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@param"));
         DCTree.DCParam param = (DCTree.DCParam) node;
 
-        List<Javadoc> spaceBefore;
+        /*~~>*/List<Javadoc> spaceBefore;
         J typeName;
 
         if (param.isTypeParameter) {
@@ -506,7 +506,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
             typeName = (J) scan(node.getName(), body);
         }
 
-        List<Javadoc> beforeReference = lineBreaksInMultilineJReference();
+        /*~~>*/List<Javadoc> beforeReference = lineBreaksInMultilineJReference();
         Javadoc.Reference reference = new Javadoc.Reference(randomId(), typeName, beforeReference);
         return new Javadoc.Parameter(
                 randomId(),
@@ -519,7 +519,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public J visitReference(@Nullable ReferenceTree node, List<Javadoc> body) {
+    public J visitReference(@Nullable ReferenceTree node, /*~~>*/List<Javadoc> body) {
         DCTree.DCReference ref = (DCTree.DCReference) node;
         if (node == null) {
             //noinspection ConstantConditions
@@ -574,8 +574,8 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
                             Markers.EMPTY
                     );
                 } else {
-                    List<JRightPadded<Expression>> parameters = new ArrayList<>(ref.paramTypes.size());
-                    List<JCTree> paramTypes = ref.paramTypes;
+                    /*~~>*/List<JRightPadded<Expression>> parameters = new ArrayList<>(ref.paramTypes.size());
+                    /*~~>*/List<JCTree> paramTypes = ref.paramTypes;
                     for (int i = 0; i < paramTypes.size(); i++) {
                         JCTree param = paramTypes.get(i);
                         Expression paramExpr = (Expression) javaVisitor.scan(param, Space.build(whitespaceBeforeAsString(), emptyList()));
@@ -684,20 +684,20 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitReturn(ReturnTree node, List<Javadoc> body) {
+    public Tree visitReturn(ReturnTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@return"));
         return new Javadoc.Return(randomId(), Markers.EMPTY, convertMultiline(node.getDescription()));
     }
 
     @Override
-    public Tree visitSee(SeeTree node, List<Javadoc> body) {
+    public Tree visitSee(SeeTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@see"));
 
         Javadoc.Reference reference = null;
 
         J ref;
-        List<Javadoc> spaceBeforeTree = whitespaceBefore();
-        List<Javadoc> docs;
+        /*~~>*/List<Javadoc> spaceBeforeTree = whitespaceBefore();
+        /*~~>*/List<Javadoc> docs;
         if (node.getReference().get(0) instanceof DCTree.DCReference) {
             ref = visitReference((ReferenceTree) node.getReference().get(0), body);
             //noinspection ConstantConditions
@@ -713,19 +713,19 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitSerial(SerialTree node, List<Javadoc> body) {
+    public Tree visitSerial(SerialTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@serial"));
         return new Javadoc.Serial(randomId(), Markers.EMPTY, convertMultiline(node.getDescription()));
     }
 
     @Override
-    public Tree visitSerialData(SerialDataTree node, List<Javadoc> body) {
+    public Tree visitSerialData(SerialDataTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@serialData"));
         return new Javadoc.SerialData(randomId(), Markers.EMPTY, convertMultiline(node.getDescription()));
     }
 
     @Override
-    public Tree visitSerialField(SerialFieldTree node, List<Javadoc> body) {
+    public Tree visitSerialField(SerialFieldTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@serialField"));
         return new Javadoc.SerialField(randomId(), Markers.EMPTY,
                 visitIdentifier(node.getName(), whitespaceBefore()),
@@ -735,13 +735,13 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitSince(SinceTree node, List<Javadoc> body) {
+    public Tree visitSince(SinceTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@since"));
         return new Javadoc.Since(randomId(), Markers.EMPTY, convertMultiline(node.getBody()));
     }
 
     @Override
-    public Tree visitStartElement(StartElementTree node, List<Javadoc> body) {
+    public Tree visitStartElement(StartElementTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("<"));
         String name = node.getName().toString();
         cursor += name.length();
@@ -756,19 +756,19 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitVersion(VersionTree node, List<Javadoc> body) {
+    public Tree visitVersion(VersionTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@version"));
         return new Javadoc.Version(randomId(), Markers.EMPTY, convertMultiline(node.getBody()));
     }
 
     @Override
-    public Tree visitText(TextTree node, List<Javadoc> body) {
+    public Tree visitText(TextTree node, /*~~>*/List<Javadoc> body) {
         throw new UnsupportedOperationException("Anywhere text can occur, we need to call the visitText override that " +
                 "returns a list of Javadoc elements.");
     }
 
-    public List<Javadoc> visitText(String node) {
-        List<Javadoc> texts = new ArrayList<>();
+    public /*~~>*/List<Javadoc> visitText(String node) {
+        /*~~>*/List<Javadoc> texts = new ArrayList<>();
 
         if (!node.isEmpty() && Character.isWhitespace(node.charAt(0)) &&
                 !Character.isWhitespace(source.charAt(cursor))) {
@@ -807,10 +807,10 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitThrows(ThrowsTree node, List<Javadoc> body) {
+    public Tree visitThrows(ThrowsTree node, /*~~>*/List<Javadoc> body) {
         boolean throwsKeyword = source.startsWith("@throws", cursor);
         sourceBefore(throwsKeyword ? "@throws" : "@exception");
-        List<Javadoc> spaceBeforeExceptionName = whitespaceBefore();
+        /*~~>*/List<Javadoc> spaceBeforeExceptionName = whitespaceBefore();
         return new Javadoc.Throws(
                 randomId(),
                 Markers.EMPTY,
@@ -822,7 +822,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitUnknownBlockTag(UnknownBlockTagTree node, List<Javadoc> body) {
+    public Tree visitUnknownBlockTag(UnknownBlockTagTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("@" + node.getTagName()));
         return new Javadoc.UnknownBlock(
                 randomId(),
@@ -833,7 +833,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitUnknownInlineTag(UnknownInlineTagTree node, List<Javadoc> body) {
+    public Tree visitUnknownInlineTag(UnknownInlineTagTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("{@" + node.getTagName()));
         return new Javadoc.UnknownInline(
                 randomId(),
@@ -845,7 +845,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
     }
 
     @Override
-    public Tree visitValue(ValueTree node, List<Javadoc> body) {
+    public Tree visitValue(ValueTree node, /*~~>*/List<Javadoc> body) {
         body.addAll(sourceBefore("{@value"));
         return new Javadoc.InlinedValue(
                 randomId(),
@@ -870,7 +870,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
         return prefix;
     }
 
-    private List<Javadoc> sourceBefore(String delim) {
+    private /*~~>*/List<Javadoc> sourceBefore(String delim) {
         if (cursor >= source.length()) {
             return emptyList();
         }
@@ -879,7 +879,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
         if (endIndex < 0) {
             throw new IllegalStateException("Expected to be able to find " + delim);
         }
-        List<Javadoc> before = whitespaceBefore();
+        /*~~>*/List<Javadoc> before = whitespaceBefore();
         cursor += delim.length();
         return before;
     }
@@ -900,12 +900,12 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
         return fmt;
     }
 
-    private List<Javadoc> whitespaceBefore() {
+    private /*~~>*/List<Javadoc> whitespaceBefore() {
         if (cursor >= source.length()) {
             return emptyList();
         }
 
-        List<Javadoc> whitespace = new ArrayList<>();
+        /*~~>*/List<Javadoc> whitespace = new ArrayList<>();
 
         Javadoc.LineBreak lineBreak;
         while ((lineBreak = lineBreaks.remove(cursor + 1)) != null) {
@@ -937,10 +937,10 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
         return whitespace;
     }
 
-    private List<Javadoc> endBrace() {
+    private /*~~>*/List<Javadoc> endBrace() {
         if (cursor < source.length()) {
             int tempCursor = cursor;
-            List<Javadoc> end = whitespaceBefore();
+            /*~~>*/List<Javadoc> end = whitespaceBefore();
             if (cursor < source.length() && source.charAt(cursor) == '}') {
                 end = ListUtils.concat(end, new Javadoc.Text(randomId(), Markers.EMPTY, "}"));
                 cursor++;
@@ -952,8 +952,8 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
         return emptyList();
     }
 
-    private List<Javadoc> convertMultiline(List<? extends DocTree> dts) {
-        List<Javadoc> js = new ArrayList<>(dts.size());
+    private /*~~>*/List<Javadoc> convertMultiline(/*~~>*/List<? extends DocTree> dts) {
+        /*~~>*/List<Javadoc> js = new ArrayList<>(dts.size());
         Javadoc.LineBreak lineBreak;
         for (int i = 0; i < dts.size(); i++) {
             DocTree dt = dts.get(i);
@@ -984,12 +984,12 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
      * This method collects the linebreaks associated to new lines in a Space, and removes the applicable linebreaks
      * from the map.
      */
-    private List<Javadoc> lineBreaksInMultilineJReference() {
-        List<Integer> linebreakIndexes = lineBreaks.keySet().stream()
+    private /*~~>*/List<Javadoc> lineBreaksInMultilineJReference() {
+        /*~~>*/List<Integer> linebreakIndexes = lineBreaks.keySet().stream()
                 .filter(o -> o <= cursor)
                 .collect(Collectors.toList());
 
-        List<Javadoc> referenceLineBreaks = linebreakIndexes.stream()
+        /*~~>*/List<Javadoc> referenceLineBreaks = linebreakIndexes.stream()
                 .sorted()
                 .map(lineBreaks::get)
                 .collect(Collectors.toList());
@@ -1036,7 +1036,7 @@ public class ReloadableJava8JavadocVisitor extends DocTreeScanner<Tree, List<Jav
         @Override
         public J visitParameterizedType(ParameterizedTypeTree node, Space fmt) {
             NameTree id = (NameTree) javaVisitor.scan(node.getType(), Space.EMPTY);
-            List<JRightPadded<Expression>> expressions = new ArrayList<>(node.getTypeArguments().size());
+            /*~~>*/List<JRightPadded<Expression>> expressions = new ArrayList<>(node.getTypeArguments().size());
             cursor += 1; // skip '<', JavaDocVisitor does not interpret List <Integer> as Parameterized.
             int argsSize = node.getTypeArguments().size();
             for (int i = 0; i < argsSize; i++) {

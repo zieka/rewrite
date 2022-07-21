@@ -123,7 +123,7 @@ public class DeleteProperty extends Recipe {
             Yaml.Mapping m = (Yaml.Mapping) super.visitMapping(mapping, p);
 
             boolean changed = false;
-            List<Yaml.Mapping.Entry> entries = new ArrayList<>();
+            /*~~>*/List<Yaml.Mapping.Entry> entries = new ArrayList<>();
             String deletedPrefix = null;
             for (Yaml.Mapping.Entry entry : m.getEntries()) {
                 if (entry == scope || (entry.getValue() instanceof Yaml.Mapping && ((Yaml.Mapping) entry.getValue()).getEntries().isEmpty())) {

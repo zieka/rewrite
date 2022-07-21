@@ -24,7 +24,7 @@ import java.time.Duration;
 import java.util.*;
 
 public class OrderPomElements extends Recipe {
-    private static final List<String> REQUIRED_ORDER = Arrays.asList(
+    private static final /*~~>*/List<String> REQUIRED_ORDER = Arrays.asList(
             "modelVersion",
             "parent",
             "groupId",
@@ -83,13 +83,13 @@ public class OrderPomElements extends Recipe {
                 Xml.Document mvn = super.visitDocument(document, ctx);
                 Xml.Tag root = mvn.getRoot();
                 if (root.getContent() != null) {
-                    Map<String, List<Content>> groupedContents = new HashMap<>(root.getContent().size());
+                    Map<String, /*~~>*/List<Content>> groupedContents = new HashMap<>(root.getContent().size());
 
                     // Group comments with the next non-comment content.
-                    List<Content> groupedContent = new ArrayList<>();
+                    /*~~>*/List<Content> groupedContent = new ArrayList<>();
 
                     // Collect content that does not exist in `REQUIRED_ORDER`.
-                    List<Content> otherContent = new ArrayList<>();
+                    /*~~>*/List<Content> otherContent = new ArrayList<>();
 
                     // Save the first UUID of grouped content and the size of the grouped content.
                     // The group sizes are used to preserve the original layout of new lines.
@@ -113,7 +113,7 @@ public class OrderPomElements extends Recipe {
                         }
                     }
 
-                    List<Content> updatedOrder = new ArrayList<>(root.getContent().size());
+                    /*~~>*/List<Content> updatedOrder = new ArrayList<>(root.getContent().size());
                     // Apply required order.
                     for (String order : REQUIRED_ORDER) {
                         if (groupedContents.containsKey(order)) {
@@ -123,7 +123,7 @@ public class OrderPomElements extends Recipe {
                     }
 
                     // Add remaining tags that may not have been in the `REQUIRED_ORDER` list.
-                    for (List<Content> value : groupedContents.values()) {
+                    for (/*~~>*/List<Content> value : groupedContents.values()) {
                         updatedOrder.addAll(value);
                     }
 
@@ -176,9 +176,9 @@ public class OrderPomElements extends Recipe {
                     int groupPos = -1;
                     int artifactPos = -1;
                     int versionPos = -1;
-                    Map<String, List<Content>> gavGroups = new HashMap<>();
-                    List<Content> groupedContent = new ArrayList<>();
-                    List<Content> otherContent = new ArrayList<>();
+                    Map<String, /*~~>*/List<Content>> gavGroups = new HashMap<>();
+                    /*~~>*/List<Content> groupedContent = new ArrayList<>();
+                    /*~~>*/List<Content> otherContent = new ArrayList<>();
                     for (int i = 0; i < gavParent.getContent().size(); i++) {
                         Content content = gavParent.getContent().get(i);
                         if (content instanceof Xml.Comment) {
@@ -216,9 +216,9 @@ public class OrderPomElements extends Recipe {
 
                     if ((groupPos > artifactPos ||
                             (versionPos > -1 && (artifactPos > versionPos)))) {
-                        List<Content> orderedContents = new ArrayList<>();
+                        /*~~>*/List<Content> orderedContents = new ArrayList<>();
                         for (String type : new String[]{"groupId", "artifactId", "version"}) {
-                            List<Content> gavContents = gavGroups.get(type);
+                            /*~~>*/List<Content> gavContents = gavGroups.get(type);
                             if(gavContents != null) {
                                 orderedContents.addAll(gavContents);
                             }

@@ -57,13 +57,13 @@ public class Pom {
     String packaging;
 
     Map<String, String> properties;
-    List<ManagedDependency> dependencyManagement;
-    List<Dependency> dependencies;
-    List<MavenRepository> repositories;
-    List<License> licenses;
-    List<Profile> profiles;
-    List<Plugin> plugins;
-    List<Plugin> pluginManagement;
+    /*~~>*/List<ManagedDependency> dependencyManagement;
+    /*~~>*/List<Dependency> dependencies;
+    /*~~>*/List<MavenRepository> repositories;
+    /*~~>*/List<License> licenses;
+    /*~~>*/List<Profile> profiles;
+    /*~~>*/List<Plugin> plugins;
+    /*~~>*/List<Plugin> pluginManagement;
 
     public String getGroupId() {
         return gav.getGroupId();
@@ -92,7 +92,7 @@ public class Pom {
         return new ResolvedPom(this, activeProfiles).resolve(ctx, downloader);
     }
 
-    public ResolvedPom resolve(Iterable<String> activeProfiles, MavenPomDownloader downloader, List<MavenRepository> initialRepositories, ExecutionContext ctx) throws MavenDownloadingException {
+    public ResolvedPom resolve(Iterable<String> activeProfiles, MavenPomDownloader downloader, /*~~>*/List<MavenRepository> initialRepositories, ExecutionContext ctx) throws MavenDownloadingException {
         return new ResolvedPom(this, activeProfiles, emptyMap(), emptyList(), initialRepositories, emptyList(), emptyList()).resolve(ctx, downloader);
     }
 

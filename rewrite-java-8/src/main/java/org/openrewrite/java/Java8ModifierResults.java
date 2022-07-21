@@ -21,19 +21,19 @@ import java.util.List;
 
 public final class Java8ModifierResults {
 
-    private final List<J.Annotation> leadingAnnotations;
-    private final List<J.Modifier> modifiers;
+    private final /*~~>*/List<J.Annotation> leadingAnnotations;
+    private final /*~~>*/List<J.Modifier> modifiers;
 
-    public Java8ModifierResults(List<J.Annotation> leadingAnnotations, List<J.Modifier> modifiers) {
-        this.leadingAnnotations = leadingAnnotations;
-        this.modifiers = modifiers;
+    public Java8ModifierResults(/*~~>*/List<J.Annotation> leadingAnnotations, /*~~>*/List<J.Modifier> modifiers) {
+        /*~~>*/this.leadingAnnotations = leadingAnnotations;
+        /*~~>*/this.modifiers = modifiers;
     }
 
-    public List<J.Annotation> getLeadingAnnotations() {
+    public /*~~>*/List<J.Annotation> getLeadingAnnotations() {
         return leadingAnnotations;
     }
 
-    public List<J.Modifier> getModifiers() {
+    public /*~~>*/List<J.Modifier> getModifiers() {
         return modifiers;
     }
 }

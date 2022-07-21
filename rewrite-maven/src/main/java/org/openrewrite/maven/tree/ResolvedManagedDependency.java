@@ -35,7 +35,7 @@ public class ResolvedManagedDependency {
     @Nullable
     String classifier;
 
-    List<GroupArtifact> exclusions;
+    /*~~>*/List<GroupArtifact> exclusions;
 
     ManagedDependency requested;
 

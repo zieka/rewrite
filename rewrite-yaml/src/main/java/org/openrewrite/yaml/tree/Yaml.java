@@ -95,7 +95,7 @@ public interface Yaml extends Tree {
             return withCharsetName(charset.name());
         }
 
-        List<? extends Document> documents;
+        /*~~>*/List<? extends Document> documents;
 
         @Override
         public <P> Yaml acceptYaml(YamlVisitor<P> v, P p) {
@@ -242,7 +242,7 @@ public interface Yaml extends Tree {
         @Nullable
         String openingBracePrefix;
 
-        List<Entry> entries;
+        /*~~>*/List<Entry> entries;
 
         @Nullable
         String closingBracePrefix;
@@ -324,7 +324,7 @@ public interface Yaml extends Tree {
         @Nullable
         String openingBracketPrefix;
 
-        List<Entry> entries;
+        /*~~>*/List<Entry> entries;
 
         @Nullable
         String closingBracketPrefix;

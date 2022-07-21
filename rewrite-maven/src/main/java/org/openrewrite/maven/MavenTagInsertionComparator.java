@@ -30,7 +30,7 @@ import java.util.*;
  * "After" ordering preference takes priority over "before".
  */
 public class MavenTagInsertionComparator implements Comparator<Content> {
-    private static final List<String> canonicalOrdering = Arrays.asList(
+    private static final /*~~>*/List<String> canonicalOrdering = Arrays.asList(
             "modelVersion",
             "parent",
             "groupId",
@@ -65,7 +65,7 @@ public class MavenTagInsertionComparator implements Comparator<Content> {
 
     private final Map<Content, Integer> existingIndices = new IdentityHashMap<>();
 
-    public MavenTagInsertionComparator(List<? extends Content> existingTags) {
+    public MavenTagInsertionComparator(/*~~>*/List<? extends Content> existingTags) {
         for (int i = 0; i < existingTags.size(); i++) {
             existingIndices.put(existingTags.get(i), i);
         }

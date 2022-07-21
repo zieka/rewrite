@@ -159,8 +159,8 @@ public class AddManagedDependency extends Recipe {
     }
 
     @Override
-    protected List<SourceFile> visit(List<SourceFile> before, ExecutionContext ctx) {
-        List<SourceFile> rootPoms = new ArrayList<>();
+    protected /*~~>*/List<SourceFile> visit(/*~~>*/List<SourceFile> before, ExecutionContext ctx) {
+        /*~~>*/List<SourceFile> rootPoms = new ArrayList<>();
         for (SourceFile source : before) {
             source.getMarkers().findFirst(MavenResolutionResult.class).ifPresent(mavenResolutionResult -> {
                 if (mavenResolutionResult.getParent() == null) {

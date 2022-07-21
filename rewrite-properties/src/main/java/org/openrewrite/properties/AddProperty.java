@@ -78,7 +78,7 @@ public class AddProperty extends Recipe {
                     if (properties.isEmpty()) {
                         Properties.Value propertyValue = new Properties.Value(Tree.randomId(), "", Markers.EMPTY, value);
                         Properties.Entry entry = new Properties.Entry(Tree.randomId(), "\n", Markers.EMPTY, property, "", propertyValue);
-                        List<Properties.Content> contentList = ListUtils.concat(((Properties.File) p).getContent(), entry);
+                        /*~~>*/List<Properties.Content> contentList = ListUtils.concat(((Properties.File) p).getContent(), entry);
                         p = ((Properties.File) p).withContent(contentList);
                     }
                 }

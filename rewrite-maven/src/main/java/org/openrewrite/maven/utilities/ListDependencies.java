@@ -58,7 +58,7 @@ public class ListDependencies extends Recipe {
     }
 
     @Override
-    protected List<SourceFile> visit(List<SourceFile> before, ExecutionContext ctx) {
+    protected /*~~>*/List<SourceFile> visit(/*~~>*/List<SourceFile> before, ExecutionContext ctx) {
         Set<String> dependencies = new HashSet<>();
 
         for (SourceFile sourceFile : before) {

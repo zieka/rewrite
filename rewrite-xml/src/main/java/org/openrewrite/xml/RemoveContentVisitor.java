@@ -38,7 +38,7 @@ public class RemoveContentVisitor<P> extends XmlVisitor<P> {
         if (t.getContent() != null) {
             for (Content content : t.getContent()) {
                 if (scope.isScope(content)) {
-                    List<Content> contents = new ArrayList<>(t.getContent());
+                    /*~~>*/List<Content> contents = new ArrayList<>(t.getContent());
                     contents.remove(content);
 
                     if (removeEmptyAncestors && contents.isEmpty()) {

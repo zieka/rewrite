@@ -201,7 +201,7 @@ class TabsAndIndentsVisitor<P> extends HclIsoVisitor<P> {
         setCursor(new Cursor(getCursor(), container));
 
         Space before;
-        List<HclRightPadded<H>> js;
+        /*~~>*/List<HclRightPadded<H>> js;
 
         int indent = Optional.ofNullable(getCursor().<Integer>getNearestMessage("lastIndent")).orElse(0);
         if (container.getBefore().getLastWhitespace().contains("\n")) {

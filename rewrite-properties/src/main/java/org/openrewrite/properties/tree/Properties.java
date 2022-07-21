@@ -65,7 +65,7 @@ public interface Properties extends Tree {
         Markers markers;
         Path sourcePath;
 
-        List<Content> content;
+        /*~~>*/List<Content> content;
         String eof;
 
         @Nullable // for backwards compatibility

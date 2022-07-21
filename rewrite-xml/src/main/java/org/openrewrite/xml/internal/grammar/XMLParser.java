@@ -186,7 +186,7 @@ public class XMLParser extends Parser {
 		public XmldeclContext xmldecl() {
 			return getRuleContext(XmldeclContext.class,0);
 		}
-		public List<MiscContext> misc() {
+		public /*~~>*/List<MiscContext> misc() {
 			return getRuleContexts(MiscContext.class);
 		}
 		public MiscContext misc(int i) {
@@ -258,7 +258,7 @@ public class XMLParser extends Parser {
 	public static class XmldeclContext extends ParserRuleContext {
 		public TerminalNode SPECIAL_OPEN_XML() { return getToken(XMLParser.SPECIAL_OPEN_XML, 0); }
 		public TerminalNode SPECIAL_CLOSE() { return getToken(XMLParser.SPECIAL_CLOSE, 0); }
-		public List<AttributeContext> attribute() {
+		public /*~~>*/List<AttributeContext> attribute() {
 			return getRuleContexts(AttributeContext.class);
 		}
 		public AttributeContext attribute(int i) {
@@ -399,7 +399,7 @@ public class XMLParser extends Parser {
 			return getRuleContext(ExternalidContext.class,0);
 		}
 		public TerminalNode DTD_CLOSE() { return getToken(XMLParser.DTD_CLOSE, 0); }
-		public List<TerminalNode> STRING() { return getTokens(XMLParser.STRING); }
+		public /*~~>*/List<TerminalNode> STRING() { return getTokens(XMLParser.STRING); }
 		public TerminalNode STRING(int i) {
 			return getToken(XMLParser.STRING, i);
 		}
@@ -486,13 +486,13 @@ public class XMLParser extends Parser {
 	}
 
 	public static class IntsubsetContext extends ParserRuleContext {
-		public List<MarkupdeclContext> markupdecl() {
+		public /*~~>*/List<MarkupdeclContext> markupdecl() {
 			return getRuleContexts(MarkupdeclContext.class);
 		}
 		public MarkupdeclContext markupdecl(int i) {
 			return getRuleContext(MarkupdeclContext.class,i);
 		}
-		public List<DeclSepContext> declSep() {
+		public /*~~>*/List<DeclSepContext> declSep() {
 			return getRuleContexts(DeclSepContext.class);
 		}
 		public DeclSepContext declSep(int i) {
@@ -570,11 +570,11 @@ public class XMLParser extends Parser {
 	public static class MarkupdeclContext extends ParserRuleContext {
 		public TerminalNode MARKUP_OPEN() { return getToken(XMLParser.MARKUP_OPEN, 0); }
 		public TerminalNode MARK_UP_CLOSE() { return getToken(XMLParser.MARK_UP_CLOSE, 0); }
-		public List<TerminalNode> MARKUP_TEXT() { return getTokens(XMLParser.MARKUP_TEXT); }
+		public /*~~>*/List<TerminalNode> MARKUP_TEXT() { return getTokens(XMLParser.MARKUP_TEXT); }
 		public TerminalNode MARKUP_TEXT(int i) {
 			return getToken(XMLParser.MARKUP_TEXT, i);
 		}
-		public List<TerminalNode> MARKUP_SUBSET() { return getTokens(XMLParser.MARKUP_SUBSET); }
+		public /*~~>*/List<TerminalNode> MARKUP_SUBSET() { return getTokens(XMLParser.MARKUP_SUBSET); }
 		public TerminalNode MARKUP_SUBSET(int i) {
 			return getToken(XMLParser.MARKUP_SUBSET, i);
 		}
@@ -922,26 +922,26 @@ public class XMLParser extends Parser {
 	}
 
 	public static class ElementContext extends ParserRuleContext {
-		public List<TerminalNode> OPEN() { return getTokens(XMLParser.OPEN); }
+		public /*~~>*/List<TerminalNode> OPEN() { return getTokens(XMLParser.OPEN); }
 		public TerminalNode OPEN(int i) {
 			return getToken(XMLParser.OPEN, i);
 		}
-		public List<TerminalNode> Name() { return getTokens(XMLParser.Name); }
+		public /*~~>*/List<TerminalNode> Name() { return getTokens(XMLParser.Name); }
 		public TerminalNode Name(int i) {
 			return getToken(XMLParser.Name, i);
 		}
-		public List<TerminalNode> CLOSE() { return getTokens(XMLParser.CLOSE); }
+		public /*~~>*/List<TerminalNode> CLOSE() { return getTokens(XMLParser.CLOSE); }
 		public TerminalNode CLOSE(int i) {
 			return getToken(XMLParser.CLOSE, i);
 		}
 		public TerminalNode SLASH() { return getToken(XMLParser.SLASH, 0); }
-		public List<AttributeContext> attribute() {
+		public /*~~>*/List<AttributeContext> attribute() {
 			return getRuleContexts(AttributeContext.class);
 		}
 		public AttributeContext attribute(int i) {
 			return getRuleContext(AttributeContext.class,i);
 		}
-		public List<ContentContext> content() {
+		public /*~~>*/List<ContentContext> content() {
 			return getRuleContexts(ContentContext.class);
 		}
 		public ContentContext content(int i) {

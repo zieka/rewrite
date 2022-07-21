@@ -75,7 +75,7 @@ public class AddCommentToMavenDependency extends Recipe {
                 Xml.Tag t = super.visitTag(tag, ctx);
                 if (matcher.matches(getCursor()) && this.isDependencyTag(groupId, artifactId)) {
                     if (tag.getContent() != null) {
-                        List<Content> contents = new ArrayList<>(tag.getContent());
+                        /*~~>*/List<Content> contents = new ArrayList<>(tag.getContent());
                         boolean containsComment = contents.stream()
                                 .anyMatch(c -> c instanceof Xml.Comment &&
                                         commentText.equals(((Xml.Comment) c).getText()));

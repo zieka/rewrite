@@ -58,7 +58,7 @@ public class HclPrinter<P> extends HclVisitor<PrintOutputCapture<P>> {
         }
     }
 
-    protected void visitRightPadded(List<? extends HclRightPadded<? extends Hcl>> nodes, HclRightPadded.Location location, String suffixBetween, PrintOutputCapture<P> p) {
+    protected void visitRightPadded(/*~~>*/List<? extends HclRightPadded<? extends Hcl>> nodes, HclRightPadded.Location location, String suffixBetween, PrintOutputCapture<P> p) {
         for (int i = 0; i < nodes.size(); i++) {
             HclRightPadded<? extends Hcl> node = nodes.get(i);
             visit(node.getElement(), p);

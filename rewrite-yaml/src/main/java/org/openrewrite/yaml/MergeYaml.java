@@ -58,7 +58,7 @@ public class MergeYaml extends Recipe {
         return super.validate()
                 .and(Validated.test("yaml", "Must be valid YAML",
                         yaml, y -> {
-                            List<Yaml.Documents> parsed = new YamlParser().parse(yaml);
+                            /*~~>*/List<Yaml.Documents> parsed = new YamlParser().parse(yaml);
                             if (parsed.isEmpty()) {
                                 return false;
                             }

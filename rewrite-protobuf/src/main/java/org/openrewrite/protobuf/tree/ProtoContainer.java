@@ -37,21 +37,21 @@ public class ProtoContainer<T> {
     private static final ProtoContainer<?> EMPTY = new ProtoContainer<>(Space.EMPTY, emptyList(), Markers.EMPTY);
 
     private final Space before;
-    private final List<ProtoRightPadded<T>> elements;
+    private final /*~~>*/List<ProtoRightPadded<T>> elements;
     private final Markers markers;
 
-    private ProtoContainer(Space before, List<ProtoRightPadded<T>> elements, Markers markers) {
+    private ProtoContainer(Space before, /*~~>*/List<ProtoRightPadded<T>> elements, Markers markers) {
         this.before = before;
-        this.elements = elements;
+        /*~~>*/this.elements = elements;
         this.markers = markers;
     }
 
-    public static <T> ProtoContainer<T> build(List<ProtoRightPadded<T>> elements) {
+    public static <T> ProtoContainer<T> build(/*~~>*/List<ProtoRightPadded<T>> elements) {
         return build(Space.EMPTY, elements, Markers.EMPTY);
     }
 
     @JsonCreator
-    public static <T> ProtoContainer<T> build(Space before, List<ProtoRightPadded<T>> elements, Markers markers) {
+    public static <T> ProtoContainer<T> build(Space before, /*~~>*/List<ProtoRightPadded<T>> elements, Markers markers) {
         if (before.isEmpty() && elements.isEmpty()) {
             return empty();
         }
@@ -75,7 +75,7 @@ public class ProtoContainer<T> {
         return markers;
     }
 
-    public List<T> getElements() {
+    public /*~~>*/List<T> getElements() {
         return ProtoRightPadded.getElements(elements);
     }
 
@@ -102,17 +102,17 @@ public class ProtoContainer<T> {
     public static class Padding<T> {
         private final ProtoContainer<T> c;
 
-        public List<ProtoRightPadded<T>> getElements() {
-            return c.elements;
+        public /*~~>*/List<ProtoRightPadded<T>> getElements() {
+            return /*~~>*/c.elements;
         }
 
-        public ProtoContainer<T> withElements(List<ProtoRightPadded<T>> elements) {
-            return c.elements == elements ? c : build(c.before, elements, c.markers);
+        public ProtoContainer<T> withElements(/*~~>*/List<ProtoRightPadded<T>> elements) {
+            return /*~~>*/c.elements == elements ? c : build(c.before, elements, c.markers);
         }
     }
 
     @Nullable
-    public static <P extends Proto> ProtoContainer<P> withElementsNullable(@Nullable ProtoContainer<P> before, @Nullable List<P> elements) {
+    public static <P extends Proto> ProtoContainer<P> withElementsNullable(@Nullable ProtoContainer<P> before, @Nullable /*~~>*/List<P> elements) {
         if (before == null) {
             if (elements == null || elements.isEmpty()) {
                 return null;
@@ -122,14 +122,14 @@ public class ProtoContainer<T> {
         if (elements == null || elements.isEmpty()) {
             return null;
         }
-        return before.getPadding().withElements(ProtoRightPadded.withElements(before.elements, elements));
+        return before.getPadding().withElements(ProtoRightPadded.withElements(/*~~>*/before.elements, elements));
     }
 
-    public static <P extends Proto> ProtoContainer<P> withElements(ProtoContainer<P> before, @Nullable List<P> elements) {
+    public static <P extends Proto> ProtoContainer<P> withElements(ProtoContainer<P> before, @Nullable /*~~>*/List<P> elements) {
         if (elements == null) {
             return before.getPadding().withElements(emptyList());
         }
-        return before.getPadding().withElements(ProtoRightPadded.withElements(before.elements, elements));
+        return before.getPadding().withElements(ProtoRightPadded.withElements(/*~~>*/before.elements, elements));
     }
 
     @Override

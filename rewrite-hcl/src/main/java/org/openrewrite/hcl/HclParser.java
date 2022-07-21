@@ -40,14 +40,14 @@ import java.util.Objects;
 import static java.util.stream.Collectors.toList;
 
 public class HclParser implements Parser<Hcl.ConfigFile> {
-    private final List<NamedStyles> styles;
+    private final /*~~>*/List<NamedStyles> styles;
 
-    private HclParser(List<NamedStyles> styles) {
-        this.styles = styles;
+    private HclParser(/*~~>*/List<NamedStyles> styles) {
+        /*~~>*/this.styles = styles;
     }
 
     @Override
-    public List<Hcl.ConfigFile> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
+    public /*~~>*/List<Hcl.ConfigFile> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
         ParsingEventListener parsingListener = ParsingExecutionContextView.view(ctx).getParsingListener();
         return acceptedInputs(sourceFiles).stream()
                 .map(sourceFile -> {
@@ -122,11 +122,11 @@ public class HclParser implements Parser<Hcl.ConfigFile> {
     }
 
     public static class Builder {
-        protected final List<NamedStyles> styles = new ArrayList<>();
+        protected final /*~~>*/List<NamedStyles> styles = new ArrayList<>();
 
         public Builder styles(Iterable<? extends NamedStyles> styles) {
             for (NamedStyles style : styles) {
-                this.styles.add(style);
+                /*~~>*/this.styles.add(style);
             }
             return this;
         }

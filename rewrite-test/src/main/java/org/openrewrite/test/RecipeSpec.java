@@ -42,7 +42,7 @@ public class RecipeSpec {
      * Default parsers to use if no more specific parser is set
      * on the {@link SourceSpec}.
      */
-    List<Parser<?>> parsers = new ArrayList<>();
+    /*~~>*/List<Parser<?>> parsers = new ArrayList<>();
 
     @Nullable
     ExecutionContext executionContext;
@@ -61,10 +61,10 @@ public class RecipeSpec {
 
     boolean serializationValidation = true;
 
-    Consumer<List<SourceFile>> beforeRecipe = s -> {
+    Consumer</*~~>*/List<SourceFile>> beforeRecipe = s -> {
     };
 
-    Consumer<List<Result>> afterRecipe = r -> {
+    Consumer</*~~>*/List<Result>> afterRecipe = r -> {
     };
 
     // The before and after here don't mean anything
@@ -94,7 +94,7 @@ public class RecipeSpec {
     }
 
     public RecipeSpec parser(Parser<?> parser) {
-        this.parsers.add(parser);
+        /*~~>*/this.parsers.add(parser);
         return this;
     }
 
@@ -113,12 +113,12 @@ public class RecipeSpec {
         return this;
     }
 
-    public RecipeSpec beforeRecipe(Consumer<List<SourceFile>> beforeRecipe) {
+    public RecipeSpec beforeRecipe(Consumer</*~~>*/List<SourceFile>> beforeRecipe) {
         this.beforeRecipe = beforeRecipe;
         return this;
     }
 
-    public RecipeSpec afterRecipe(Consumer<List<Result>> afterRecipe) {
+    public RecipeSpec afterRecipe(Consumer</*~~>*/List<Result>> afterRecipe) {
         this.afterRecipe = afterRecipe;
         return this;
     }

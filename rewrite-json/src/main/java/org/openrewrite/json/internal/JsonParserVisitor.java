@@ -60,7 +60,7 @@ public class JsonParserVisitor extends JSON5BaseVisitor<Json> {
     public Json visitArr(JSON5Parser.ArrContext ctx) {
         return convert(ctx, (arr, prefix) -> {
             sourceBefore("[");
-            List<JsonRightPadded<JsonValue>> converted = new ArrayList<>(ctx.value().size());
+            /*~~>*/List<JsonRightPadded<JsonValue>> converted = new ArrayList<>(ctx.value().size());
             for (int i = 0; i < ctx.value().size(); i++) {
                 JSON5Parser.ValueContext value = ctx.value().get(i);
                 if (i == ctx.value().size() - 1) {
@@ -132,7 +132,7 @@ public class JsonParserVisitor extends JSON5BaseVisitor<Json> {
     public Json visitObj(JSON5Parser.ObjContext ctx) {
         return convert(ctx, (arr, prefix) -> {
             sourceBefore("{");
-            List<JsonRightPadded<Json>> converted = new ArrayList<>(ctx.member().size());
+            /*~~>*/List<JsonRightPadded<Json>> converted = new ArrayList<>(ctx.member().size());
             for (int i = 0; i < ctx.member().size(); i++) {
                 JSON5Parser.MemberContext member = ctx.member().get(i);
                 if (i == ctx.member().size() - 1) {

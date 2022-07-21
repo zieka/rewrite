@@ -53,12 +53,12 @@ public class YamlParser implements org.openrewrite.Parser<Yaml.Documents> {
     private static final Pattern VARIABLE_PATTERN = Pattern.compile(":\\s*(@[^\n\r@]+@)");
 
     @Override
-    public List<Yaml.Documents> parse(@Language("yml") String... sources) {
+    public /*~~>*/List<Yaml.Documents> parse(@Language("yml") String... sources) {
         return parse(new InMemoryExecutionContext(), sources);
     }
 
     @Override
-    public List<Yaml.Documents> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
+    public /*~~>*/List<Yaml.Documents> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
         ParsingEventListener parsingListener = ParsingExecutionContextView.view(ctx).getParsingListener();
         return acceptedInputs(sourceFiles).stream()
                 .map(sourceFile -> {
@@ -119,7 +119,7 @@ public class YamlParser implements org.openrewrite.Parser<Yaml.Documents> {
 
             int lastEnd = 0;
 
-            List<Yaml.Document> documents = new ArrayList<>();
+            /*~~>*/List<Yaml.Document> documents = new ArrayList<>();
             // https://yaml.org/spec/1.2.2/#3222-anchors-and-aliases, section: 3.2.2.2. Anchors and Aliases.
             // An anchor key should always replace the previous value, since an alias refers to the most recent anchor key.
             Map<String, Yaml.Anchor> anchors = new HashMap<>();
@@ -368,7 +368,7 @@ public class YamlParser implements org.openrewrite.Parser<Yaml.Documents> {
         @Nullable
         private final String startBracePrefix;
 
-        private final List<Yaml.Mapping.Entry> entries = new ArrayList<>();
+        private final /*~~>*/List<Yaml.Mapping.Entry> entries = new ArrayList<>();
 
         @Nullable
         private Yaml.Scalar key;
@@ -415,7 +415,7 @@ public class YamlParser implements org.openrewrite.Parser<Yaml.Documents> {
         @Nullable
         private final String startBracketPrefix;
 
-        private final List<Yaml.Sequence.Entry> entries = new ArrayList<>();
+        private final /*~~>*/List<Yaml.Sequence.Entry> entries = new ArrayList<>();
 
         private SequenceBuilder(String prefix, @Nullable String startBracketPrefix) {
             this.prefix = prefix;
@@ -453,7 +453,7 @@ public class YamlParser implements org.openrewrite.Parser<Yaml.Documents> {
     private static class MappingWithPrefix extends Yaml.Mapping {
         private String prefix;
 
-        public MappingWithPrefix(String prefix, @Nullable String startBracePrefix, List<Yaml.Mapping.Entry> entries, @Nullable String endBracePrefix) {
+        public MappingWithPrefix(String prefix, @Nullable String startBracePrefix, /*~~>*/List<Yaml.Mapping.Entry> entries, @Nullable String endBracePrefix) {
             super(randomId(), Markers.EMPTY, startBracePrefix, entries, endBracePrefix);
             this.prefix = prefix;
         }
@@ -469,7 +469,7 @@ public class YamlParser implements org.openrewrite.Parser<Yaml.Documents> {
     private static class SequenceWithPrefix extends Yaml.Sequence {
         private String prefix;
 
-        public SequenceWithPrefix(String prefix, @Nullable String startBracketPrefix, List<Yaml.Sequence.Entry> entries, @Nullable String endBracketPrefix) {
+        public SequenceWithPrefix(String prefix, @Nullable String startBracketPrefix, /*~~>*/List<Yaml.Sequence.Entry> entries, @Nullable String endBracketPrefix) {
             super(randomId(), Markers.EMPTY, startBracketPrefix, entries, endBracketPrefix);
             this.prefix = prefix;
         }

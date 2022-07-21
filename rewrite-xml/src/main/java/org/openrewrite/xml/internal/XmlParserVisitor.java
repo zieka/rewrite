@@ -170,7 +170,7 @@ public class XmlParserVisitor extends XMLParserBaseVisitor<Xml> {
         return convert(ctx, (c, prefix) -> {
                     cursor = ctx.SPECIAL_OPEN_XML().getSymbol().getStopIndex() + 1;
                     String name = convert(ctx.SPECIAL_OPEN_XML(), (n, p) -> n.getText()).substring(2);
-                    List<Xml.Attribute> attributes = ctx.attribute().stream()
+                    /*~~>*/List<Xml.Attribute> attributes = ctx.attribute().stream()
                             .map(this::visitAttribute)
                             .collect(toList());
                     return new Xml.XmlDecl(
@@ -209,9 +209,9 @@ public class XmlParserVisitor extends XMLParserBaseVisitor<Xml> {
         return convert(ctx, (c, prefix) -> {
                     String name = convert(ctx.Name(0), (n, p) -> n.getText());
 
-                    List<Xml.Attribute> attributes = ctx.attribute().stream().map(this::visitAttribute).collect(toList());
+                    /*~~>*/List<Xml.Attribute> attributes = ctx.attribute().stream().map(this::visitAttribute).collect(toList());
 
-                    List<Content> content = null;
+                    /*~~>*/List<Content> content = null;
                     String beforeTagDelimiterPrefix;
                     Xml.Tag.Closing closeTag = null;
 
@@ -272,7 +272,7 @@ public class XmlParserVisitor extends XMLParserBaseVisitor<Xml> {
             skip(c.DOCTYPE());
             Xml.Ident name = convert(c.Name(), (n, p) -> new Xml.Ident(randomId(), p, Markers.EMPTY, n.getText()));
             Xml.Ident externalId = null;
-            List<Xml.Ident> internalSubset = null;
+            /*~~>*/List<Xml.Ident> internalSubset = null;
             if (!c.externalid().getStart().equals(c.DTD_CLOSE().getSymbol())) {
                 if (c.externalid().Name() != null) {
                     externalId = convert(c.externalid(),
@@ -288,8 +288,8 @@ public class XmlParserVisitor extends XMLParserBaseVisitor<Xml> {
                 String subsetPrefix = prefix(c.DTD_SUBSET_OPEN());
                 cursor = c.DTD_SUBSET_OPEN().getSymbol().getStopIndex() + 1;
 
-                List<Xml.Element> elements = new ArrayList<>();
-                List<ParseTree> children = c.intsubset().children;
+                /*~~>*/List<Xml.Element> elements = new ArrayList<>();
+                /*~~>*/List<ParseTree> children = /*~~>*/c.intsubset().children;
                 for (int i = 0; i < children.size(); i++) {
                     ParserRuleContext element = (ParserRuleContext) children.get(i);
                     // Markup declarations are not fully implemented.

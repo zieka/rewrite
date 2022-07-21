@@ -40,12 +40,12 @@ import static org.openrewrite.Tree.randomId;
 
 public class PropertiesParser implements Parser<Properties.File> {
     @Override
-    public List<Properties.File> parse(@Language("properties") String... sources) {
+    public /*~~>*/List<Properties.File> parse(@Language("properties") String... sources) {
         return parse(new InMemoryExecutionContext(), sources);
     }
 
     @Override
-    public List<Properties.File> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
+    public /*~~>*/List<Properties.File> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
         ParsingEventListener parsingListener = ParsingExecutionContextView.view(ctx).getParsingListener();
         return acceptedInputs(sourceFiles).stream()
                 .map(sourceFile -> {
@@ -70,7 +70,7 @@ public class PropertiesParser implements Parser<Properties.File> {
     }
 
     private Properties.File parseFromInput(Path sourceFile, EncodingDetectingInputStream source) {
-        List<Properties.Content> contents = new ArrayList<>();
+        /*~~>*/List<Properties.Content> contents = new ArrayList<>();
 
         StringBuilder prefix = new StringBuilder();
         StringBuilder buff = new StringBuilder();

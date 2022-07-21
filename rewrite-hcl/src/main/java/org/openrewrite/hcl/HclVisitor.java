@@ -436,7 +436,7 @@ public class HclVisitor<P> extends TreeVisitor<Hcl, P> {
         setCursor(new Cursor(getCursor(), container));
 
         Space before = visitSpace(container.getBefore(), loc.getBeforeLocation(), p);
-        List<HclRightPadded<H>> js = ListUtils.map(container.getPadding().getElements(), t -> visitRightPadded(t, loc.getElementLocation(), p));
+        /*~~>*/List<HclRightPadded<H>> js = ListUtils.map(container.getPadding().getElements(), t -> visitRightPadded(t, loc.getElementLocation(), p));
 
         setCursor(getCursor().getParent());
 

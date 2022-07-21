@@ -152,7 +152,7 @@ public class VersionRequirement {
 
     @Value
     private static class RangeSet implements VersionSpec {
-        List<Range> ranges;
+        /*~~>*/List<Range> ranges;
 
         public boolean matches(Version version) {
             for (Range range : ranges) {
@@ -257,7 +257,7 @@ public class VersionRequirement {
     }
 
     @Nullable
-    public String resolve(GroupArtifact groupArtifact, MavenPomDownloader downloader, List<MavenRepository> repositories) {
+    public String resolve(GroupArtifact groupArtifact, MavenPomDownloader downloader, /*~~>*/List<MavenRepository> repositories) {
         return resolve(() -> {
             MavenMetadata metadata = downloader.downloadMetadata(groupArtifact, null, repositories);
             return metadata.getVersioning().getVersions();

@@ -34,7 +34,7 @@ import static java.util.Collections.emptyList;
 @Setter(AccessLevel.PACKAGE)
 public class FlowGraph {
     private final Cursor cursor;
-    private List<FlowGraph> edges = emptyList();
+    private /*~~>*/List<FlowGraph> edges = emptyList();
 
     /**
      * Add an edge to the graph returning the newly added {@link FlowGraph} leaf.

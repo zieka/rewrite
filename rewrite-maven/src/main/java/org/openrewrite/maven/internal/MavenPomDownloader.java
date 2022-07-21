@@ -94,13 +94,13 @@ public class MavenPomDownloader {
         this.mavenCache = this.ctx.getPomCache();
     }
 
-    public MavenMetadata downloadMetadata(GroupArtifact groupArtifact, @Nullable ResolvedPom containingPom, List<MavenRepository> repositories) {
+    public MavenMetadata downloadMetadata(GroupArtifact groupArtifact, @Nullable ResolvedPom containingPom, /*~~>*/List<MavenRepository> repositories) {
         return downloadMetadata(new GroupArtifactVersion(groupArtifact.getGroupId(), groupArtifact.getArtifactId(), null),
                 containingPom,
                 repositories);
     }
 
-    public MavenMetadata downloadMetadata(GroupArtifactVersion gav, @Nullable ResolvedPom containingPom, List<MavenRepository> repositories) {
+    public MavenMetadata downloadMetadata(GroupArtifactVersion gav, @Nullable ResolvedPom containingPom, /*~~>*/List<MavenRepository> repositories) {
         if (gav.getGroupId() == null) {
             throw new MavenDownloadingException("Unable to download maven metadata because of a missing groupId.");
         }
@@ -188,7 +188,7 @@ public class MavenPomDownloader {
     public Pom download(GroupArtifactVersion gav,
                         @Nullable String relativePath,
                         @Nullable ResolvedPom containingPom,
-                        List<MavenRepository> repositories) throws MavenDownloadingException {
+                        /*~~>*/List<MavenRepository> repositories) throws MavenDownloadingException {
         if (gav.getGroupId() == null || gav.getArtifactId() == null || gav.getVersion() == null) {
             String errorText = "Unable to download dependency " + gav;
             if (containingPom != null) {
@@ -316,7 +316,7 @@ public class MavenPomDownloader {
     }
 
     @Nullable
-    private String datedSnapshotVersion(GroupArtifactVersion gav, @Nullable ResolvedPom containingPom, List<MavenRepository> repositories, ExecutionContext ctx) {
+    private String datedSnapshotVersion(GroupArtifactVersion gav, @Nullable ResolvedPom containingPom, /*~~>*/List<MavenRepository> repositories, ExecutionContext ctx) {
         if (gav.getVersion() != null && gav.getVersion().endsWith("-SNAPSHOT")) {
             for (ResolvedGroupArtifactVersion pinnedSnapshotVersion : new MavenExecutionContextView(ctx).getPinnedSnapshotVersions()) {
                 if (pinnedSnapshotVersion.getDatedSnapshotVersion() != null &&
@@ -343,7 +343,7 @@ public class MavenPomDownloader {
         return gav.getVersion();
     }
 
-    private Collection<MavenRepository> distinctNormalizedRepositories(List<MavenRepository> repositories,
+    private Collection<MavenRepository> distinctNormalizedRepositories(/*~~>*/List<MavenRepository> repositories,
                                                                        @Nullable ResolvedPom containingPom,
                                                                        @Nullable String acceptsVersion) {
         Set<MavenRepository> normalizedRepositories = new LinkedHashSet<>();

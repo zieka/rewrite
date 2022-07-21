@@ -72,7 +72,7 @@ public class JsonPathMatcher {
         }
         JsonPathParser.JsonPathContext ctx = jsonPath().jsonPath();
         // The stop may be optimized by interpreting the ExpressionContext and pre-determining the last visit.
-        JsonPathParser.ExpressionContext stop = (JsonPathParser.ExpressionContext) ctx.children.get(ctx.children.size() - 1);
+        JsonPathParser.ExpressionContext stop = (JsonPathParser.ExpressionContext) /*~~>*/ctx.children.get(/*~~>*/ctx.children.size() - 1);
         @SuppressWarnings("ConstantConditions") JsonPathParserVisitor<Object> v = new JsonPathParserHclVisitor(cursorPath, start, stop, false);
         Object result = v.visit(ctx);
 
@@ -81,11 +81,11 @@ public class JsonPathMatcher {
     }
 
     public boolean matches(Cursor cursor) {
-        List<Object> cursorPath = cursor.getPathAsStream().collect(Collectors.toList());
+        /*~~>*/List<Object> cursorPath = cursor.getPathAsStream().collect(Collectors.toList());
         return find(cursor).map(o -> {
-            if (o instanceof List) {
+            if (o instanceof /*~~>*/List) {
                 //noinspection unchecked
-                List<Object> l = (List<Object>) o;
+                /*~~>*/List<Object> l = (/*~~>*/List<Object>) o;
                 return !disjoint(l, cursorPath) && l.contains(cursor.getValue());
             } else {
                 return Objects.equals(o, cursor.getValue());
@@ -100,13 +100,13 @@ public class JsonPathMatcher {
     @SuppressWarnings({"ConstantConditions", "unchecked"})
     private static class JsonPathParserHclVisitor extends JsonPathParserBaseVisitor<Object> {
 
-        private final List<Tree> cursorPath;
+        private final /*~~>*/List<Tree> cursorPath;
         protected Object scope;
         private final JsonPathParser.ExpressionContext stop;
         private final boolean isRecursiveDescent;
 
-        public JsonPathParserHclVisitor(List<Tree> cursorPath, Object scope, JsonPathParser.ExpressionContext stop, boolean isRecursiveDescent) {
-            this.cursorPath = cursorPath;
+        public JsonPathParserHclVisitor(/*~~>*/List<Tree> cursorPath, Object scope, JsonPathParser.ExpressionContext stop, boolean isRecursiveDescent) {
+            /*~~>*/this.cursorPath = cursorPath;
             this.scope = scope;
             this.stop = stop;
             this.isRecursiveDescent = isRecursiveDescent;
@@ -145,10 +145,10 @@ public class JsonPathMatcher {
             Object result = null;
             // A recursive descent at the start of the expression or declared in a filter must check the entire cursor patch.
             // `$..foo` or `$.foo..bar[?($..buz == 'buz')]`
-            List<ParseTree> previous = ctx.getParent().getParent().children;
+            /*~~>*/List<ParseTree> previous = /*~~>*/ctx.getParent().getParent().children;
             ParserRuleContext current = ctx.getParent();
             if (previous.indexOf(current) - 1 < 0 || "$".equals(previous.get(previous.indexOf(current) - 1).getText())) {
-                List<Object> results = new ArrayList<>();
+                /*~~>*/List<Object> results = new ArrayList<>();
                 for (Tree path : cursorPath) {
                     JsonPathParserHclVisitor v = new JsonPathParserHclVisitor(cursorPath, path, null, false);
                     for (int i = 1; i < ctx.getChildCount(); i++) {
@@ -196,10 +196,10 @@ public class JsonPathMatcher {
 
         @Override
         public Object visitSlice(JsonPathParser.SliceContext ctx) {
-            List<Hcl> results;
-            if (scope instanceof List) {
+            /*~~>*/List<Hcl> results;
+            if (scope instanceof /*~~>*/List) {
                 //noinspection unchecked
-                results = (List<Hcl>) scope;
+                results = (/*~~>*/List<Hcl>) scope;
             } else if (scope instanceof Hcl.Attribute) {
                 scope = ((Hcl.Attribute) scope).getValue();
                 return visitSlice(ctx);
@@ -233,10 +233,10 @@ public class JsonPathMatcher {
 
         @Override
         public Object visitIndexes(JsonPathParser.IndexesContext ctx) {
-            List<Object> results;
-            if (scope instanceof List) {
+            /*~~>*/List<Object> results;
+            if (scope instanceof /*~~>*/List) {
                 //noinspection unchecked
-                results = (List<Object>) scope;
+                results = (/*~~>*/List<Object>) scope;
             } else if (scope instanceof Hcl.Attribute) {
                 scope = ((Hcl.Attribute) scope).getValue();
                 return visitIndexes(ctx);
@@ -244,7 +244,7 @@ public class JsonPathMatcher {
                 results = new ArrayList<>();
             }
 
-            List<Object> indexes = new ArrayList<>();
+            /*~~>*/List<Object> indexes = new ArrayList<>();
             for (TerminalNode terminalNode : ctx.PositiveNumber()) {
                 for (int i = 0; i < results.size(); i++) {
                     if (terminalNode.getText().contains(String.valueOf(i))) {
@@ -260,7 +260,7 @@ public class JsonPathMatcher {
         public Object visitProperty(JsonPathParser.PropertyContext ctx) {
             if (scope instanceof Hcl.Block) {
                 Hcl.Block block = (Hcl.Block) scope;
-                List<Object> matches = new ArrayList<>();
+                /*~~>*/List<Object> matches = new ArrayList<>();
                 String key = block.getType().getName();
                 String name = ctx.StringLiteral() != null ?
                         unquoteStringLiteral(ctx.StringLiteral().getText()) : ctx.Identifier().getText();
@@ -290,8 +290,8 @@ public class JsonPathMatcher {
                 if (key.equals(name)) {
                     return attribute;
                 }
-            } else if (scope instanceof List) {
-                List<Object> results = ((List<Object>) scope).stream()
+            } else if (scope instanceof /*~~>*/List) {
+                /*~~>*/List<Object> results = ((/*~~>*/List<Object>) scope).stream()
                         .map(o -> {
                             scope = o;
                             return visitProperty(ctx);
@@ -299,10 +299,10 @@ public class JsonPathMatcher {
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());
                 // Unwrap lists of results from visitProperty to match the position of the cursor.
-                List<Object> matches = new ArrayList<>();
+                /*~~>*/List<Object> matches = new ArrayList<>();
                 for (Object result : results) {
-                    if (result instanceof List) {
-                        matches.addAll(((List<Object>) result));
+                    if (result instanceof /*~~>*/List) {
+                        matches.addAll(((/*~~>*/List<Object>) result));
                     } else {
                         matches.add(result);
                     }
@@ -325,8 +325,8 @@ public class JsonPathMatcher {
             if (scope instanceof Hcl.Attribute) {
                 Hcl.Attribute attr = (Hcl.Attribute) scope;
                 return attr.getValue();
-            } else if (scope instanceof List) {
-                return ((List<Object>) scope).stream()
+            } else if (scope instanceof /*~~>*/List) {
+                return ((/*~~>*/List<Object>) scope).stream()
                         .map(o -> {
                             scope = o;
                             return visitWildcard(ctx);
@@ -346,8 +346,8 @@ public class JsonPathMatcher {
             String s = null;
             if (ctx.StringLiteral() != null) {
                 s = ctx.StringLiteral().getText();
-            } else if (!ctx.children.isEmpty()) {
-                s = ctx.children.get(0).getText();
+            } else if (!/*~~>*/ctx.children.isEmpty()) {
+                s = /*~~>*/ctx.children.get(0).getText();
             }
             if (s != null && (s.startsWith("'") || s.startsWith("\""))) {
                 return s.substring(1, s.length() - 1);
@@ -389,8 +389,8 @@ public class JsonPathMatcher {
                             }
                         }
                     }
-                } else if (scope instanceof List) {
-                    List<Object> results = ((List<Object>) scope).stream()
+                } else if (scope instanceof /*~~>*/List) {
+                    /*~~>*/List<Object> results = ((/*~~>*/List<Object>) scope).stream()
                             .map(o -> {
                                 scope = o;
                                 return visitUnaryExpression(ctx);
@@ -399,10 +399,10 @@ public class JsonPathMatcher {
                             .collect(Collectors.toList());
 
                     // Unwrap lists of results from visitUnaryExpression to match the position of the cursor.
-                    List<Object> matches = new ArrayList<>();
+                    /*~~>*/List<Object> matches = new ArrayList<>();
                     for (Object result : results) {
-                        if (result instanceof List) {
-                            matches.addAll(((List<Object>) result));
+                        if (result instanceof /*~~>*/List) {
+                            matches.addAll(((/*~~>*/List<Object>) result));
                         } else {
                             matches.add(result);
                         }
@@ -419,7 +419,7 @@ public class JsonPathMatcher {
 
         @Override
         public Object visitRegexExpression(JsonPathParser.RegexExpressionContext ctx) {
-            if (scope == null || scope instanceof List && ((List<Object>) scope).isEmpty()) {
+            if (scope == null || scope instanceof /*~~>*/List && ((/*~~>*/List<Object>) scope).isEmpty()) {
                 return null;
             }
 
@@ -427,9 +427,9 @@ public class JsonPathMatcher {
             Object lhs = visitUnaryExpression(ctx.unaryExpression());
             String operator = "=~";
 
-            if (lhs instanceof List) {
-                List<Object> matches = new ArrayList<>();
-                for (Object match : ((List<Object>) lhs)) {
+            if (lhs instanceof /*~~>*/List) {
+                /*~~>*/List<Object> matches = new ArrayList<>();
+                for (Object match : ((/*~~>*/List<Object>) lhs)) {
                     Hcl result = getOperatorResult(match, operator, rhs);
                     if (result != null) {
                         matches.add(match);
@@ -445,12 +445,12 @@ public class JsonPathMatcher {
         @Override
         public Object visitContainsExpression(JsonPathParser.ContainsExpressionContext ctx) {
             Object originalScope = scope;
-            if (ctx.children.get(0) instanceof JsonPathParser.UnaryExpressionContext) {
+            if (/*~~>*/ctx.children.get(0) instanceof JsonPathParser.UnaryExpressionContext) {
                 Object lhs = visitUnaryExpression(ctx.unaryExpression());
                 Object rhs = visitLiteralExpression(ctx.literalExpression());
                 if (lhs instanceof Hcl.Block && rhs != null) {
                     Hcl.Block block = (Hcl.Block) lhs;
-                    String key = ctx.children.get(0).getChild(2).getText();
+                    String key = /*~~>*/ctx.children.get(0).getChild(2).getText();
                     lhs = getResultByKey(block, key);
                     if (lhs instanceof Hcl.Attribute) {
                         Hcl.Attribute attr = (Hcl.Attribute) lhs;
@@ -467,7 +467,7 @@ public class JsonPathMatcher {
                 Object rhs = visitUnaryExpression(ctx.unaryExpression());
                 if (rhs instanceof Hcl.Block && lhs != null) {
                     Hcl.Block block = (Hcl.Block) rhs;
-                    String key = ctx.children.get(2).getChild(2).getText();
+                    String key = /*~~>*/ctx.children.get(2).getChild(2).getText();
                     rhs = getResultByKey(block, key);
                     if (rhs instanceof Hcl.Attribute) {
                         Hcl.Attribute attr = (Hcl.Attribute) rhs;
@@ -486,8 +486,8 @@ public class JsonPathMatcher {
 
         @Override
         public Object visitBinaryExpression(JsonPathParser.BinaryExpressionContext ctx) {
-            Object lhs = ctx.children.get(0);
-            Object rhs = ctx.children.get(2);
+            Object lhs = /*~~>*/ctx.children.get(0);
+            Object rhs = /*~~>*/ctx.children.get(2);
 
             if (ctx.LOGICAL_OPERATOR() != null) {
                 String operator;
@@ -508,10 +508,10 @@ public class JsonPathMatcher {
                 scope = scopeOfLogicalOp;
                 rhs = getBinaryExpressionResult(rhs);
                 if ("&&".equals(operator) &&
-                        ((lhs != null && (!(lhs instanceof List) || !((List<Object>) lhs).isEmpty())) && (rhs != null && (!(rhs instanceof List) || !((List<Object>) rhs).isEmpty())))) {
+                        ((lhs != null && (!(lhs instanceof /*~~>*/List) || !((/*~~>*/List<Object>) lhs).isEmpty())) && (rhs != null && (!(rhs instanceof /*~~>*/List) || !((/*~~>*/List<Object>) rhs).isEmpty())))) {
                     return scopeOfLogicalOp;
                 } else if ("||".equals(operator) &&
-                        ((lhs != null && (!(lhs instanceof List) || !((List<Object>) lhs).isEmpty())) || (rhs != null && (!(rhs instanceof List) || !((List<Object>) rhs).isEmpty())))) {
+                        ((lhs != null && (!(lhs instanceof /*~~>*/List) || !((/*~~>*/List<Object>) lhs).isEmpty())) || (rhs != null && (!(rhs instanceof /*~~>*/List) || !((/*~~>*/List<Object>) rhs).isEmpty())))) {
                     return scopeOfLogicalOp;
                 }
             } else if (ctx.EQUALITY_OPERATOR() != null) {
@@ -531,9 +531,9 @@ public class JsonPathMatcher {
                         return null;
                 }
 
-                if (lhs instanceof List) {
-                    List<Object> matches = new ArrayList<>();
-                    for (Object match : ((List<Object>) lhs)) {
+                if (lhs instanceof /*~~>*/List) {
+                    /*~~>*/List<Object> matches = new ArrayList<>();
+                    for (Object match : ((/*~~>*/List<Object>) lhs)) {
                         Hcl result = getOperatorResult(match, operator, rhs);
                         if (result != null) {
                             matches.add(match);
@@ -643,8 +643,8 @@ public class JsonPathMatcher {
                 if (attr.getValue() instanceof Hcl.Literal) {
                     return attr.getSimpleName().equals(key) ? attr : null;
                 }
-            } else if (result instanceof List) {
-                for (Object o : ((List<Object>) result)) {
+            } else if (result instanceof /*~~>*/List) {
+                for (Object o : ((/*~~>*/List<Object>) result)) {
                     Object r = getResultByKey(o, key);
                     if (r != null) {
                         return r;
@@ -656,8 +656,8 @@ public class JsonPathMatcher {
 
         // Ensure the scope is set correctly when results are wrapped in a list.
         private Object getResultFromList(Object results) {
-            if (results instanceof List) {
-                List<Object> matches = (List<Object>) results;
+            if (results instanceof /*~~>*/List) {
+                /*~~>*/List<Object> matches = (/*~~>*/List<Object>) results;
                 if (matches.isEmpty()) {
                     return null;
                 } else if (matches.size() == 1) {
@@ -674,8 +674,8 @@ public class JsonPathMatcher {
                 return getValue(((Hcl.Attribute) result).getValue());
             } else if (result instanceof Hcl.Block) {
                 return ((Hcl.Block) result).getBody();
-            } else if (result instanceof List) {
-                return ((List<Object>) result).stream()
+            } else if (result instanceof /*~~>*/List) {
+                return ((/*~~>*/List<Object>) result).stream()
                         .map(this::getValue)
                         .filter(Objects::nonNull)
                         .collect(Collectors.toList());

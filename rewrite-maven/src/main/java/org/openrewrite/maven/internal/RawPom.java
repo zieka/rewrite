@@ -137,7 +137,7 @@ public class RawPom {
 
         @Nullable
         @JacksonXmlElementWrapper
-        List<GroupArtifact> exclusions;
+        /*~~>*/List<GroupArtifact> exclusions;
     }
 
     @Getter
@@ -156,40 +156,40 @@ public class RawPom {
 
     @Getter
     public static class Dependencies {
-        private final List<Dependency> dependencies;
+        private final /*~~>*/List<Dependency> dependencies;
 
         public Dependencies() {
-            this.dependencies = emptyList();
+            /*~~>*/this.dependencies = emptyList();
         }
 
-        public Dependencies(@JacksonXmlProperty(localName = "dependency") List<Dependency> dependencies) {
-            this.dependencies = dependencies;
+        public Dependencies(@JacksonXmlProperty(localName = "dependency") /*~~>*/List<Dependency> dependencies) {
+            /*~~>*/this.dependencies = dependencies;
         }
     }
 
     @Getter
     public static class Licenses {
-        private final List<License> licenses;
+        private final /*~~>*/List<License> licenses;
 
         public Licenses() {
-            this.licenses = emptyList();
+            /*~~>*/this.licenses = emptyList();
         }
 
-        public Licenses(@JacksonXmlProperty(localName = "license") List<License> licenses) {
-            this.licenses = licenses;
+        public Licenses(@JacksonXmlProperty(localName = "license") /*~~>*/List<License> licenses) {
+            /*~~>*/this.licenses = licenses;
         }
     }
 
     @Getter
     public static class Profiles {
-        private final List<Profile> profiles;
+        private final /*~~>*/List<Profile> profiles;
 
         public Profiles() {
-            this.profiles = emptyList();
+            /*~~>*/this.profiles = emptyList();
         }
 
-        public Profiles(@JacksonXmlProperty(localName = "profile") List<Profile> profiles) {
-            this.profiles = profiles;
+        public Profiles(@JacksonXmlProperty(localName = "profile") /*~~>*/List<Profile> profiles) {
+            /*~~>*/this.profiles = profiles;
         }
     }
 
@@ -202,7 +202,7 @@ public class RawPom {
         @Nullable
         @JacksonXmlElementWrapper(localName = "plugins")
         @JacksonXmlProperty(localName = "plugin")
-        List<Plugin> plugins;
+        /*~~>*/List<Plugin> plugins;
 
         @Nullable
         @JacksonXmlProperty(localName = "pluginManagement")
@@ -220,7 +220,7 @@ public class RawPom {
         @Nullable
         @JacksonXmlElementWrapper(localName = "plugins")
         @JacksonXmlProperty(localName = "plugin")
-        List<Plugin> plugins;
+        /*~~>*/List<Plugin> plugins;
     }
 
     @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -245,13 +245,13 @@ public class RawPom {
         @Nullable
         @JacksonXmlElementWrapper(localName = "dependencies")
         @JacksonXmlProperty(localName = "dependency")
-        List<Dependency> dependencies;
+        /*~~>*/List<Dependency> dependencies;
 
         @NonFinal
         @Nullable
         @JacksonXmlElementWrapper(localName = "executions")
         @JacksonXmlProperty(localName = "execution")
-        List<Execution> executions;
+        /*~~>*/List<Execution> executions;
     }
 
     @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -262,7 +262,7 @@ public class RawPom {
         @NonFinal
         @JacksonXmlElementWrapper(localName = "goals")
         @JacksonXmlProperty(localName = "goal")
-        List<String> goals;
+        /*~~>*/List<String> goals;
 
         String phase;
 
@@ -355,10 +355,10 @@ public class RawPom {
         );
     }
 
-    private List<org.openrewrite.maven.tree.License> mapLicenses(@Nullable Licenses rawLicenses) {
-        List<org.openrewrite.maven.tree.License> licenses = emptyList();
+    private /*~~>*/List<org.openrewrite.maven.tree.License> mapLicenses(@Nullable Licenses rawLicenses) {
+        /*~~>*/List<org.openrewrite.maven.tree.License> licenses = emptyList();
         if (rawLicenses != null) {
-            List<License> unmappedLicenses = rawLicenses.getLicenses();
+            /*~~>*/List<License> unmappedLicenses = rawLicenses.getLicenses();
             if (unmappedLicenses != null) {
                 licenses = new ArrayList<>(unmappedLicenses.size());
                 for (License l : unmappedLicenses) {
@@ -369,10 +369,10 @@ public class RawPom {
         return licenses;
     }
 
-    private List<org.openrewrite.maven.tree.Profile> mapProfiles(@Nullable Profiles rawProfiles) {
-        List<org.openrewrite.maven.tree.Profile> profiles = emptyList();
+    private /*~~>*/List<org.openrewrite.maven.tree.Profile> mapProfiles(@Nullable Profiles rawProfiles) {
+        /*~~>*/List<org.openrewrite.maven.tree.Profile> profiles = emptyList();
         if (rawProfiles != null) {
-            List<Profile> unmappedProfiles = rawProfiles.getProfiles();
+            /*~~>*/List<Profile> unmappedProfiles = rawProfiles.getProfiles();
             if (unmappedProfiles != null) {
                 profiles = new ArrayList<>(unmappedProfiles.size());
 
@@ -397,10 +397,10 @@ public class RawPom {
     }
 
     @NotNull
-    private List<MavenRepository> mapRepositories(@Nullable RawRepositories rawRepositories) {
-        List<MavenRepository> pomRepositories = emptyList();
+    private /*~~>*/List<MavenRepository> mapRepositories(@Nullable RawRepositories rawRepositories) {
+        /*~~>*/List<MavenRepository> pomRepositories = emptyList();
         if (rawRepositories != null) {
-            List<RawRepositories.Repository> unmappedRepos = rawRepositories.getRepositories();
+            /*~~>*/List<RawRepositories.Repository> unmappedRepos = rawRepositories.getRepositories();
             if (unmappedRepos != null) {
                 pomRepositories = new ArrayList<>(unmappedRepos.size());
                 for (RawRepositories.Repository r : unmappedRepos) {
@@ -415,10 +415,10 @@ public class RawPom {
         return pomRepositories;
     }
 
-    private List<ManagedDependency> mapDependencyManagement(@Nullable DependencyManagement rawDependencyManagement) {
-        List<ManagedDependency> dependencyManagementDependencies = emptyList();
+    private /*~~>*/List<ManagedDependency> mapDependencyManagement(@Nullable DependencyManagement rawDependencyManagement) {
+        /*~~>*/List<ManagedDependency> dependencyManagementDependencies = emptyList();
         if (rawDependencyManagement != null && rawDependencyManagement.getDependencies() != null) {
-            List<Dependency> unmappedDependencies = rawDependencyManagement.getDependencies().getDependencies();
+            /*~~>*/List<Dependency> unmappedDependencies = rawDependencyManagement.getDependencies().getDependencies();
             if (unmappedDependencies != null) {
                 dependencyManagementDependencies = new ArrayList<>(unmappedDependencies.size());
                 for (Dependency d : unmappedDependencies) {
@@ -434,10 +434,10 @@ public class RawPom {
         return dependencyManagementDependencies;
     }
 
-    private List<org.openrewrite.maven.tree.Dependency> mapRequestedDependencies(@Nullable Dependencies rawDependencies) {
-        List<org.openrewrite.maven.tree.Dependency> dependencies = emptyList();
+    private /*~~>*/List<org.openrewrite.maven.tree.Dependency> mapRequestedDependencies(@Nullable Dependencies rawDependencies) {
+        /*~~>*/List<org.openrewrite.maven.tree.Dependency> dependencies = emptyList();
         if (rawDependencies != null && rawDependencies.getDependencies() != null) {
-            List<Dependency> unmappedDependencies = rawDependencies.getDependencies();
+            /*~~>*/List<Dependency> unmappedDependencies = rawDependencies.getDependencies();
             if (unmappedDependencies != null) {
                 dependencies = new ArrayList<>(unmappedDependencies.size());
                 for (Dependency d : unmappedDependencies) {
@@ -450,8 +450,8 @@ public class RawPom {
         return dependencies;
     }
 
-    private List<org.openrewrite.maven.tree.Dependency> mapRequestedDependencies(@Nullable List<Dependency> rawDependencies) {
-        List<org.openrewrite.maven.tree.Dependency> dependencies = emptyList();
+    private /*~~>*/List<org.openrewrite.maven.tree.Dependency> mapRequestedDependencies(@Nullable /*~~>*/List<Dependency> rawDependencies) {
+        /*~~>*/List<org.openrewrite.maven.tree.Dependency> dependencies = emptyList();
         if (rawDependencies != null) {
             dependencies = new ArrayList<>(rawDependencies.size());
             for (Dependency d : rawDependencies) {
@@ -463,8 +463,8 @@ public class RawPom {
         return dependencies;
     }
 
-    private List<org.openrewrite.maven.tree.Plugin> mapPlugins(@Nullable List<Plugin> rawPlugins) {
-        List<org.openrewrite.maven.tree.Plugin> plugins = emptyList();
+    private /*~~>*/List<org.openrewrite.maven.tree.Plugin> mapPlugins(@Nullable /*~~>*/List<Plugin> rawPlugins) {
+        /*~~>*/List<org.openrewrite.maven.tree.Plugin> plugins = emptyList();
         if (rawPlugins != null) {
             plugins = new ArrayList<>(rawPlugins.size());
             for (Plugin rawPlugin : rawPlugins) {
@@ -491,8 +491,8 @@ public class RawPom {
         return MavenXmlMapper.readMapper().convertValue(configuration, new TypeReference<Map<String, Object>>(){});
     }
 
-    private List<org.openrewrite.maven.tree.Plugin.Execution> mapPluginExecutions(@Nullable List<Execution> rawExecutions) {
-        List<org.openrewrite.maven.tree.Plugin.Execution> executions = emptyList();
+    private /*~~>*/List<org.openrewrite.maven.tree.Plugin.Execution> mapPluginExecutions(@Nullable /*~~>*/List<Execution> rawExecutions) {
+        /*~~>*/List<org.openrewrite.maven.tree.Plugin.Execution> executions = emptyList();
         if (rawExecutions != null) {
             executions = new ArrayList<>(rawExecutions.size());
             for (Execution rawExecution : rawExecutions) {

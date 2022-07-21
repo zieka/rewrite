@@ -77,7 +77,7 @@ public class DeleteProperty extends Recipe {
                 Properties.File f = (Properties.File) super.visitFile(file, executionContext);
 
                 String prefix = null;
-                List<Properties.Content> fileContent = new ArrayList<>();
+                /*~~>*/List<Properties.Content> fileContent = new ArrayList<>();
                 for (int i = 0; i < f.getContent().size(); i++) {
                     Properties.Content content = f.getContent().get(i);
                     if (content instanceof Properties.Entry && isMatch(((Properties.Entry) content).getKey())) {

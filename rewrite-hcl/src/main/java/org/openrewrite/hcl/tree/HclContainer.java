@@ -37,21 +37,21 @@ public class HclContainer<T> {
     private static final HclContainer<?> EMPTY = new HclContainer<>(Space.EMPTY, emptyList(), Markers.EMPTY);
 
     private final Space before;
-    private final List<HclRightPadded<T>> elements;
+    private final /*~~>*/List<HclRightPadded<T>> elements;
     private final Markers markers;
 
-    private HclContainer(Space before, List<HclRightPadded<T>> elements, Markers markers) {
+    private HclContainer(Space before, /*~~>*/List<HclRightPadded<T>> elements, Markers markers) {
         this.before = before;
-        this.elements = elements;
+        /*~~>*/this.elements = elements;
         this.markers = markers;
     }
 
-    public static <T> HclContainer<T> build(List<HclRightPadded<T>> elements) {
+    public static <T> HclContainer<T> build(/*~~>*/List<HclRightPadded<T>> elements) {
         return build(Space.EMPTY, elements, Markers.EMPTY);
     }
 
     @JsonCreator
-    public static <T> HclContainer<T> build(Space before, List<HclRightPadded<T>> elements, Markers markers) {
+    public static <T> HclContainer<T> build(Space before, /*~~>*/List<HclRightPadded<T>> elements, Markers markers) {
         if (before.isEmpty() && elements.isEmpty()) {
             return empty();
         }
@@ -75,7 +75,7 @@ public class HclContainer<T> {
         return markers;
     }
 
-    public List<T> getElements() {
+    public /*~~>*/List<T> getElements() {
         return HclRightPadded.getElements(elements);
     }
 
@@ -125,17 +125,17 @@ public class HclContainer<T> {
     public static class Padding<T> {
         private final HclContainer<T> c;
 
-        public List<HclRightPadded<T>> getElements() {
-            return c.elements;
+        public /*~~>*/List<HclRightPadded<T>> getElements() {
+            return /*~~>*/c.elements;
         }
 
-        public HclContainer<T> withElements(List<HclRightPadded<T>> elements) {
-            return c.elements == elements ? c : build(c.before, elements, c.markers);
+        public HclContainer<T> withElements(/*~~>*/List<HclRightPadded<T>> elements) {
+            return /*~~>*/c.elements == elements ? c : build(c.before, elements, c.markers);
         }
     }
 
     @Nullable
-    public static <H extends Hcl> HclContainer<H> withElementsNullable(@Nullable HclContainer<H> before, @Nullable List<H> elements) {
+    public static <H extends Hcl> HclContainer<H> withElementsNullable(@Nullable HclContainer<H> before, @Nullable /*~~>*/List<H> elements) {
         if (before == null) {
             if (elements == null || elements.isEmpty()) {
                 return null;
@@ -145,14 +145,14 @@ public class HclContainer<T> {
         if (elements == null || elements.isEmpty()) {
             return null;
         }
-        return before.getPadding().withElements(HclRightPadded.withElements(before.elements, elements));
+        return before.getPadding().withElements(HclRightPadded.withElements(/*~~>*/before.elements, elements));
     }
 
-    public static <H extends Hcl> HclContainer<H> withElements(HclContainer<H> before, @Nullable List<H> elements) {
+    public static <H extends Hcl> HclContainer<H> withElements(HclContainer<H> before, @Nullable /*~~>*/List<H> elements) {
         if (elements == null) {
             return before.getPadding().withElements(emptyList());
         }
-        return before.getPadding().withElements(HclRightPadded.withElements(before.elements, elements));
+        return before.getPadding().withElements(HclRightPadded.withElements(/*~~>*/before.elements, elements));
     }
 
     @Override

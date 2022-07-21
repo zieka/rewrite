@@ -167,7 +167,7 @@ public class JSON5Parser extends Parser {
 	}
 
 	public static class ObjContext extends ParserRuleContext {
-		public List<MemberContext> member() {
+		public /*~~>*/List<MemberContext> member() {
 			return getRuleContexts(MemberContext.class);
 		}
 		public MemberContext member(int i) {
@@ -456,7 +456,7 @@ public class JSON5Parser extends Parser {
 	}
 
 	public static class ArrContext extends ParserRuleContext {
-		public List<ValueContext> value() {
+		public /*~~>*/List<ValueContext> value() {
 			return getRuleContexts(ValueContext.class);
 		}
 		public ValueContext value(int i) {

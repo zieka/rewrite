@@ -105,7 +105,7 @@ public class JsonPrinter<P> extends JsonVisitor<PrintOutputCapture<P>> {
         return space;
     }
 
-    protected void visitRightPadded(List<? extends JsonRightPadded<? extends Json>> nodes, String suffixBetween, PrintOutputCapture<P> p) {
+    protected void visitRightPadded(/*~~>*/List<? extends JsonRightPadded<? extends Json>> nodes, String suffixBetween, PrintOutputCapture<P> p) {
         for (int i = 0; i < nodes.size(); i++) {
             JsonRightPadded<? extends Json> node = nodes.get(i);
             visit(node.getElement(), p);

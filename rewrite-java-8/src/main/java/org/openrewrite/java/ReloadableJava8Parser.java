@@ -143,7 +143,7 @@ class ReloadableJava8Parser implements JavaParser {
     }
 
     @Override
-    public List<J.CompilationUnit> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
+    public /*~~>*/List<J.CompilationUnit> parseInputs(Iterable<Input> sourceFiles, @Nullable Path relativeTo, ExecutionContext ctx) {
         ParsingEventListener parsingListener = ParsingExecutionContextView.view(ctx).getParsingListener();
 
         if (classpath != null) { // override classpath
@@ -189,7 +189,7 @@ class ReloadableJava8Parser implements JavaParser {
             ctx.getOnError().accept(new JavaParsingException("Failed symbol entering or attribution", t));
         }
 
-        List<J.CompilationUnit> mappedCus = cus.entrySet().stream()
+        /*~~>*/List<J.CompilationUnit> mappedCus = cus.entrySet().stream()
                 .map(cuByPath -> {
                     Timer.Sample sample = Timer.start();
                     Input input = cuByPath.getKey();
@@ -228,7 +228,7 @@ class ReloadableJava8Parser implements JavaParser {
 
         JavaSourceSet sourceSet = getSourceSet(ctx);
         if (!ctx.getMessage(SKIP_SOURCE_SET_TYPE_GENERATION, false)) {
-            List<JavaType.FullyQualified> classpath = sourceSet.getClasspath();
+            /*~~>*/List<JavaType.FullyQualified> classpath = sourceSet.getClasspath();
             for (J.CompilationUnit cu : mappedCus) {
                 for (JavaType type : cu.getTypesInUse().getTypesInUse()) {
                     if (type instanceof JavaType.FullyQualified) {
@@ -335,14 +335,14 @@ class ReloadableJava8Parser implements JavaParser {
     }
 
     private static class ByteArrayCapableJavacFileManager extends JavacFileManager {
-        private final List<PackageAwareJavaFileObject> classByteClasspath;
+        private final /*~~>*/List<PackageAwareJavaFileObject> classByteClasspath;
 
         public ByteArrayCapableJavacFileManager(Context context,
                                                 boolean register,
                                                 Charset charset,
                                                 Collection<byte[]> classByteClasspath) {
             super(context, register, charset);
-            this.classByteClasspath = classByteClasspath.stream()
+            /*~~>*/this.classByteClasspath = classByteClasspath.stream()
                     .map(PackageAwareJavaFileObject::new)
                     .collect(toList());
         }

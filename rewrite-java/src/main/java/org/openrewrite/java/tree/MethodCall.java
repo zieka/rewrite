@@ -36,7 +36,7 @@ public interface MethodCall extends Expression {
 
     MethodCall withMethodType(@Nullable JavaType.Method methodType);
 
-    List<Expression> getArguments();
+    /*~~>*/List<Expression> getArguments();
 
-    MethodCall withArguments(List<Expression> arguments);
+    MethodCall withArguments(/*~~>*/List<Expression> arguments);
 }

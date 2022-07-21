@@ -25,7 +25,7 @@ import java.util.List;
 @Value
 public class PomDownloadResult {
     GroupArtifactVersion requested;
-    List<MavenRepository> repositories;
+    /*~~>*/List<MavenRepository> repositories;
     String errors;
     Pom pom;
 }

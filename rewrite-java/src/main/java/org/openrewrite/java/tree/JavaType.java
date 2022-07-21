@@ -111,21 +111,21 @@ public interface JavaType {
 
         public abstract FullyQualified withFullyQualifiedName(String fullyQualifiedName);
 
-        public abstract List<FullyQualified> getAnnotations();
+        public abstract /*~~>*/List<FullyQualified> getAnnotations();
 
         public abstract boolean hasFlags(Flag... test);
 
         public abstract Set<Flag> getFlags();
 
-        public abstract List<FullyQualified> getInterfaces();
+        public abstract /*~~>*/List<FullyQualified> getInterfaces();
 
         public abstract Kind getKind();
 
-        public abstract List<Variable> getMembers();
+        public abstract /*~~>*/List<Variable> getMembers();
 
-        public abstract List<Method> getMethods();
+        public abstract /*~~>*/List<Method> getMethods();
 
-        public abstract List<JavaType> getTypeParameters();
+        public abstract /*~~>*/List<JavaType> getTypeParameters();
 
         public Iterator<Method> getVisibleMethods() {
             return getVisibleMethods(getPackageName());
@@ -297,7 +297,7 @@ public interface JavaType {
 
         @NonFinal
         @Nullable
-        List<JavaType> typeParameters;
+        /*~~>*/List<JavaType> typeParameters;
 
         @With
         @Nullable
@@ -311,12 +311,12 @@ public interface JavaType {
 
         @Nullable
         @NonFinal
-        List<FullyQualified> annotations;
+        /*~~>*/List<FullyQualified> annotations;
 
         public Class(@Nullable Integer managedReference, long flagsBitMap, String fullyQualifiedName,
-                     Kind kind, @Nullable List<JavaType> typeParameters, @Nullable FullyQualified supertype, @Nullable FullyQualified owningClass,
-                     @Nullable List<FullyQualified> annotations, @Nullable List<FullyQualified> interfaces,
-                     @Nullable List<Variable> members, @Nullable List<Method> methods) {
+                     Kind kind, @Nullable /*~~>*/List<JavaType> typeParameters, @Nullable FullyQualified supertype, @Nullable FullyQualified owningClass,
+                     @Nullable /*~~>*/List<FullyQualified> annotations, @Nullable /*~~>*/List<FullyQualified> interfaces,
+                     @Nullable /*~~>*/List<Variable> members, @Nullable /*~~>*/List<Method> methods) {
             this.managedReference = managedReference;
             this.flagsBitMap = flagsBitMap & Flag.VALID_CLASS_FLAGS;
             this.fullyQualifiedName = fullyQualifiedName;
@@ -335,11 +335,11 @@ public interface JavaType {
             return ShallowClass.build(fullyQualifiedName);
         }
 
-        public List<FullyQualified> getAnnotations() {
+        public /*~~>*/List<FullyQualified> getAnnotations() {
             return annotations == null ? emptyList() : annotations;
         }
 
-        public Class withAnnotations(@Nullable List<FullyQualified> annotations) {
+        public Class withAnnotations(@Nullable /*~~>*/List<FullyQualified> annotations) {
             if (annotations != null && annotations.isEmpty()) {
                 annotations = null;
             }
@@ -352,13 +352,13 @@ public interface JavaType {
 
         @Nullable
         @NonFinal
-        List<FullyQualified> interfaces;
+        /*~~>*/List<FullyQualified> interfaces;
 
-        public List<FullyQualified> getInterfaces() {
+        public /*~~>*/List<FullyQualified> getInterfaces() {
             return interfaces == null ? emptyList() : interfaces;
         }
 
-        public Class withInterfaces(@Nullable List<FullyQualified> interfaces) {
+        public Class withInterfaces(@Nullable /*~~>*/List<FullyQualified> interfaces) {
             if (interfaces != null && interfaces.isEmpty()) {
                 interfaces = null;
             }
@@ -371,13 +371,13 @@ public interface JavaType {
 
         @Nullable
         @NonFinal
-        List<Variable> members;
+        /*~~>*/List<Variable> members;
 
-        public List<Variable> getMembers() {
+        public /*~~>*/List<Variable> getMembers() {
             return members == null ? emptyList() : members;
         }
 
-        public Class withMembers(@Nullable List<Variable> members) {
+        public Class withMembers(@Nullable /*~~>*/List<Variable> members) {
             if (members != null && members.isEmpty()) {
                 members = null;
             }
@@ -390,13 +390,13 @@ public interface JavaType {
 
         @Nullable
         @NonFinal
-        List<Method> methods;
+        /*~~>*/List<Method> methods;
 
-        public List<Method> getMethods() {
+        public /*~~>*/List<Method> getMethods() {
             return methods == null ? emptyList() : methods;
         }
 
-        public Class withMethods(@Nullable List<Method> methods) {
+        public Class withMethods(@Nullable /*~~>*/List<Method> methods) {
             if (methods != null && methods.isEmpty()) {
                 methods = null;
             }
@@ -418,11 +418,11 @@ public interface JavaType {
         }
 
         @Override
-        public List<JavaType> getTypeParameters() {
+        public /*~~>*/List<JavaType> getTypeParameters() {
             return typeParameters == null ? emptyList() : typeParameters;
         }
 
-        public Class withTypeParameters(@Nullable List<JavaType> typeParameters) {
+        public Class withTypeParameters(@Nullable /*~~>*/List<JavaType> typeParameters) {
             if (typeParameters != null && typeParameters.isEmpty()) {
                 typeParameters = null;
             }
@@ -443,9 +443,9 @@ public interface JavaType {
             return this;
         }
 
-        public Class unsafeSet(@Nullable List<JavaType> typeParameters, @Nullable FullyQualified supertype, @Nullable FullyQualified owningClass,
-                               @Nullable List<FullyQualified> annotations, @Nullable List<FullyQualified> interfaces,
-                               @Nullable List<Variable> members, @Nullable List<Method> methods) {
+        public Class unsafeSet(@Nullable /*~~>*/List<JavaType> typeParameters, @Nullable FullyQualified supertype, @Nullable FullyQualified owningClass,
+                               @Nullable /*~~>*/List<FullyQualified> annotations, @Nullable /*~~>*/List<FullyQualified> interfaces,
+                               @Nullable /*~~>*/List<Variable> members, @Nullable /*~~>*/List<Method> methods) {
             this.typeParameters = nullIfEmpty(typeParameters);
             this.supertype = supertype;
             this.owningClass = owningClass;
@@ -910,24 +910,24 @@ public interface JavaType {
         JavaType returnType;
 
         @Nullable
-        List<String> parameterNames;
+        /*~~>*/List<String> parameterNames;
 
         @NonFinal
         @Nullable
-        List<JavaType> parameterTypes;
+        /*~~>*/List<JavaType> parameterTypes;
 
         @NonFinal
         @Nullable
-        List<FullyQualified> thrownExceptions;
+        /*~~>*/List<FullyQualified> thrownExceptions;
 
         @NonFinal
         @Nullable
-        List<FullyQualified> annotations;
+        /*~~>*/List<FullyQualified> annotations;
 
         public Method(@Nullable Integer managedReference, long flagsBitMap, @Nullable FullyQualified declaringType, String name,
-                      @Nullable JavaType returnType, @Nullable List<String> parameterNames,
-                      @Nullable List<JavaType> parameterTypes, @Nullable List<FullyQualified> thrownExceptions,
-                      @Nullable List<FullyQualified> annotations) {
+                      @Nullable JavaType returnType, @Nullable /*~~>*/List<String> parameterNames,
+                      @Nullable /*~~>*/List<JavaType> parameterTypes, @Nullable /*~~>*/List<FullyQualified> thrownExceptions,
+                      @Nullable /*~~>*/List<FullyQualified> annotations) {
             this.managedReference = managedReference;
             this.flagsBitMap = flagsBitMap & Flag.VALID_FLAGS;
             this.declaringType = declaringType;
@@ -947,9 +947,9 @@ public interface JavaType {
 
         public Method unsafeSet(FullyQualified declaringType,
                                 JavaType returnType,
-                                @Nullable List<JavaType> parameterTypes,
-                                @Nullable List<FullyQualified> thrownExceptions,
-                                @Nullable List<FullyQualified> annotations) {
+                                @Nullable /*~~>*/List<JavaType> parameterTypes,
+                                @Nullable /*~~>*/List<FullyQualified> thrownExceptions,
+                                @Nullable /*~~>*/List<FullyQualified> annotations) {
             this.declaringType = declaringType;
             this.returnType = returnType;
             this.parameterTypes = nullIfEmpty(parameterTypes);
@@ -1007,11 +1007,11 @@ public interface JavaType {
             return false;
         }
 
-        public List<String> getParameterNames() {
+        public /*~~>*/List<String> getParameterNames() {
             return parameterNames == null ? emptyList() : parameterNames;
         }
 
-        public Method withParameterNames(@Nullable List<String> parameterNames) {
+        public Method withParameterNames(@Nullable /*~~>*/List<String> parameterNames) {
             if (parameterNames != null && parameterNames.isEmpty()) {
                 parameterNames = null;
             }
@@ -1022,11 +1022,11 @@ public interface JavaType {
                     parameterNames, this.parameterTypes, this.thrownExceptions, this.annotations);
         }
 
-        public List<JavaType> getParameterTypes() {
+        public /*~~>*/List<JavaType> getParameterTypes() {
             return parameterTypes == null ? emptyList() : parameterTypes;
         }
 
-        public Method withParameterTypes(@Nullable List<JavaType> parameterTypes) {
+        public Method withParameterTypes(@Nullable /*~~>*/List<JavaType> parameterTypes) {
             if (parameterTypes != null && parameterTypes.isEmpty()) {
                 parameterTypes = null;
             }
@@ -1037,11 +1037,11 @@ public interface JavaType {
                     this.parameterNames, parameterTypes, this.thrownExceptions, this.annotations);
         }
 
-        public List<FullyQualified> getThrownExceptions() {
+        public /*~~>*/List<FullyQualified> getThrownExceptions() {
             return thrownExceptions == null ? emptyList() : thrownExceptions;
         }
 
-        public Method withThrownExceptions(@Nullable List<FullyQualified> thrownExceptions) {
+        public Method withThrownExceptions(@Nullable /*~~>*/List<FullyQualified> thrownExceptions) {
             if (thrownExceptions != null && thrownExceptions.isEmpty()) {
                 thrownExceptions = null;
             }
@@ -1052,11 +1052,11 @@ public interface JavaType {
                     this.parameterNames, this.parameterTypes, thrownExceptions, this.annotations);
         }
 
-        public List<FullyQualified> getAnnotations() {
+        public /*~~>*/List<FullyQualified> getAnnotations() {
             return annotations == null ? emptyList() : annotations;
         }
 
-        public Method withAnnotations(@Nullable List<FullyQualified> annotations) {
+        public Method withAnnotations(@Nullable /*~~>*/List<FullyQualified> annotations) {
             if (annotations != null && annotations.isEmpty()) {
                 annotations = null;
             }
@@ -1123,10 +1123,10 @@ public interface JavaType {
 
         @NonFinal
         @Nullable
-        List<FullyQualified> annotations;
+        /*~~>*/List<FullyQualified> annotations;
 
         public Variable(@Nullable Integer managedReference, long flagsBitMap, String name, @Nullable JavaType owner,
-                        @Nullable JavaType type, @Nullable List<FullyQualified> annotations) {
+                        @Nullable JavaType type, @Nullable /*~~>*/List<FullyQualified> annotations) {
             this.managedReference = managedReference;
             this.flagsBitMap = flagsBitMap & Flag.VALID_FLAGS;
             this.name = name;
@@ -1140,11 +1140,11 @@ public interface JavaType {
             return owner;
         }
 
-        public List<FullyQualified> getAnnotations() {
+        public /*~~>*/List<FullyQualified> getAnnotations() {
             return annotations == null ? emptyList() : annotations;
         }
 
-        public Variable withAnnotations(@Nullable List<FullyQualified> annotations) {
+        public Variable withAnnotations(@Nullable /*~~>*/List<FullyQualified> annotations) {
             if (annotations != null && annotations.isEmpty()) {
                 annotations = null;
             }
@@ -1169,7 +1169,7 @@ public interface JavaType {
         }
 
         public Variable unsafeSet(JavaType owner, @Nullable JavaType type,
-                                  @Nullable List<FullyQualified> annotations) {
+                                  @Nullable /*~~>*/List<FullyQualified> annotations) {
             this.owner = owner;
             this.type = type;
             this.annotations = nullIfEmpty(annotations);

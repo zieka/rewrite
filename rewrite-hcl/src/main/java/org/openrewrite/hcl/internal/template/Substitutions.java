@@ -59,7 +59,7 @@ public class Substitutions {
         return parameter.toString();
     }
 
-    public <H extends Hcl> List<H> unsubstitute(List<H> js) {
+    public <H extends Hcl> /*~~>*/List<H> unsubstitute(/*~~>*/List<H> js) {
         return ListUtils.map(js, this::unsubstitute);
     }
 

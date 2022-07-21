@@ -27,7 +27,7 @@ public class SourceFlow<Source extends Expression> extends FlowGraph {
         super(cursor);
     }
 
-    public List<Source> getSources() {
+    public /*~~>*/List<Source> getSources() {
         throw new UnsupportedOperationException("Implement me");
     }
 }

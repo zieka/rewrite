@@ -97,7 +97,7 @@ public class ExcludeDependency extends Recipe {
                     if (maybeExclusions.isPresent()) {
                         Xml.Tag exclusions = maybeExclusions.get();
 
-                        List<Xml.Tag> individualExclusions = exclusions.getChildren("exclusion");
+                        /*~~>*/List<Xml.Tag> individualExclusions = exclusions.getChildren("exclusion");
                         if (individualExclusions.stream().noneMatch(exclusion ->
                                 groupId.equals(exclusion.getChildValue("groupId").orElse(null)) &&
                                         artifactId.equals(exclusion.getChildValue("artifactId").orElse(null)))) {

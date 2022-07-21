@@ -37,7 +37,7 @@ public class FindText extends Recipe {
     @Option(displayName = "Text patterns",
             description = "A list of regular expressions to search for.",
             example = "-----BEGIN RSA PRIVATE KEY-----")
-    List<String> patterns;
+    /*~~>*/List<String> patterns;
 
     @Override
     public String getDisplayName() {

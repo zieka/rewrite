@@ -167,7 +167,7 @@ public class GroovyPrinter<P> extends GroovyVisitor<PrintOutputCapture<P>> {
         p.out.append(after == null ? "" : after);
     }
 
-    protected void visitRightPadded(List<? extends JRightPadded<? extends J>> nodes, GRightPadded.Location location, String suffixBetween, PrintOutputCapture<P> p) {
+    protected void visitRightPadded(/*~~>*/List<? extends JRightPadded<? extends J>> nodes, GRightPadded.Location location, String suffixBetween, PrintOutputCapture<P> p) {
         for (int i = 0; i < nodes.size(); i++) {
             JRightPadded<? extends J> node = nodes.get(i);
             visit(node.getElement(), p);
@@ -289,7 +289,7 @@ public class GroovyPrinter<P> extends GroovyVisitor<PrintOutputCapture<P>> {
             JContainer<Expression> argContainer = method.getPadding().getArguments();
 
             visitSpace(argContainer.getBefore(), Space.Location.METHOD_INVOCATION_ARGUMENTS, p);
-            List<JRightPadded<Expression>> args = argContainer.getPadding().getElements();
+            /*~~>*/List<JRightPadded<Expression>> args = argContainer.getPadding().getElements();
             for (int i = 0; i < args.size(); i++) {
                 JRightPadded<Expression> arg = args.get(i);
                 boolean omitParens = arg.getElement().getMarkers()

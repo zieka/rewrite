@@ -201,7 +201,7 @@ public interface Xml extends Tree {
         @Nullable
         XmlDecl xmlDecl;
 
-        List<Misc> misc;
+        /*~~>*/List<Misc> misc;
 
         @Override
         public <P> Xml acceptXml(XmlVisitor<P> v, P p) {
@@ -227,7 +227,7 @@ public interface Xml extends Tree {
 
         Markers markers;
         String name;
-        List<Attribute> attributes;
+        /*~~>*/List<Attribute> attributes;
 
         /**
          * Space before '&gt;'
@@ -320,10 +320,10 @@ public interface Xml extends Tree {
         }
 
         @With
-        List<Attribute> attributes;
+        /*~~>*/List<Attribute> attributes;
 
         @Nullable
-        List<? extends Content> content;
+        /*~~>*/List<? extends Content> content;
 
         public Optional<Tag> getChild(String name) {
             return content == null ? Optional.empty() : content.stream()
@@ -333,7 +333,7 @@ public interface Xml extends Tree {
                     .findAny();
         }
 
-        public List<Tag> getChildren(String name) {
+        public /*~~>*/List<Tag> getChildren(String name) {
             return content == null ? emptyList() : content.stream()
                     .filter(t -> t instanceof Xml.Tag)
                     .map(Tag.class::cast)
@@ -341,7 +341,7 @@ public interface Xml extends Tree {
                     .collect(toList());
         }
 
-        public List<Tag> getChildren() {
+        public /*~~>*/List<Tag> getChildren() {
             return content == null ? emptyList() : content.stream()
                     .filter(t -> t instanceof Xml.Tag)
                     .map(Tag.class::cast)
@@ -403,8 +403,8 @@ public interface Xml extends Tree {
             return parent.getChild(name);
         }
 
-        public Tag withContent(@Nullable List<? extends Content> content) {
-            if (this.content == content) {
+        public Tag withContent(@Nullable /*~~>*/List<? extends Content> content) {
+            if (/*~~>*/this.content == content) {
                 return this;
             }
 
@@ -617,7 +617,7 @@ public interface Xml extends Tree {
         Markers markers;
         Ident name;
         Ident externalId;
-        List<Ident> internalSubset;
+        /*~~>*/List<Ident> internalSubset;
 
         @Nullable
         ExternalSubsets externalSubsets;
@@ -645,7 +645,7 @@ public interface Xml extends Tree {
             }
 
             Markers markers;
-            List<Element> elements;
+            /*~~>*/List<Element> elements;
         }
 
         @Override
@@ -672,7 +672,7 @@ public interface Xml extends Tree {
         }
 
         Markers markers;
-        List<Ident> subset;
+        /*~~>*/List<Ident> subset;
 
         /**
          * Space before '&gt;'

@@ -25,14 +25,14 @@ import java.util.stream.Collectors;
 public class InsertDependencyComparator implements Comparator<Content> {
     private final Map<Content, Float> positions = new LinkedHashMap<>();
 
-    public InsertDependencyComparator(List<? extends Content> existingDependencies, Xml.Tag dependencyTag) {
+    public InsertDependencyComparator(/*~~>*/List<? extends Content> existingDependencies, Xml.Tag dependencyTag) {
         for (int i = 0, existingDependenciesSize = existingDependencies.size(); i < existingDependenciesSize; i++) {
             positions.put(existingDependencies.get(i), (float) i);
         }
 
         // if everything were ideally sorted, which dependency would the addable dependency
         // come after?
-        List<Xml.Tag> ideallySortedDependencies = existingDependencies.stream()
+        /*~~>*/List<Xml.Tag> ideallySortedDependencies = existingDependencies.stream()
                 .filter(c -> c instanceof Xml.Tag)
                 .map(c -> (Xml.Tag) c)
                 .collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class InsertDependencyComparator implements Comparator<Content> {
         }
 
         float insertPos = afterDependency == null ? -0.5f : 0.5f;
-        List<? extends Content> contents = new ArrayList<>(positions.keySet());
+        /*~~>*/List<? extends Content> contents = new ArrayList<>(positions.keySet());
         for (float f = afterDependency == null ? 0 : positions.get(afterDependency); f < contents.size(); f++) {
             if (!(contents.get((int) f) instanceof Xml.Tag)) {
                 continue;

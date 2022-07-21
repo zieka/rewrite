@@ -48,7 +48,7 @@ public class PotentiallyDeadCode extends Recipe {
     }
 
     @Override
-    protected List<SourceFile> visit(List<SourceFile> before, ExecutionContext ctx) {
+    protected /*~~>*/List<SourceFile> visit(/*~~>*/List<SourceFile> before, ExecutionContext ctx) {
         Set<JavaType.Method> declared = new HashSet<>();
         Set<JavaType.Method> used = new HashSet<>();
 
@@ -94,7 +94,7 @@ public class PotentiallyDeadCode extends Recipe {
         );
     }
 
-    private List<SourceFile> listMethods(Set<JavaType.Method> methods, String sourcePath) {
+    private /*~~>*/List<SourceFile> listMethods(Set<JavaType.Method> methods, String sourcePath) {
         return new PlainTextParser()
                 .parse(methods.stream()
                         .sorted(Comparator.comparing(JavaType.Method::toString))

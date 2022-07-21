@@ -55,12 +55,12 @@ public class GroovyParser implements Parser<G.CompilationUnit> {
     @Nullable
     private final Collection<Path> classpath;
 
-    private final List<NamedStyles> styles;
+    private final /*~~>*/List<NamedStyles> styles;
     private final boolean logCompilationWarningsAndErrors;
     private final JavaTypeCache typeCache;
 
     @Override
-    public List<G.CompilationUnit> parse(@Language("groovy") String... sources) {
+    public /*~~>*/List<G.CompilationUnit> parse(@Language("groovy") String... sources) {
         Pattern packagePattern = Pattern.compile("^package\\s+([^;]+);");
         Pattern classPattern = Pattern.compile("(class|interface|enum)\\s*(<[^>]*>)?\\s+(\\w+)");
 
@@ -92,10 +92,10 @@ public class GroovyParser implements Parser<G.CompilationUnit> {
     }
 
     @Override
-    public List<G.CompilationUnit> parseInputs(Iterable<Input> sources, @Nullable Path relativeTo, ExecutionContext ctx) {
+    public /*~~>*/List<G.CompilationUnit> parseInputs(Iterable<Input> sources, @Nullable Path relativeTo, ExecutionContext ctx) {
         ParsingEventListener parsingListener = ParsingExecutionContextView.view(ctx).getParsingListener();
-        List<CompiledGroovySource> compilerCus = parseInputsToCompilerAst(sources, relativeTo, ctx);
-        List<G.CompilationUnit> cus = new ArrayList<>(compilerCus.size());
+        /*~~>*/List<CompiledGroovySource> compilerCus = parseInputsToCompilerAst(sources, relativeTo, ctx);
+        /*~~>*/List<G.CompilationUnit> cus = new ArrayList<>(compilerCus.size());
 
         for (CompiledGroovySource compiled : compilerCus) {
             try {
@@ -117,8 +117,8 @@ public class GroovyParser implements Parser<G.CompilationUnit> {
         return cus;
     }
 
-    List<CompiledGroovySource> parseInputsToCompilerAst(Iterable<Input> sources, @Nullable Path relativeTo, ExecutionContext ctx) {
-        List<CompiledGroovySource> cus = new ArrayList<>();
+    /*~~>*/List<CompiledGroovySource> parseInputsToCompilerAst(Iterable<Input> sources, @Nullable Path relativeTo, ExecutionContext ctx) {
+        /*~~>*/List<CompiledGroovySource> cus = new ArrayList<>();
 
         for (Input input : sources) {
             CompilerConfiguration configuration = new CompilerConfiguration();
@@ -197,7 +197,7 @@ public class GroovyParser implements Parser<G.CompilationUnit> {
 
         private JavaTypeCache typeCache = new JavaTypeCache();
         private boolean logCompilationWarningsAndErrors = false;
-        private final List<NamedStyles> styles = new ArrayList<>();
+        private final /*~~>*/List<NamedStyles> styles = new ArrayList<>();
 
         public Builder logCompilationWarningsAndErrors(boolean logCompilationWarningsAndErrors) {
             this.logCompilationWarningsAndErrors = logCompilationWarningsAndErrors;
@@ -221,7 +221,7 @@ public class GroovyParser implements Parser<G.CompilationUnit> {
 
         public Builder styles(Iterable<? extends NamedStyles> styles) {
             for (NamedStyles style : styles) {
-                this.styles.add(style);
+                /*~~>*/this.styles.add(style);
             }
             return this;
         }

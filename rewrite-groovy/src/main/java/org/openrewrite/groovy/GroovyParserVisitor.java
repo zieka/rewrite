@@ -83,7 +83,7 @@ public class GroovyParserVisitor {
     }
 
     public G.CompilationUnit visit(SourceUnit unit, ModuleNode ast) throws GroovyParsingException {
-        NavigableMap<LineColumn, List<ASTNode>> sortedByPosition = new TreeMap<>();
+        NavigableMap<LineColumn, /*~~>*/List<ASTNode>> sortedByPosition = new TreeMap<>();
         for (org.codehaus.groovy.ast.stmt.Statement s : ast.getStatementBlock().getStatements()) {
             if (!isSynthetic(s)) {
                 sortedByPosition.computeIfAbsent(pos(s), i -> new ArrayList<>()).add(s);
@@ -129,8 +129,8 @@ public class GroovyParserVisitor {
             sortedByPosition.computeIfAbsent(pos(method), i -> new ArrayList<>()).add(method);
         }
 
-        List<JRightPadded<Statement>> statements = new ArrayList<>(sortedByPosition.size());
-        for (List<ASTNode> values : sortedByPosition.values()) {
+        /*~~>*/List<JRightPadded<Statement>> statements = new ArrayList<>(sortedByPosition.size());
+        for (/*~~>*/List<ASTNode> values : sortedByPosition.values()) {
             try {
                 for (ASTNode value : values) {
                     if (value instanceof InnerClassNode) {
@@ -176,7 +176,7 @@ public class GroovyParserVisitor {
         @Override
         public void visitClass(ClassNode clazz) {
             Space fmt = whitespace();
-            List<J.Annotation> leadingAnnotations;
+            /*~~>*/List<J.Annotation> leadingAnnotations;
             if (clazz.getAnnotations().isEmpty()) {
                 leadingAnnotations = emptyList();
             } else {
@@ -186,7 +186,7 @@ public class GroovyParserVisitor {
                     leadingAnnotations.add(pollQueue());
                 }
             }
-            List<J.Modifier> modifiers = visitModifiers(clazz.getModifiers());
+            /*~~>*/List<J.Modifier> modifiers = visitModifiers(clazz.getModifiers());
 
             Space kindPrefix = whitespace();
             J.ClassDeclaration.Kind.Type kindType = null;
@@ -223,7 +223,7 @@ public class GroovyParserVisitor {
                 } else {
                     implPrefix = sourceBefore("implements");
                 }
-                List<JRightPadded<TypeTree>> implTypes = new ArrayList<>(clazz.getInterfaces().length);
+                /*~~>*/List<JRightPadded<TypeTree>> implTypes = new ArrayList<>(clazz.getInterfaces().length);
                 ClassNode[] interfaces = clazz.getInterfaces();
                 for (int i = 0; i < interfaces.length; i++) {
                     ClassNode anInterface = interfaces[i];
@@ -253,7 +253,7 @@ public class GroovyParserVisitor {
         }
 
         J.Block visitClassBlock(ClassNode clazz) {
-            NavigableMap<LineColumn, List<ASTNode>> sortedByPosition = new TreeMap<>();
+            NavigableMap<LineColumn, /*~~>*/List<ASTNode>> sortedByPosition = new TreeMap<>();
             for (MethodNode method : clazz.getMethods()) {
                 if (method.isSynthetic()) {
                     continue;
@@ -329,7 +329,7 @@ public class GroovyParserVisitor {
         private void visitVariableField(FieldNode field) {
             RewriteGroovyVisitor visitor = new RewriteGroovyVisitor(field, this);
 
-            List<J.Modifier> modifiers = visitModifiers(field.getModifiers());
+            /*~~>*/List<J.Modifier> modifiers = visitModifiers(field.getModifiers());
             TypeTree typeExpr = visitTypeTree(field.getOriginType());
 
             J.Identifier name = new J.Identifier(randomId(), sourceBefore(field.getName()), Markers.EMPTY,
@@ -412,14 +412,14 @@ public class GroovyParserVisitor {
         public void visitMethod(MethodNode method) {
             Space fmt = whitespace();
 
-            List<J.Annotation> annotations = method.getAnnotations().stream()
+            /*~~>*/List<J.Annotation> annotations = method.getAnnotations().stream()
                     .map(a -> {
                         visitAnnotation(a);
                         return (J.Annotation) pollQueue();
                     })
                     .collect(Collectors.toList());
 
-            List<J.Modifier> modifiers = visitModifiers(method.getModifiers());
+            /*~~>*/List<J.Modifier> modifiers = visitModifiers(method.getModifiers());
 
             TypeTree returnType = visitTypeTree(method.getReturnType());
 
@@ -433,12 +433,12 @@ public class GroovyParserVisitor {
 
             // Parameter has no visit implementation, so we've got to do this by hand
             Space beforeParen = sourceBefore("(");
-            List<JRightPadded<Statement>> params = new ArrayList<>(method.getParameters().length);
+            /*~~>*/List<JRightPadded<Statement>> params = new ArrayList<>(method.getParameters().length);
             Parameter[] unparsedParams = method.getParameters();
             for (int i = 0; i < unparsedParams.length; i++) {
                 Parameter param = unparsedParams[i];
 
-                List<J.Annotation> paramAnnotations = param.getAnnotations().stream()
+                /*~~>*/List<J.Annotation> paramAnnotations = param.getAnnotations().stream()
                         .map(a -> {
                             visitAnnotation(a);
                             return (J.Annotation) pollQueue();
@@ -525,8 +525,8 @@ public class GroovyParserVisitor {
             return pollQueue();
         }
 
-        private <T> List<JRightPadded<T>> visitRightPadded(ASTNode[] nodes, @Nullable String afterLast) {
-            List<JRightPadded<T>> ts = new ArrayList<>(nodes.length);
+        private <T> /*~~>*/List<JRightPadded<T>> visitRightPadded(ASTNode[] nodes, @Nullable String afterLast) {
+            /*~~>*/List<JRightPadded<T>> ts = new ArrayList<>(nodes.length);
             for (int i = 0; i < nodes.length; i++) {
                 ASTNode node = nodes[i];
                 @SuppressWarnings("unchecked") JRightPadded<T> converted = JRightPadded.build(
@@ -551,7 +551,7 @@ public class GroovyParserVisitor {
 
         @Override
         public void visitArgumentlistExpression(ArgumentListExpression expression) {
-            List<JRightPadded<Expression>> args = new ArrayList<>(expression.getExpressions().size());
+            /*~~>*/List<JRightPadded<Expression>> args = new ArrayList<>(expression.getExpressions().size());
 
             int saveCursor = cursor;
             Space beforeOpenParen = whitespace();
@@ -565,7 +565,7 @@ public class GroovyParserVisitor {
                 cursor = saveCursor;
             }
 
-            List<org.codehaus.groovy.ast.expr.Expression> unparsedArgs = expression.getExpressions();
+            /*~~>*/List<org.codehaus.groovy.ast.expr.Expression> unparsedArgs = expression.getExpressions();
             // If the first parameter to a function is a Map, then groovy allows "named parameters" style invocations, see:
             //     https://docs.groovy-lang.org/latest/html/documentation/#_named_parameters_2
             // When named parameters are in use they may appear before, after, or intermixed with any positional arguments
@@ -798,8 +798,8 @@ public class GroovyParserVisitor {
             if (!(parent instanceof ClosureExpression)) {
                 fmt = sourceBefore("{");
             }
-            List<JRightPadded<Statement>> statements = new ArrayList<>(block.getStatements().size());
-            List<org.codehaus.groovy.ast.stmt.Statement> blockStatements = block.getStatements();
+            /*~~>*/List<JRightPadded<Statement>> statements = new ArrayList<>(block.getStatements().size());
+            /*~~>*/List<org.codehaus.groovy.ast.stmt.Statement> blockStatements = block.getStatements();
             for (int i = 0; i < blockStatements.size(); i++) {
                 ASTNode statement = blockStatements.get(i);
                 J expr = visit(statement);
@@ -908,7 +908,7 @@ public class GroovyParserVisitor {
         public void visitClosureExpression(ClosureExpression expression) {
             Space prefix = sourceBefore("{");
             JavaType closureType = typeMapping.type(staticType(expression));
-            List<JRightPadded<J>> paramExprs = emptyList();
+            /*~~>*/List<JRightPadded<J>> paramExprs = emptyList();
             if (expression.getParameters().length > 0) {
                 paramExprs = new ArrayList<>(expression.getParameters().length);
                 Parameter[] parameters = expression.getParameters();
@@ -943,8 +943,8 @@ public class GroovyParserVisitor {
 
         @Override
         public void visitClosureListExpression(ClosureListExpression closureListExpression) {
-            List<org.codehaus.groovy.ast.expr.Expression> expressions = closureListExpression.getExpressions();
-            List<JRightPadded<Object>> results = new ArrayList<>(closureListExpression.getExpressions().size());
+            /*~~>*/List<org.codehaus.groovy.ast.expr.Expression> expressions = closureListExpression.getExpressions();
+            /*~~>*/List<JRightPadded<Object>> results = new ArrayList<>(closureListExpression.getExpressions().size());
             for (int i = 0, expressionsSize = expressions.size(); i < expressionsSize; i++) {
                 results.add(JRightPadded.build(visit(expressions.get(i))).withAfter(whitespace()));
                 if (i < expressionsSize - 1) {
@@ -1111,16 +1111,16 @@ public class GroovyParserVisitor {
             Space fmt = sourceBefore("for");
             Space controlFmt = sourceBefore("(");
             if (forLoop.getCollectionExpression() instanceof ClosureListExpression) {
-                List<JRightPadded<?>> controls = visit(forLoop.getCollectionExpression());
+                /*~~>*/List<JRightPadded<?>> controls = visit(forLoop.getCollectionExpression());
                 // There will always be exactly three elements in a for loop's ClosureListExpression
-                List<JRightPadded<Statement>> init = controls.get(0).getElement() instanceof List ?
-                        (List<JRightPadded<Statement>>) controls.get(0).getElement() :
+                /*~~>*/List<JRightPadded<Statement>> init = controls.get(0).getElement() instanceof /*~~>*/List ?
+                        (/*~~>*/List<JRightPadded<Statement>>) controls.get(0).getElement() :
                         singletonList((JRightPadded<Statement>) controls.get(0));
 
                 JRightPadded<Expression> condition = (JRightPadded<Expression>) controls.get(1);
 
-                List<JRightPadded<Statement>> update = controls.get(2).getElement() instanceof List ?
-                        (List<JRightPadded<Statement>>) controls.get(2).getElement() :
+                /*~~>*/List<JRightPadded<Statement>> update = controls.get(2).getElement() instanceof /*~~>*/List ?
+                        (/*~~>*/List<JRightPadded<Statement>>) controls.get(2).getElement() :
                         singletonList((JRightPadded<Statement>) controls.get(2));
                 cursor++; // skip ')'
 
@@ -1179,7 +1179,7 @@ public class GroovyParserVisitor {
         public void visitGStringExpression(GStringExpression gstring) {
             Space fmt = sourceBefore("\"");
 
-            List<J> strings = new ArrayList<>(gstring.getStrings().size());
+            /*~~>*/List<J> strings = new ArrayList<>(gstring.getStrings().size());
             int valueIndex = 0;
             for (ConstantExpression string : gstring.getStrings()) {
                 if (string.getValue().equals("")) {
@@ -1331,7 +1331,7 @@ public class GroovyParserVisitor {
                 if (args.getElements().size() == 1 && args.getElements().get(0) instanceof J.Empty) {
                     methodType = typeMapping.methodType(parameterType.getMethod(name.getSimpleName(), new Parameter[]{}));
                 } else if (call.getArguments() instanceof ArgumentListExpression) {
-                    List<org.codehaus.groovy.ast.expr.Expression> rawArgs = ((ArgumentListExpression) call.getArguments()).getExpressions();
+                    /*~~>*/List<org.codehaus.groovy.ast.expr.Expression> rawArgs = ((ArgumentListExpression) call.getArguments()).getExpressions();
                     /*
                       Look through the methods returning the closest match on a best-effort basis
                       Factors which can result in a less accurate match, or no match, include:
@@ -1454,10 +1454,10 @@ public class GroovyParserVisitor {
                 cursor = saveCursor;
             }
 
-            List<JRightPadded<Expression>> args = new ArrayList<>(tuple.getExpressions().size());
+            /*~~>*/List<JRightPadded<Expression>> args = new ArrayList<>(tuple.getExpressions().size());
             for (org.codehaus.groovy.ast.expr.Expression expression : tuple.getExpressions()) {
                 NamedArgumentListExpression namedArgList = (NamedArgumentListExpression) expression;
-                List<MapEntryExpression> mapEntryExpressions = namedArgList.getMapEntryExpressions();
+                /*~~>*/List<MapEntryExpression> mapEntryExpressions = namedArgList.getMapEntryExpressions();
                 for (int i = 0; i < mapEntryExpressions.size(); i++) {
                     Expression arg = visit(mapEntryExpressions.get(i));
                     if (omitParentheses != null) {
@@ -1491,7 +1491,7 @@ public class GroovyParserVisitor {
             // Recent versions of groovy support try-with-resources, usage of this pattern in groovy is uncommon
             JContainer<J.Try.Resource> resources = null;
             J.Block body = visit(node.getTryStatement());
-            List<J.Try.Catch> catches;
+            /*~~>*/List<J.Try.Catch> catches;
             if(node.getCatchStatements().isEmpty()) {
                 catches = null;
             } else {
@@ -1803,8 +1803,8 @@ public class GroovyParserVisitor {
         return typeTree(classNode);
     }
 
-    private List<J.Modifier> visitModifiers(int modifiers) {
-        List<J.Modifier> unorderedModifiers = new ArrayList<>();
+    private /*~~>*/List<J.Modifier> visitModifiers(int modifiers) {
+        /*~~>*/List<J.Modifier> unorderedModifiers = new ArrayList<>();
 
         if ((modifiers & Opcodes.ACC_ABSTRACT) != 0) {
             unorderedModifiers.add(new J.Modifier(randomId(), EMPTY, Markers.EMPTY, J.Modifier.Type.Abstract, emptyList()));
@@ -1834,7 +1834,7 @@ public class GroovyParserVisitor {
             unorderedModifiers.add(new J.Modifier(randomId(), EMPTY, Markers.EMPTY, J.Modifier.Type.Volatile, emptyList()));
         }
 
-        List<J.Modifier> orderedModifiers = new ArrayList<>(unorderedModifiers.size());
+        /*~~>*/List<J.Modifier> orderedModifiers = new ArrayList<>(unorderedModifiers.size());
         boolean foundModifier = true;
         nextModifier:
         while (foundModifier) {
@@ -1902,7 +1902,7 @@ public class GroovyParserVisitor {
      */
     private JContainer<Expression> visitTypeParameterizations(@Nullable GenericsType[] genericsTypes) {
         Space prefix = sourceBefore("<");
-        List<JRightPadded<Expression>> parameters;
+        /*~~>*/List<JRightPadded<Expression>> parameters;
 
         //noinspection ConstantConditions
         if (genericsTypes == null) {
@@ -1960,7 +1960,7 @@ public class GroovyParserVisitor {
      */
     private JContainer<J.TypeParameter> visitTypeParameters(GenericsType[] genericsTypes) {
         Space prefix = sourceBefore("<");
-        List<JRightPadded<J.TypeParameter>> typeParameters = new ArrayList<>(genericsTypes.length);
+        /*~~>*/List<JRightPadded<J.TypeParameter>> typeParameters = new ArrayList<>(genericsTypes.length);
         for (int i = 0; i < genericsTypes.length; i++) {
             typeParameters.add(JRightPadded.build(visitTypeParameter(genericsTypes[i]))
                     .withAfter(
@@ -1980,7 +1980,7 @@ public class GroovyParserVisitor {
         if (genericType.getUpperBounds() != null) {
             Space boundsPrefix = sourceBefore("extends");
             ClassNode[] upperBounds = genericType.getUpperBounds();
-            List<JRightPadded<TypeTree>> convertedBounds = new ArrayList<>(upperBounds.length);
+            /*~~>*/List<JRightPadded<TypeTree>> convertedBounds = new ArrayList<>(upperBounds.length);
             for (int i = 0; i < upperBounds.length; i++) {
                 convertedBounds.add(JRightPadded.build(visitTypeTree(upperBounds[i]))
                         .withAfter(
@@ -1993,7 +1993,7 @@ public class GroovyParserVisitor {
         } else if (genericType.getLowerBound() != null) {
             Space boundsPrefix = sourceBefore("super");
             ClassNode lowerBound = genericType.getLowerBound();
-            List<JRightPadded<TypeTree>> convertedBounds = new ArrayList<>(1);
+            /*~~>*/List<JRightPadded<TypeTree>> convertedBounds = new ArrayList<>(1);
             convertedBounds.add(JRightPadded.build(visitTypeTree(lowerBound))
                     .withAfter(EMPTY));
             bounds = JContainer.build(boundsPrefix, convertedBounds, Markers.EMPTY);

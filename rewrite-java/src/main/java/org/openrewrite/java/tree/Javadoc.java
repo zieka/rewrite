@@ -65,10 +65,10 @@ public interface Javadoc extends Tree {
         String name;
 
         @Nullable
-        List<Javadoc> spaceBeforeEqual;
+        /*~~>*/List<Javadoc> spaceBeforeEqual;
 
         @Nullable
-        List<Javadoc> value;
+        /*~~>*/List<Javadoc> value;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -84,7 +84,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> name;
+        /*~~>*/List<Javadoc> name;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -100,7 +100,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -117,7 +117,7 @@ public interface Javadoc extends Tree {
 
         Markers markers;
         String name;
-        List<Javadoc> spaceBeforeEndBracket;
+        /*~~>*/List<Javadoc> spaceBeforeEndBracket;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -136,7 +136,7 @@ public interface Javadoc extends Tree {
         Markers markers;
 
         @With
-        List<Javadoc> body;
+        /*~~>*/List<Javadoc> body;
 
         String suffix;
 
@@ -174,7 +174,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> endBrace;
+        /*~~>*/List<Javadoc> endBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -190,7 +190,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> text;
+        /*~~>*/List<Javadoc> text;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -206,7 +206,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> text;
+        /*~~>*/List<Javadoc> text;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -222,7 +222,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> endBrace;
+        /*~~>*/List<Javadoc> endBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -238,7 +238,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> body;
+        /*~~>*/List<Javadoc> body;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -254,9 +254,9 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> searchTerm;
-        List<Javadoc> description;
-        List<Javadoc> endBrace;
+        /*~~>*/List<Javadoc> searchTerm;
+        /*~~>*/List<Javadoc> description;
+        /*~~>*/List<Javadoc> endBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -272,12 +272,12 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> spaceBeforeTree;
+        /*~~>*/List<Javadoc> spaceBeforeTree;
 
         @Nullable
         J tree;
 
-        List<Javadoc> endBrace;
+        /*~~>*/List<Javadoc> endBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -328,7 +328,7 @@ public interface Javadoc extends Tree {
 
         Markers markers;
         boolean plain;
-        List<Javadoc> spaceBeforeTree;
+        /*~~>*/List<Javadoc> spaceBeforeTree;
 
         @Nullable
         J tree;
@@ -346,9 +346,9 @@ public interface Javadoc extends Tree {
         @Nullable
         Reference treeReference;
 
-        List<Javadoc> label;
+        /*~~>*/List<Javadoc> label;
 
-        List<Javadoc> endBrace;
+        /*~~>*/List<Javadoc> endBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -365,8 +365,8 @@ public interface Javadoc extends Tree {
 
         Markers markers;
         boolean code;
-        List<Javadoc> description;
-        List<Javadoc> endBrace;
+        /*~~>*/List<Javadoc> description;
+        /*~~>*/List<Javadoc> endBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -382,7 +382,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> spaceBeforeName;
+        /*~~>*/List<Javadoc> spaceBeforeName;
 
         @Nullable
         J name;
@@ -400,7 +400,7 @@ public interface Javadoc extends Tree {
         @Nullable
         Reference nameReference;
 
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -416,9 +416,9 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> spaceBeforeServiceType;
+        /*~~>*/List<Javadoc> spaceBeforeServiceType;
         J serviceType;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -434,7 +434,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -450,7 +450,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> spaceBeforeTree;
+        /*~~>*/List<Javadoc> spaceBeforeTree;
 
         @Nullable
         J tree;
@@ -468,7 +468,7 @@ public interface Javadoc extends Tree {
         @Nullable
         Reference treeReference;
 
-        List<Javadoc> reference;
+        /*~~>*/List<Javadoc> reference;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -484,7 +484,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -500,7 +500,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -518,7 +518,7 @@ public interface Javadoc extends Tree {
         Markers markers;
         J.Identifier name;
         J type;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -534,7 +534,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -551,9 +551,9 @@ public interface Javadoc extends Tree {
 
         Markers markers;
         String name;
-        List<Javadoc> attributes;
+        /*~~>*/List<Javadoc> attributes;
         boolean selfClosing;
-        List<Javadoc> spaceBeforeEndBracket;
+        /*~~>*/List<Javadoc> spaceBeforeEndBracket;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -569,8 +569,8 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> summary;
-        List<Javadoc> beforeBrace;
+        /*~~>*/List<Javadoc> summary;
+        /*~~>*/List<Javadoc> beforeBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -608,9 +608,9 @@ public interface Javadoc extends Tree {
          */
         boolean throwsKeyword;
 
-        List<Javadoc> spaceBeforeExceptionName;
+        /*~~>*/List<Javadoc> spaceBeforeExceptionName;
         J exceptionName;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -627,7 +627,7 @@ public interface Javadoc extends Tree {
 
         Markers markers;
         String name;
-        List<Javadoc> content;
+        /*~~>*/List<Javadoc> content;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -644,8 +644,8 @@ public interface Javadoc extends Tree {
 
         Markers markers;
         String name;
-        List<Javadoc> content;
-        List<Javadoc> endBrace;
+        /*~~>*/List<Javadoc> content;
+        /*~~>*/List<Javadoc> endBrace;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -661,9 +661,9 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> beforeServiceType;
+        /*~~>*/List<Javadoc> beforeServiceType;
         J serviceType;
-        List<Javadoc> description;
+        /*~~>*/List<Javadoc> description;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -679,7 +679,7 @@ public interface Javadoc extends Tree {
         UUID id;
 
         Markers markers;
-        List<Javadoc> body;
+        /*~~>*/List<Javadoc> body;
 
         @Override
         public <P> Javadoc acceptJavadoc(JavadocVisitor<P> v, P p) {
@@ -698,9 +698,9 @@ public interface Javadoc extends Tree {
         J tree;
 
         @Nullable
-        List<Javadoc> lineBreaks;
+        /*~~>*/List<Javadoc> lineBreaks;
 
-        public List<Javadoc> getLineBreaks() {
+        public /*~~>*/List<Javadoc> getLineBreaks() {
             return lineBreaks == null ? Collections.emptyList() : lineBreaks;
         }
 

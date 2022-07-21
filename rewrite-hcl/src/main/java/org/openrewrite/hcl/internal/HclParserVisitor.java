@@ -170,7 +170,7 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
     public Hcl visitBlock(HCLParser.BlockContext ctx) {
         return convert(ctx, (c, prefix) -> {
             Hcl.Identifier type = visitIdentifier(ctx.Identifier());
-            List<Label> labels = c.blockLabel().stream()
+            /*~~>*/List<Label> labels = c.blockLabel().stream()
                     .map(l -> l.Identifier() != null ?
                             visitIdentifier(l.Identifier()) :
                             (Label) visit(l))
@@ -228,8 +228,8 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
     @Override
     public Hcl visitForIntro(HCLParser.ForIntroContext ctx) {
         return convert(ctx, (c, prefix) -> {
-            List<HclRightPadded<Hcl.Identifier>> mappedVariables = new ArrayList<>();
-            List<TerminalNode> variables = ctx.Identifier();
+            /*~~>*/List<HclRightPadded<Hcl.Identifier>> mappedVariables = new ArrayList<>();
+            /*~~>*/List<TerminalNode> variables = ctx.Identifier();
             int lastFor = prefix.lastIndexOf("for");
             String beforeFor = prefix.substring(0, lastFor);
             String afterFor = prefix.substring(lastFor + 3);
@@ -320,9 +320,9 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
             Hcl.Identifier name = visitIdentifier(ctx.Identifier());
 
             Space argPrefix = sourceBefore("(");
-            List<HclRightPadded<Expression>> mappedArgs = new ArrayList<>();
+            /*~~>*/List<HclRightPadded<Expression>> mappedArgs = new ArrayList<>();
             if (ctx.arguments() != null) {
-                List<HCLParser.ExpressionContext> args = ctx.arguments().expression();
+                /*~~>*/List<HCLParser.ExpressionContext> args = ctx.arguments().expression();
                 for (int i = 0; i < args.size(); i++) {
                     HCLParser.ExpressionContext arg = args.get(i);
                     mappedArgs.add(HclRightPadded.build((Expression) visit(arg))
@@ -344,7 +344,7 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
             String arrow = ctx.HEREDOC_START().getText();
             sourceBefore(arrow);
             Hcl.Identifier delimiter = visitIdentifier(ctx.Identifier(0));
-            List<Expression> expressions = visitHeredocTemplateExpressions(ctx.heredocTemplatePart());
+            /*~~>*/List<Expression> expressions = visitHeredocTemplateExpressions(ctx.heredocTemplatePart());
 
             return new Hcl.HeredocTemplate(
                     randomId(),
@@ -360,8 +360,8 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
     }
 
     @NotNull
-    private List<Expression> visitHeredocTemplateExpressions(List<HCLParser.HeredocTemplatePartContext> ctx) {
-        List<Expression> expressions = new ArrayList<>(ctx.size());
+    private /*~~>*/List<Expression> visitHeredocTemplateExpressions(/*~~>*/List<HCLParser.HeredocTemplatePartContext> ctx) {
+        /*~~>*/List<Expression> expressions = new ArrayList<>(ctx.size());
         for (HCLParser.HeredocTemplatePartContext part : ctx) {
             if (part.heredocLiteral() != null) {
                 Space prefix = Space.format(prefix(part.heredocLiteral()));
@@ -428,8 +428,8 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
     public Hcl visitObject(HCLParser.ObjectContext ctx) {
         return convert(ctx, (c, prefix) -> {
             Space tuplePrefix = sourceBefore("{");
-            List<HclRightPadded<Expression>> mappedValues = new ArrayList<>();
-            List<HCLParser.ObjectelemContext> values = ctx.objectelem();
+            /*~~>*/List<HclRightPadded<Expression>> mappedValues = new ArrayList<>();
+            /*~~>*/List<HCLParser.ObjectelemContext> values = ctx.objectelem();
             for (int i = 0; i < values.size(); i++) {
                 HCLParser.ObjectelemContext value = values.get(i);
                 mappedValues.add(HclRightPadded.build((Expression) visit(value))
@@ -514,12 +514,12 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
             );
 
             return visitSplatAttr(splat, c.splat().attrSplat() != null ?
-                    c.splat().attrSplat().children :
-                    c.splat().fullSplat().children);
+                    /*~~>*/c.splat().attrSplat().children :
+                    /*~~>*/c.splat().fullSplat().children);
         });
     }
 
-    public Expression visitSplatAttr(Expression acc, List<ParseTree> attrs) {
+    public Expression visitSplatAttr(Expression acc, /*~~>*/List<ParseTree> attrs) {
         for (ParseTree attr : attrs) {
             if (attr instanceof HCLParser.GetAttrContext) {
                 acc = new Hcl.AttributeAccess(
@@ -553,7 +553,7 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
     public Hcl visitQuotedTemplate(HCLParser.QuotedTemplateContext ctx) {
         Space quotePrefix = sourceBefore("\"");
         Hcl.QuotedTemplate quotedTemplate = convert(ctx, (c, prefix) -> {
-            List<Expression> expressions = visitTemplateExpressions(ctx.quotedTemplatePart());
+            /*~~>*/List<Expression> expressions = visitTemplateExpressions(ctx.quotedTemplatePart());
             return new Hcl.QuotedTemplate(randomId(), quotePrefix, Markers.EMPTY, expressions);
         });
         skip(ctx.QUOTE(1));
@@ -561,8 +561,8 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
     }
 
     @NotNull
-    private List<Expression> visitTemplateExpressions(List<HCLParser.QuotedTemplatePartContext> ctx) {
-        List<Expression> expressions = new ArrayList<>(ctx.size());
+    private /*~~>*/List<Expression> visitTemplateExpressions(/*~~>*/List<HCLParser.QuotedTemplatePartContext> ctx) {
+        /*~~>*/List<Expression> expressions = new ArrayList<>(ctx.size());
         for (HCLParser.QuotedTemplatePartContext part : ctx) {
             if (part.stringLiteral() != null) {
                 Space prefix = Space.format(prefix(part.stringLiteral()));
@@ -592,8 +592,8 @@ public class HclParserVisitor extends HCLParserBaseVisitor<Hcl> {
     public Hcl visitTuple(HCLParser.TupleContext ctx) {
         return convert(ctx, (c, prefix) -> {
             Space tuplePrefix = sourceBefore("[");
-            List<HclRightPadded<Expression>> mappedValues = new ArrayList<>();
-            List<HCLParser.ExpressionContext> values = ctx.expression();
+            /*~~>*/List<HclRightPadded<Expression>> mappedValues = new ArrayList<>();
+            /*~~>*/List<HCLParser.ExpressionContext> values = ctx.expression();
             for (int i = 0; i < values.size(); i++) {
                 HCLParser.ExpressionContext value = values.get(i);
                 mappedValues.add(HclRightPadded.build((Expression) visit(value))

@@ -359,13 +359,13 @@ public interface Hcl extends Tree {
         Identifier type;
 
         @With
-        List<Label> labels;
+        /*~~>*/List<Label> labels;
 
         @With
         Space open;
 
         @With
-        List<BodyContent> body;
+        /*~~>*/List<BodyContent> body;
 
         @Incubating(since = "7.27.0")
         @Nullable
@@ -592,7 +592,7 @@ public interface Hcl extends Tree {
         Checksum checksum;
 
         @With
-        List<BodyContent> body;
+        /*~~>*/List<BodyContent> body;
 
         @With
         Space eof;
@@ -666,11 +666,11 @@ public interface Hcl extends Tree {
 
         HclContainer<Identifier> variables;
 
-        public List<Identifier> getVariables() {
+        public /*~~>*/List<Identifier> getVariables() {
             return variables.getElements();
         }
 
-        public ForIntro withVariables(List<Identifier> variables) {
+        public ForIntro withVariables(/*~~>*/List<Identifier> variables) {
             return getPadding().withVariables(HclContainer.withElements(this.variables, variables));
         }
 
@@ -968,11 +968,11 @@ public interface Hcl extends Tree {
 
         HclContainer<Expression> arguments;
 
-        public List<Expression> getVariables() {
+        public /*~~>*/List<Expression> getVariables() {
             return arguments.getElements();
         }
 
-        public FunctionCall withArguments(List<Expression> arguments) {
+        public FunctionCall withArguments(/*~~>*/List<Expression> arguments) {
             return getPadding().withArguments(HclContainer.withElements(this.arguments, arguments));
         }
 
@@ -1043,7 +1043,7 @@ public interface Hcl extends Tree {
         Identifier delimiter;
 
         @With
-        List<Expression> expressions;
+        /*~~>*/List<Expression> expressions;
 
         @With
         Space end;
@@ -1248,11 +1248,11 @@ public interface Hcl extends Tree {
          */
         HclContainer<Expression> attributes;
 
-        public List<Expression> getAttributes() {
+        public /*~~>*/List<Expression> getAttributes() {
             return attributes.getElements();
         }
 
-        public ObjectValue withArguments(List<Expression> attributes) {
+        public ObjectValue withArguments(/*~~>*/List<Expression> attributes) {
             return getPadding().withAttributes(HclContainer.withElements(this.attributes, attributes));
         }
 
@@ -1381,7 +1381,7 @@ public interface Hcl extends Tree {
         Markers markers;
 
         @With
-        List<Expression> expressions;
+        /*~~>*/List<Expression> expressions;
 
         @Override
         public <P> Hcl acceptHcl(HclVisitor<P> v, P p) {
@@ -1521,11 +1521,11 @@ public interface Hcl extends Tree {
 
         HclContainer<Expression> values;
 
-        public List<Expression> getValues() {
+        public /*~~>*/List<Expression> getValues() {
             return values.getElements();
         }
 
-        public Tuple withValues(List<Expression> values) {
+        public Tuple withValues(/*~~>*/List<Expression> values) {
             return getPadding().withValues(HclContainer.withElements(this.values, values));
         }
 

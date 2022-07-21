@@ -42,7 +42,7 @@ public class Autodetect extends NamedStyles {
                 emptySet(), styles);
     }
 
-    public static Autodetect detect(List<Xml.Document> xmls) {
+    public static Autodetect detect(/*~~>*/List<Xml.Document> xmls) {
         IndentStatistics indentStatistics = new IndentStatistics();
         GeneralFormatStatistics generalFormatStatistics = new GeneralFormatStatistics();
 

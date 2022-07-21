@@ -122,7 +122,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         JContainer<Expression> args = null;
         if (node.getArguments().size() > 0) {
             Space argsPrefix = sourceBefore("(");
-            List<JRightPadded<Expression>> expressions;
+            /*~~>*/List<JRightPadded<Expression>> expressions;
             if (node.getArguments().size() == 1) {
                 ExpressionTree arg = node.getArguments().get(0);
                 if (arg instanceof JCAssign) {
@@ -182,7 +182,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
 
         TypeTree elemType = convert(typeIdent);
 
-        List<JRightPadded<Space>> dimensions = emptyList();
+        /*~~>*/List<JRightPadded<Space>> dimensions = emptyList();
         if (dimCount > 0) {
             dimensions = new ArrayList<>(dimCount);
             for (int n = 0; n < dimCount; n++) {
@@ -320,7 +320,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         }
 
         // filter out synthetic super() invocations and the like
-        List<StatementTree> statementTrees = new ArrayList<>();
+        /*~~>*/List<StatementTree> statementTrees = new ArrayList<>();
         for (StatementTree s : node.getStatements()) {
             if (endPos(s) > 0) {
                 statementTrees.add(s);
@@ -381,7 +381,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
 
         ReloadableJava11ModifierResults modifierResults = sortedModifiersAndAnnotations(node.getModifiers(), annotationPosTable);
 
-        List<J.Annotation> kindAnnotations = collectAnnotations(annotationPosTable);
+        /*~~>*/List<J.Annotation> kindAnnotations = collectAnnotations(annotationPosTable);
 
         J.ClassDeclaration.Kind kind;
         if (hasFlag(node.getModifiers(), Flags.ENUM)) {
@@ -421,7 +421,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         Space bodyPrefix = sourceBefore("{");
 
         // enum values are required by the grammar to occur before any ordinary field, constructor, or method members
-        List<Tree> jcEnums = new ArrayList<>();
+        /*~~>*/List<Tree> jcEnums = new ArrayList<>();
         for (Tree tree : node.getMembers()) {
             if (tree instanceof JCVariableDecl) {
                 if (hasFlag(((JCVariableDecl) tree).getModifiers(), Flags.ENUM)) {
@@ -434,7 +434,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         if (!jcEnums.isEmpty()) {
             AtomicBoolean semicolonPresent = new AtomicBoolean(false);
 
-            List<JRightPadded<J.EnumValue>> enumValues = convertAll(jcEnums, commaDelim, t -> {
+            /*~~>*/List<JRightPadded<J.EnumValue>> enumValues = convertAll(jcEnums, commaDelim, t -> {
                 // this semicolon is required when there are non-value members, but can still
                 // be present when there are not
                 semicolonPresent.set(positionOfNext(";", '}') > 0);
@@ -453,7 +453,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             );
         }
 
-        List<Tree> membersMultiVariablesSeparated = new ArrayList<>();
+        /*~~>*/List<Tree> membersMultiVariablesSeparated = new ArrayList<>();
         for (Tree m : node.getMembers()) {
             // we don't care about the compiler-inserted default constructor,
             // since it will never be subject to refactoring
@@ -466,7 +466,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             membersMultiVariablesSeparated.add(m);
         }
 
-        List<JRightPadded<Statement>> members = new ArrayList<>();
+        /*~~>*/List<JRightPadded<Statement>> members = new ArrayList<>();
         if (enumSet != null) {
             members.add(enumSet);
         }
@@ -497,7 +497,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             JCAnnotation annotation = (JCAnnotation) annotationNode;
             annotationPosTable.put(annotation.pos, annotation);
         }
-        List<J.Annotation> packageAnnotations = collectAnnotations(annotationPosTable);
+        /*~~>*/List<J.Annotation> packageAnnotations = collectAnnotations(annotationPosTable);
 
         J.Package packageDecl = null;
         if (cu.getPackageName() != null) {
@@ -622,7 +622,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
     }
 
     private J visitEnumVariable(VariableTree node, Space fmt) {
-        List<J.Annotation> annotations = emptyList();
+        /*~~>*/List<J.Annotation> annotations = emptyList();
         Space nameSpace = EMPTY;
 
         if (!node.getModifiers().getAnnotations().isEmpty()) {
@@ -647,7 +647,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         skip("for");
         Space ctrlPrefix = sourceBefore("(");
 
-        List<JRightPadded<Statement>> init = node.getInitializer().isEmpty() ?
+        /*~~>*/List<JRightPadded<Statement>> init = node.getInitializer().isEmpty() ?
                 singletonList(padRight(new J.Empty(randomId(), sourceBefore(";"), Markers.EMPTY), EMPTY)) :
                 convertStatements(node.getInitializer(), t ->
                         positionOfNext(",", ';') == -1 ?
@@ -660,11 +660,11 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             condition = padRight(new J.Empty(randomId(), sourceBefore(";"), Markers.EMPTY), EMPTY);
         }
 
-        List<JRightPadded<Statement>> update;
+        /*~~>*/List<JRightPadded<Statement>> update;
         if (node.getUpdate().isEmpty()) {
             update = singletonList(padRight(new J.Empty(randomId(), sourceBefore(")"), Markers.EMPTY), EMPTY));
         } else {
-            List<? extends ExpressionStatementTree> nodeUpdate = node.getUpdate();
+            /*~~>*/List<? extends ExpressionStatementTree> nodeUpdate = node.getUpdate();
             update = new ArrayList<>(nodeUpdate.size());
             for (int i = 0; i < nodeUpdate.size(); i++) {
                 ExpressionStatementTree tree = nodeUpdate.get(i);
@@ -728,7 +728,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         boolean parenthesized = source.charAt(cursor) == '(';
         skip("(");
 
-        List<JRightPadded<J>> paramList;
+        /*~~>*/List<JRightPadded<J>> paramList;
         if (parenthesized && node.getParameters().isEmpty()) {
             paramList = singletonList(padRight(new J.Empty(randomId(), sourceBefore(")"), Markers.EMPTY), EMPTY));
         } else {
@@ -767,7 +767,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             }
         } else if (JavaType.Primitive.String.equals(type)) {
             StringBuilder valueSourceWithoutSurrogates = new StringBuilder();
-            List<J.Literal.UnicodeEscape> unicodeEscapes = null;
+            /*~~>*/List<J.Literal.UnicodeEscape> unicodeEscapes = null;
 
             int i = 0;
             char[] valueSourceArr = valueSource.toCharArray();
@@ -906,7 +906,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         if (node.getTypeParameters().isEmpty()) {
             typeParams = null;
         } else {
-            List<J.Annotation> typeParamsAnnotations = collectAnnotations(annotationPosTable);
+            /*~~>*/List<J.Annotation> typeParamsAnnotations = collectAnnotations(annotationPosTable);
 
             // see https://docs.oracle.com/javase/tutorial/java/generics/methods.html
             typeParams = new J.TypeParameters(randomId(), sourceBefore("<"), Markers.EMPTY,
@@ -914,7 +914,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
                     convertAll(node.getTypeParameters(), commaDelim, t -> sourceBefore(">")));
         }
 
-        List<J.Annotation> returnTypeAnnotations = collectAnnotations(annotationPosTable);
+        /*~~>*/List<J.Annotation> returnTypeAnnotations = collectAnnotations(annotationPosTable);
         TypeTree returnType = convertOrNull(node.getReturnType());
         if (returnType != null && !returnTypeAnnotations.isEmpty()) {
             returnType = new J.AnnotatedType(randomId(), Space.EMPTY, Markers.EMPTY,
@@ -986,8 +986,8 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             typeExpr = convertOrNull(jcVarType);
         }
 
-        List<J.ArrayDimension> dimensions = new ArrayList<>();
-        List<? extends ExpressionTree> nodeDimensions = node.getDimensions();
+        /*~~>*/List<J.ArrayDimension> dimensions = new ArrayList<>();
+        /*~~>*/List<? extends ExpressionTree> nodeDimensions = node.getDimensions();
         for (ExpressionTree dim : nodeDimensions) {
             dimensions.add(new J.ArrayDimension(
                     randomId(),
@@ -1047,7 +1047,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
 
             // we don't care about the compiler-inserted default constructor,
             // since it will never be subject to refactoring
-            List<Tree> members = new ArrayList<>();
+            /*~~>*/List<Tree> members = new ArrayList<>();
             for (Tree m : node.getClassBody().getMembers()) {
                 if (!(m instanceof JCMethodDecl) || (((JCMethodDecl) m).getModifiers().flags & Flags.GENERATEDCONSTR) == 0L) {
                     members.add(m);
@@ -1166,7 +1166,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             resources = null;
         } else {
             Space before = sourceBefore("(");
-            List<JRightPadded<J.Try.Resource>> resourceList = new ArrayList<>();
+            /*~~>*/List<JRightPadded<J.Try.Resource>> resourceList = new ArrayList<>();
 
             for (int i = 0; i < node.getResources().size(); i++) {
                 Tree resource = node.getResources().get(i);
@@ -1201,7 +1201,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         }
 
         J.Block block = convert(node.getBlock());
-        List<J.Try.Catch> catches = convertAll(node.getCatches());
+        /*~~>*/List<J.Try.Catch> catches = convertAll(node.getCatches());
 
         JLeftPadded<J.Block> finallyy = node.getFinallyBlock() == null ? null :
                 padLeft(sourceBefore("finally"), convert(node.getFinallyBlock()));
@@ -1226,7 +1226,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
 
     @Override
     public J visitTypeParameter(TypeParameterTree node, Space fmt) {
-        List<J.Annotation> annotations = convertAll(node.getAnnotations());
+        /*~~>*/List<J.Annotation> annotations = convertAll(node.getAnnotations());
 
         Expression name = buildName(node.getName().toString())
                 .withPrefix(sourceBefore(node.getName().toString()));
@@ -1343,7 +1343,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
                 visitVariables(singletonList(node), fmt); // method arguments cannot be multi-declarations
     }
 
-    private J.VariableDeclarations visitVariables(List<VariableTree> nodes, Space fmt) {
+    private J.VariableDeclarations visitVariables(/*~~>*/List<VariableTree> nodes, Space fmt) {
         JCTree.JCVariableDecl node = (JCVariableDecl) nodes.get(0);
 
         JCExpression vartype = node.vartype;
@@ -1354,7 +1354,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         }
         ReloadableJava11ModifierResults modifierResults = sortedModifiersAndAnnotations(node.getModifiers(), annotationPosTable);
 
-        List<J.Annotation> typeExprAnnotations = collectAnnotations(annotationPosTable);
+        /*~~>*/List<J.Annotation> typeExprAnnotations = collectAnnotations(annotationPosTable);
 
         TypeTree typeExpr;
         if (vartype == null || vartype instanceof JCErroneous) {
@@ -1382,7 +1382,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             typeExpr = new J.AnnotatedType(randomId(), Space.EMPTY, Markers.EMPTY, typeExprAnnotations, typeExpr);
         }
 
-        Supplier<List<JLeftPadded<Space>>> dimensions = () -> {
+        Supplier</*~~>*/List<JLeftPadded<Space>>> dimensions = () -> {
             Matcher matcher = Pattern.compile("\\G(\\s*)\\[(\\s*)]").matcher(source);
             List<JLeftPadded<Space>> dims = new ArrayList<>();
             while (matcher.find(cursor)) {
@@ -1392,7 +1392,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             return dims;
         };
 
-        List<JLeftPadded<Space>> beforeDimensions = dimensions.get();
+        /*~~>*/List<JLeftPadded<Space>> beforeDimensions = dimensions.get();
 
         Space varargs = null;
         if (typeExpr == null || typeExpr.getMarkers().findFirst(JavaVarKeyword.class).isEmpty()) {
@@ -1407,7 +1407,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             }
         }
 
-        List<JRightPadded<J.VariableDeclarations.NamedVariable>> vars = new ArrayList<>();
+        /*~~>*/List<JRightPadded<J.VariableDeclarations.NamedVariable>> vars = new ArrayList<>();
 
         for (int i = 0; i < nodes.size(); i++) {
             JCVariableDecl n = (JCVariableDecl) nodes.get(i);
@@ -1418,7 +1418,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             J.Identifier name = new J.Identifier(randomId(), EMPTY, Markers.EMPTY, n.getName().toString(),
                     type instanceof JavaType.Variable ? ((JavaType.Variable) type).getType() : type,
                     type instanceof JavaType.Variable ? (JavaType.Variable) type : null);
-            List<JLeftPadded<Space>> dimensionsAfterName = dimensions.get();
+            /*~~>*/List<JLeftPadded<Space>> dimensionsAfterName = dimensions.get();
 
             vars.add(
                     padRight(
@@ -1483,7 +1483,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
             StringBuilder message = new StringBuilder("Failed to convert for the following cursor stack:");
             message.append("--- BEGIN PATH ---\n");
 
-            List<Tree> paths = stream(getCurrentPath().spliterator(), false).collect(toList());
+            /*~~>*/List<Tree> paths = stream(getCurrentPath().spliterator(), false).collect(toList());
             for (int i = paths.size(); i-- > 0; ) {
                 JCTree tree = (JCTree) paths.get(i);
                 if (tree instanceof JCCompilationUnit) {
@@ -1526,21 +1526,21 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         return t == null ? null : convert(t, suffix);
     }
 
-    private <J2 extends J> List<J2> convertAll(List<? extends Tree> trees) {
-        List<J2> converted = new ArrayList<>(trees.size());
+    private <J2 extends J> /*~~>*/List<J2> convertAll(/*~~>*/List<? extends Tree> trees) {
+        /*~~>*/List<J2> converted = new ArrayList<>(trees.size());
         for (Tree tree : trees) {
             converted.add(convert(tree));
         }
         return converted;
     }
 
-    private <J2 extends J> List<JRightPadded<J2>> convertAll(List<? extends Tree> trees,
+    private <J2 extends J> /*~~>*/List<JRightPadded<J2>> convertAll(/*~~>*/List<? extends Tree> trees,
                                                              Function<Tree, Space> innerSuffix,
                                                              Function<Tree, Space> suffix) {
         if (trees.isEmpty()) {
             return emptyList();
         }
-        List<JRightPadded<J2>> converted = new ArrayList<>(trees.size());
+        /*~~>*/List<JRightPadded<J2>> converted = new ArrayList<>(trees.size());
         for (int i = 0; i < trees.size(); i++) {
             converted.add(convert(trees.get(i), i == trees.size() - 1 ? suffix : innerSuffix));
         }
@@ -1548,13 +1548,13 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
     }
 
     @Nullable
-    private JContainer<Expression> convertTypeParameters(@Nullable List<? extends Tree> typeArguments) {
+    private JContainer<Expression> convertTypeParameters(@Nullable /*~~>*/List<? extends Tree> typeArguments) {
         if (typeArguments == null) {
             return null;
         }
 
         Space typeArgPrefix = sourceBefore("<");
-        List<JRightPadded<Expression>> params;
+        /*~~>*/List<JRightPadded<Expression>> params;
         if (typeArguments.isEmpty()) {
             // raw type, see http://docs.oracle.com/javase/tutorial/java/generics/rawTypes.html
             // adding space before > as a suffix to be consistent with space before > for non-empty lists of type args
@@ -1595,24 +1595,24 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         return EMPTY;
     }
 
-    private List<JRightPadded<Statement>> convertStatements(@Nullable List<? extends Tree> trees) {
+    private /*~~>*/List<JRightPadded<Statement>> convertStatements(@Nullable /*~~>*/List<? extends Tree> trees) {
         return convertStatements(trees, this::statementDelim);
     }
 
     @SuppressWarnings("unchecked")
-    private List<JRightPadded<Statement>> convertStatements(@Nullable List<? extends Tree> trees,
+    private /*~~>*/List<JRightPadded<Statement>> convertStatements(@Nullable /*~~>*/List<? extends Tree> trees,
                                                             Function<Tree, Space> suffix) {
         if (trees == null || trees.isEmpty()) {
             return emptyList();
         }
 
-        Map<Integer, List<Tree>> treesGroupedByStartPosition = new LinkedHashMap<>();
+        Map<Integer, /*~~>*/List<Tree>> treesGroupedByStartPosition = new LinkedHashMap<>();
         for (Tree t : trees) {
             treesGroupedByStartPosition.computeIfAbsent(((JCTree) t).getStartPosition(), k -> new ArrayList<>()).add(t);
         }
 
-        List<JRightPadded<Statement>> converted = new ArrayList<>();
-        for (List<? extends Tree> treeGroup : treesGroupedByStartPosition.values()) {
+        /*~~>*/List<JRightPadded<Statement>> converted = new ArrayList<>();
+        for (/*~~>*/List<? extends Tree> treeGroup : treesGroupedByStartPosition.values()) {
             if (treeGroup.size() == 1) {
                 converted.add(convert(treeGroup.get(0), suffix));
             } else {
@@ -1623,7 +1623,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
                 Tree last = treeGroup.get(treeGroup.size() - 1);
 
                 @SuppressWarnings("unchecked")
-                J.VariableDeclarations vars = visitVariables((List<VariableTree>) treeGroup, format(prefix));
+                J.VariableDeclarations vars = visitVariables((/*~~>*/List<VariableTree>) treeGroup, format(prefix));
                 JRightPadded<Statement> paddedVars = padRight(vars, semiDelim.apply(last));
                 cursor(max(endPos(last), cursor));
                 converted.add(paddedVars);
@@ -1744,7 +1744,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
 
     @SuppressWarnings("unused")
     // Used for debugging
-    private List<String> listFlags(long flags) {
+    private /*~~>*/List<String> listFlags(long flags) {
         Map<String, Long> allFlags = Arrays.stream(Flags.class.getDeclaredFields())
                 .filter(field -> {
                     field.setAccessible(true);
@@ -1764,7 +1764,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
                     }
                 }));
 
-        List<String> all = new ArrayList<>();
+        /*~~>*/List<String> all = new ArrayList<>();
         for (Map.Entry<String, Long> flagNameAndCode : allFlags.entrySet()) {
             if ((flagNameAndCode.getValue() & flags) != 0L) {
                 all.add(flagNameAndCode.getKey());
@@ -1778,9 +1778,9 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
      * which they appear in the OpenJDK AST
      */
     private ReloadableJava11ModifierResults sortedModifiersAndAnnotations(ModifiersTree modifiers, Map<Integer, JCAnnotation> annotationPosTable) {
-        List<J.Annotation> leadingAnnotations = new ArrayList<>();
-        List<J.Modifier> sortedModifiers = new ArrayList<>();
-        List<J.Annotation> currentAnnotations = new ArrayList<>();
+        /*~~>*/List<J.Annotation> leadingAnnotations = new ArrayList<>();
+        /*~~>*/List<J.Modifier> sortedModifiers = new ArrayList<>();
+        /*~~>*/List<J.Annotation> currentAnnotations = new ArrayList<>();
         boolean afterFirstModifier = false;
         boolean inComment = false;
         boolean inMultilineComment = false;
@@ -1849,7 +1849,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         );
     }
 
-    private J.Modifier mapModifier(Modifier mod, List<J.Annotation> annotations) {
+    private J.Modifier mapModifier(Modifier mod, /*~~>*/List<J.Annotation> annotations) {
         Space modFormat = whitespace();
         cursor += mod.name().length();
         J.Modifier.Type type;
@@ -1896,9 +1896,9 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
         return new J.Modifier(randomId(), modFormat, Markers.EMPTY, type, annotations);
     }
 
-    private List<J.Annotation> collectAnnotations(Map<Integer, JCAnnotation> annotationPosTable) {
+    private /*~~>*/List<J.Annotation> collectAnnotations(Map<Integer, JCAnnotation> annotationPosTable) {
         int maxAnnotationPosition = annotationPosTable.keySet().stream().mapToInt(i -> i).max().orElse(0);
-        List<J.Annotation> annotations = new ArrayList<>();
+        /*~~>*/List<J.Annotation> annotations = new ArrayList<>();
         boolean inComment = false;
         boolean inMultilineComment = false;
         for (int i = cursor; i <= maxAnnotationPosition && i < source.length(); i++) {
@@ -1933,7 +1933,7 @@ public class ReloadableJava11ParserVisitor extends TreePathScanner<J, Space> {
     Space formatWithCommentTree(String prefix, JCTree tree, @Nullable DCTree.DCDocComment commentTree) {
         Space fmt = format(prefix);
         if (commentTree != null) {
-            List<Comment> comments = fmt.getComments();
+            /*~~>*/List<Comment> comments = fmt.getComments();
             int i;
             for (i = comments.size() - 1; i >= 0; i--) {
                 Comment comment = comments.get(i);

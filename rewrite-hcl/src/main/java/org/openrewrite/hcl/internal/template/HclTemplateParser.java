@@ -41,7 +41,7 @@ public class HclTemplateParser {
     private static final String BODY_STUB = "#{}";
     private static final String EXPRESSION_STUB = "a=#{}";
 
-    private static final Map<String, List<? extends Hcl>> templateCache = new LinkedHashMap<String, List<? extends Hcl>>() {
+    private static final Map<String, /*~~>*/List<? extends Hcl>> templateCache = new LinkedHashMap<String, /*~~>*/List<? extends Hcl>>() {
         @Override
         protected boolean removeEldestEntry(Map.Entry eldest) {
             return size() > 10_000;
@@ -51,7 +51,7 @@ public class HclTemplateParser {
     private final Consumer<String> onAfterVariableSubstitution;
     private final Consumer<String> onBeforeParseTemplate;
 
-    public List<BodyContent> parseBodyContent(String template) {
+    public /*~~>*/List<BodyContent> parseBodyContent(String template) {
         String stub = substitute(BODY_STUB, template);
         onBeforeParseTemplate.accept(stub);
         return cache(stub, () -> {
@@ -80,12 +80,12 @@ public class HclTemplateParser {
     }
 
     @SuppressWarnings("unchecked")
-    private <H extends Hcl> List<H> cache(String stub, Supplier<List<? extends Hcl>> ifAbsent) {
-        List<H> hs;
+    private <H extends Hcl> /*~~>*/List<H> cache(String stub, Supplier</*~~>*/List<? extends Hcl>> ifAbsent) {
+        /*~~>*/List<H> hs;
         synchronized (templateCacheLock) {
-            hs = (List<H>) templateCache.get(stub);
+            hs = (/*~~>*/List<H>) templateCache.get(stub);
             if(hs == null) {
-                hs = (List<H>) ifAbsent.get();
+                hs = (/*~~>*/List<H>) ifAbsent.get();
                 templateCache.put(stub, hs);
             }
         }

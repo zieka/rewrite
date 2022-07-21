@@ -65,7 +65,7 @@ public class AddToTagVisitor<P> extends XmlVisitor<P> {
                 formattedTagToAdd = formattedTagToAdd.withPrefix("\n");
             }
 
-            List<Content> content = t.getContent() == null ? new ArrayList<>() : new ArrayList<>(t.getContent());
+            /*~~>*/List<Content> content = t.getContent() == null ? new ArrayList<>() : new ArrayList<>(t.getContent());
             if (tagComparator != null) {
                 int i = 0;
                 for (; i < content.size(); i++) {

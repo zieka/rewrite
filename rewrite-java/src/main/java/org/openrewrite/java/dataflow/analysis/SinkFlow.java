@@ -57,14 +57,14 @@ public class SinkFlow<Source extends Expression, Sink extends J> extends FlowGra
         return requireNonNull(source).getValue();
     }
 
-    public List<Sink> getSinks() {
+    public /*~~>*/List<Sink> getSinks() {
         return getSinkCursors()
                 .stream()
                 .map(Cursor::<Sink>getValue)
                 .collect(Collectors.toList());
     }
 
-    public List<Cursor> getSinkCursors() {
+    public /*~~>*/List<Cursor> getSinkCursors() {
         List<List<Cursor>> flows = getFlows();
         List<Cursor> sinkCursors = new ArrayList<>(flows.size());
         for (List<Cursor> flow : flows) {
@@ -73,7 +73,7 @@ public class SinkFlow<Source extends Expression, Sink extends J> extends FlowGra
         return sinkCursors;
     }
 
-    public List<List<Cursor>> getFlows() {
+    public /*~~>*/List</*~~>*/List<Cursor>> getFlows() {
         // IMPORTANT NOTE!
         // A naive implementation would return emptyList if the edges are empty.
         // But we need to consider that the source can also be a valid sink.
@@ -93,7 +93,7 @@ public class SinkFlow<Source extends Expression, Sink extends J> extends FlowGra
     }
 
     private void recurseGetFlows(FlowGraph flowGraph, Stack<Cursor> pathToHere,
-                                 List<List<Cursor>> pathsToSinks) {
+                                 /*~~>*/List</*~~>*/List<Cursor>> pathsToSinks) {
         Cursor cursor = flowGraph.getCursor();
         if (cursor.getValue() instanceof Expression && !reachable.contains(cursor.<Expression>getValue())) {
             return;

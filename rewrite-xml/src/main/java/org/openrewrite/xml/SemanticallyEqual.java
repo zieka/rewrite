@@ -74,10 +74,10 @@ public class SemanticallyEqual {
                 areEqual = false;
                 return null;
             }
-            List<Xml.Attribute> theseAttributes = tag.getAttributes().stream()
+            /*~~>*/List<Xml.Attribute> theseAttributes = tag.getAttributes().stream()
                     .sorted(comparing(Xml.Attribute::getKeyAsString))
                     .collect(toList());
-            List<Xml.Attribute> thoseAttributes = otherTag.getAttributes().stream()
+            /*~~>*/List<Xml.Attribute> thoseAttributes = otherTag.getAttributes().stream()
                     .sorted(comparing(Xml.Attribute::getKeyAsString))
                     .collect(toList());
             for(int i = 0; i < theseAttributes.size(); i++) {
@@ -92,10 +92,10 @@ public class SemanticallyEqual {
                 areEqual = false;
                 return null;
             }
-            List<Content> theseContents = tag.getContent().stream()
+            /*~~>*/List<Content> theseContents = tag.getContent().stream()
                     .filter(it -> it != null && !(it instanceof Xml.Comment))
                     .collect(toList());
-            List<Content> thoseContents = otherTag.getContent().stream()
+            /*~~>*/List<Content> thoseContents = otherTag.getContent().stream()
                     .filter(it -> it != null && !(it instanceof Xml.Comment))
                     .collect(toList());
             if(theseContents.size() != thoseContents.size()) {
@@ -149,13 +149,13 @@ public class SemanticallyEqual {
             return null;
         }
     }
-    private static boolean isNullOrEmpty(@Nullable List<?> a) {
+    private static boolean isNullOrEmpty(@Nullable /*~~>*/List<?> a) {
         return a == null || a.isEmpty();
     }
-    private static boolean bothNullOrEmpty(@Nullable List<?> a, @Nullable List<?> b) {
+    private static boolean bothNullOrEmpty(@Nullable /*~~>*/List<?> a, @Nullable /*~~>*/List<?> b) {
         return isNullOrEmpty(a) && isNullOrEmpty(b);
     }
-    private static boolean eitherNullOrEmpty(@Nullable List<?> a, @Nullable List<?> b) {
+    private static boolean eitherNullOrEmpty(@Nullable /*~~>*/List<?> a, @Nullable /*~~>*/List<?> b) {
         return isNullOrEmpty(a) || isNullOrEmpty(b);
     }
 }

@@ -53,15 +53,15 @@ public class Plugin {
 
     JsonNode configuration;
 
-    List<Dependency> dependencies;
-    List<Execution> executions;
+    /*~~>*/List<Dependency> dependencies;
+    /*~~>*/List<Execution> executions;
 
     @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
     @Value
     public static class Execution {
 
         String id;
-        List<String> goals;
+        /*~~>*/List<String> goals;
 
         String phase;
 
@@ -112,7 +112,7 @@ public class Plugin {
     }
 
     @Incubating(since = "7.22.0")
-    public <T> List<T> getConfigurationList(String path, Class<T> elementClass) {
+    public <T> /*~~>*/List<T> getConfigurationList(String path, Class<T> elementClass) {
         JsonNode current = configuration;
         if (!path.isEmpty()) {
             String[] elements = path.split("\\.");
@@ -135,7 +135,7 @@ public class Plugin {
         if (!current.isArray()) {
             return Collections.emptyList();
         }
-        return MavenXmlMapper.readMapper().convertValue(current, new TypeReference<List<T>>() {});
+        return MavenXmlMapper.readMapper().convertValue(current, new TypeReference</*~~>*/List<T>>() {});
     }
 }
 

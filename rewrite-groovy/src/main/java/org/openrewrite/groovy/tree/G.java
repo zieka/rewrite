@@ -56,7 +56,7 @@ public interface G extends J {
 
     Space getPrefix();
 
-    default List<Comment> getComments() {
+    default /*~~>*/List<Comment> getComments() {
         return getPrefix().getComments();
     }
 
@@ -137,21 +137,21 @@ public interface G extends J {
             return getPadding().withPackageDeclaration(JRightPadded.withElement(this.packageDeclaration, packageDeclaration));
         }
 
-        List<JRightPadded<Statement>> statements;
+        /*~~>*/List<JRightPadded<Statement>> statements;
 
-        public List<Statement> getStatements() {
+        public /*~~>*/List<Statement> getStatements() {
             return JRightPadded.getElements(statements);
         }
 
-        public G.CompilationUnit withStatements(List<Statement> statements) {
-            return getPadding().withStatements(JRightPadded.withElements(this.statements, statements));
+        public G.CompilationUnit withStatements(/*~~>*/List<Statement> statements) {
+            return getPadding().withStatements(JRightPadded.withElements(/*~~>*/this.statements, statements));
         }
 
         @With
         @Getter
         Space eof;
 
-        public List<Import> getImports() {
+        public /*~~>*/List<Import> getImports() {
             return statements.stream()
                     .map(JRightPadded::getElement)
                     .filter(J.Import.class::isInstance)
@@ -166,7 +166,7 @@ public interface G extends J {
          * @param imports The imports to use.
          * @return This compilation unit with new imports.
          */
-        public G.CompilationUnit withImports(List<Import> imports) {
+        public G.CompilationUnit withImports(/*~~>*/List<Import> imports) {
 //            List<Statement> after = ListUtils.concatAll(
 //                    imports.stream()
 //                            .map(s -> (Statement) s)
@@ -191,7 +191,7 @@ public interface G extends J {
             return this;
         }
 
-        public List<ClassDeclaration> getClasses() {
+        public /*~~>*/List<ClassDeclaration> getClasses() {
             return statements.stream()
                     .map(JRightPadded::getElement)
                     .filter(J.ClassDeclaration.class::isInstance)
@@ -208,7 +208,7 @@ public interface G extends J {
          * @param classes The classes to use.
          * @return This compilation unit with new classes.
          */
-        public G.CompilationUnit withClasses(List<ClassDeclaration> classes) {
+        public G.CompilationUnit withClasses(/*~~>*/List<ClassDeclaration> classes) {
             // TODO implement me!
             return this;
         }
@@ -281,32 +281,32 @@ public interface G extends J {
             public G.CompilationUnit withPackageDeclaration(@Nullable JRightPadded<Package> packageDeclaration) {
                 return t.packageDeclaration == packageDeclaration ? t :
                         new G.CompilationUnit(t.id, t.shebang, t.prefix, t.markers, t.sourcePath, t.fileAttributes,
-                                t.charsetName, t.charsetBomMarked, t.checksum, packageDeclaration, t.statements, t.eof);
+                                t.charsetName, t.charsetBomMarked, t.checksum, packageDeclaration, /*~~>*/t.statements, t.eof);
 
             }
 
             @Override
-            public List<JRightPadded<Import>> getImports() {
+            public /*~~>*/List<JRightPadded<Import>> getImports() {
                 //noinspection unchecked
-                return t.statements.stream()
+                return /*~~>*/t.statements.stream()
                         .filter(s -> s.getElement() instanceof J.Import)
                         .map(s -> (JRightPadded<J.Import>) (Object) s)
                         .collect(Collectors.toList());
             }
 
             @Override
-            public G.CompilationUnit withImports(List<JRightPadded<Import>> imports) {
+            public G.CompilationUnit withImports(/*~~>*/List<JRightPadded<Import>> imports) {
                 // TODO implement me!
                 return t;
 //                return t.imports == imports ? t : new G.CompilationUnit(t.id, t.shebang, t.prefix, t.markers, t.sourcePath, t.packageDeclaration, imports, t.classes, t.eof);
             }
 
-            public List<JRightPadded<Statement>> getStatements() {
+            public /*~~>*/List<JRightPadded<Statement>> getStatements() {
                 return t.statements;
             }
 
-            public G.CompilationUnit withStatements(List<JRightPadded<Statement>> statements) {
-                return t.statements == statements ? t : new G.CompilationUnit(t.id, t.shebang, t.prefix, t.markers, t.sourcePath,
+            public G.CompilationUnit withStatements(/*~~>*/List<JRightPadded<Statement>> statements) {
+                return /*~~>*/t.statements == statements ? t : new G.CompilationUnit(t.id, t.shebang, t.prefix, t.markers, t.sourcePath,
                         t.fileAttributes, t.charsetName, t.charsetBomMarked, t.checksum, t.packageDeclaration, statements, t.eof);
             }
         }
@@ -504,11 +504,11 @@ public interface G extends J {
 
         JContainer<G.MapEntry> elements;
 
-        public List<G.MapEntry> getElements() {
+        public /*~~>*/List<G.MapEntry> getElements() {
             return elements.getElements();
         }
 
-        public MapLiteral withElements(List<G.MapEntry> elements) {
+        public MapLiteral withElements(/*~~>*/List<G.MapEntry> elements) {
             return getPadding().withElements(JContainer.withElements(this.elements, elements));
         }
 
@@ -588,11 +588,11 @@ public interface G extends J {
 
         JContainer<Expression> elements;
 
-        public List<Expression> getElements() {
+        public /*~~>*/List<Expression> getElements() {
             return elements.getElements();
         }
 
-        public ListLiteral withElements(List<Expression> elements) {
+        public ListLiteral withElements(/*~~>*/List<Expression> elements) {
             return getPadding().withElements(JContainer.withElements(this.elements, elements));
         }
 
@@ -655,7 +655,7 @@ public interface G extends J {
         UUID id;
         Space prefix;
         Markers markers;
-        List<J> strings;
+        /*~~>*/List<J> strings;
 
         @Nullable
         JavaType type;

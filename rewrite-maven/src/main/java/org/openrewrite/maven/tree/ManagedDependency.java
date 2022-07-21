@@ -45,7 +45,7 @@ public interface ManagedDependency {
         @Nullable
         String classifier;
 
-        List<GroupArtifact> exclusions;
+        /*~~>*/List<GroupArtifact> exclusions;
 
         public String getGroupId() {
             return gav.getGroupId();

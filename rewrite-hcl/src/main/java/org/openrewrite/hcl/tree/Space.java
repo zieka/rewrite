@@ -38,7 +38,7 @@ import static java.util.Collections.emptyList;
 public class Space {
     public static final Space EMPTY = new Space("", emptyList());
 
-    private final List<Comment> comments;
+    private final /*~~>*/List<Comment> comments;
 
     @Nullable
     private final String whitespace;
@@ -50,13 +50,13 @@ public class Space {
      */
     private static final Map<String, Space> flyweights = new WeakHashMap<>();
 
-    private Space(@Nullable String whitespace, List<Comment> comments) {
-        this.comments = comments;
+    private Space(@Nullable String whitespace, /*~~>*/List<Comment> comments) {
+        /*~~>*/this.comments = comments;
         this.whitespace = whitespace == null || whitespace.isEmpty() ? null : whitespace;
     }
 
     @JsonCreator
-    public static Space build(@Nullable String whitespace, List<Comment> comments) {
+    public static Space build(@Nullable String whitespace, /*~~>*/List<Comment> comments) {
         if (comments.isEmpty()) {
             if (whitespace == null || whitespace.isEmpty()) {
                 return Space.EMPTY;
@@ -93,7 +93,7 @@ public class Space {
         return whitespace;
     }
 
-    public List<Comment> getComments() {
+    public /*~~>*/List<Comment> getComments() {
         return comments;
     }
 
@@ -101,8 +101,8 @@ public class Space {
         return whitespace == null ? "" : whitespace;
     }
 
-    public Space withComments(List<Comment> comments) {
-        if (comments == this.comments) {
+    public Space withComments(/*~~>*/List<Comment> comments) {
+        if (comments == /*~~>*/this.comments) {
             return this;
         }
         if (comments.isEmpty() && (whitespace == null || whitespace.isEmpty())) {
@@ -126,14 +126,14 @@ public class Space {
         return this == EMPTY;
     }
 
-    public static Space firstPrefix(@Nullable List<? extends Hcl> trees) {
+    public static Space firstPrefix(@Nullable /*~~>*/List<? extends Hcl> trees) {
         return trees == null || trees.isEmpty() ? Space.EMPTY : trees.iterator().next().getPrefix();
     }
 
     public static Space format(String formatting) {
         StringBuilder prefix = new StringBuilder();
         StringBuilder comment = new StringBuilder();
-        List<Comment> comments = new ArrayList<>();
+        /*~~>*/List<Comment> comments = new ArrayList<>();
 
         boolean inSingleLineComment = false;
         Comment.Style inLineSlashOrHashComment = null;
@@ -230,9 +230,9 @@ public class Space {
         return build(whitespace, comments);
     }
 
-    public static <H extends Hcl> List<H> formatFirstPrefix(List<H> trees, Space prefix) {
+    public static <H extends Hcl> /*~~>*/List<H> formatFirstPrefix(/*~~>*/List<H> trees, Space prefix) {
         if (!trees.isEmpty() && !trees.get(0).getPrefix().equals(prefix)) {
-            List<H> formattedTrees = new ArrayList<>(trees);
+            /*~~>*/List<H> formattedTrees = new ArrayList<>(trees);
             formattedTrees.set(0, formattedTrees.get(0).withPrefix(prefix));
             return formattedTrees;
         }

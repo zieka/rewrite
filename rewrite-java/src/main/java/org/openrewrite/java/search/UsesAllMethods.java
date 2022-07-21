@@ -30,7 +30,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public class UsesAllMethods<P> extends JavaIsoVisitor<P> {
-    private final List<MethodMatcher> methodMatchers;
+    private final /*~~>*/List<MethodMatcher> methodMatchers;
 
     public UsesAllMethods(MethodMatcher... methodMatchers) {
         this(Arrays.asList(methodMatchers));

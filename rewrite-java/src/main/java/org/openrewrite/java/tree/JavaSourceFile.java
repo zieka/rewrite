@@ -30,9 +30,9 @@ public interface JavaSourceFile extends J {
 
     JavaSourceFile withPackageDeclaration(J.Package pkg);
 
-    List<Import> getImports();
+    /*~~>*/List<Import> getImports();
 
-    List<J.ClassDeclaration> getClasses();
+    /*~~>*/List<J.ClassDeclaration> getClasses();
 
     Space getEof();
 
@@ -48,7 +48,7 @@ public interface JavaSourceFile extends J {
     SourceFile withSourcePath(Path path);
 
     interface Padding {
-        List<JRightPadded<Import>> getImports();
-        JavaSourceFile withImports(List<JRightPadded<Import>> imports);
+        /*~~>*/List<JRightPadded<Import>> getImports();
+        JavaSourceFile withImports(/*~~>*/List<JRightPadded<Import>> imports);
     }
 }

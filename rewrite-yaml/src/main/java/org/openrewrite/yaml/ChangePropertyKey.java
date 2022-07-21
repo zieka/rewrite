@@ -186,7 +186,7 @@ public class ChangePropertyKey extends Recipe {
             Yaml.Mapping m = super.visitMapping(mapping, p);
 
             boolean changed = false;
-            List<Yaml.Mapping.Entry> entries = new ArrayList<>();
+            /*~~>*/List<Yaml.Mapping.Entry> entries = new ArrayList<>();
             for (Yaml.Mapping.Entry entry : m.getEntries()) {
                 if (entry == scope || (entry.getValue() instanceof Yaml.Mapping && ((Yaml.Mapping) entry.getValue()).getEntries().isEmpty())) {
                     changed = true;
